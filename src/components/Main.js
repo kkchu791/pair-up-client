@@ -5,7 +5,8 @@ import { Home } from './Home';
 import { SignUp } from './SignUp';
 import { Layout } from './Layout';
 import { UserProfile } from './UserProfile';
-
+import { Sessions } from './Sessions';
+import { PATH } from '../constants';
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,21 +17,29 @@ export const Main = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={PATH.ROOT}>
           <Home />
         </Route>
-        <Route path="/login">
+        <Route path={PATH.LOGIN}>
           <Login />
         </Route>
-        <Route path="/signup">
+        <Route path={PATH.SIGNUP}>
           <SignUp />
         </Route>
-        <Route path="/scheduler">
+        <Route path={PATH.DASHBOARD}>
           <Layout>
             <Dashboard />
           </Layout>
         </Route>
-        <Route path="/users/:user_id" component={UserProfile} />
+        <Route path={PATH.SESSIONS}>
+          <Layout>
+            <Sessions />
+          </Layout>
+        </Route>
+        <Route
+          path={PATH.USER}
+          component={UserProfile}
+        />
       </Switch>
 
     </Router>

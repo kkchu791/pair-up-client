@@ -1,53 +1,54 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import styles from './Dashboard.module.scss';
 import { Scheduler } from './Scheduler';
 import { Current } from './Current';
 import { Events } from './Events';
-import { getTimeBlocks as getTimeBlocksApi } from '../api';
-import { getBlocksByDateRange as getBlocksByDateRangeApi } from '../api/blocks';
 import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  toggleModal,
+  getBlocksByDate,
+  getTimeBlocks,
+} from '../redux/actions';
+import { TaskModal } from './TaskModal';
+import { TaskForm } from './TaskForm';
 
 export const Dashboard = () => {
-  const [date, setDate] = useState(new Date());
-  const [timeBlocks, setTimeBlocks] = useState([])
-  const [selectedBlocks, setSelectedBlocks] = useState({});
-
-  const getDates = useCallback(() => {
-    const start = startOfWeek(date, {weekStartsOn: 1});
-    const end = endOfWeek(date, {weekStartsOn: 1});
-
-    return eachDayOfInterval({start, end});
-  }, [date]);
-
-  const getBlocksByDateRange = useCallback(async () => {
-    const dates = getDates();
-    const startDate = dates[0].toISOString().slice(0,10);
-    const endDate = dates[6].toISOString().slice(0,10);
-    const blocks = await getBlocksByDateRangeApi({startDate, endDate});
-    setSelectedBlocks(blocks.data);
-  }, [getDates]);
-
-  const getTimeBlocks = useCallback(async () => {
-    const timeBlocks = await getTimeBlocksApi();
-    setTimeBlocks(timeBlocks.data);
-  }, []);
+  const dispatch = useDispatch();
+  const {isOpen} = useSelector(state => state.modal);
+  const date = useSelector(state => state.date);
+  const start = startOfWeek(date, {weekStartsOn: 1});
+  const end = endOfWeek(date, {weekStartsOn: 1});
 
   useEffect(() => {
-    getTimeBlocks();
-    getBlocksByDateRange();
-  }, [getBlocksByDateRange, getTimeBlocks]);
+    dispatch(getTimeBlocks({
+      onSuccess: () => console.log('success timeBlock'),
+      onError: () => console.log('error timeBlock')
+    }));
+
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      onSuccess: () => console.log('success'),
+      onError: () => console.log('errored'),
+    }));
+  }, [getBlocksByDate, getTimeBlocks]);
+
+  const closeModal = () => {
+    dispatch(toggleModal(false));
+  }
 
   return (
     <div className={styles.container}>
-      <Current
-        setSelectedBlocks={setSelectedBlocks}
-      />
+      <TaskModal
+        onClose={closeModal}
+        open={isOpen}
+      >
+        <TaskForm />
+      </TaskModal>
+      <Current />
       <Scheduler
-        timeBlocks={timeBlocks}
-        selectedBlocks={selectedBlocks}
-        setDate={setDate}
-        dates={getDates()}
-        setSelectedBlocks={setSelectedBlocks}
+        dates={eachDayOfInterval({start, end})}
       />
       <Events />
     </div>

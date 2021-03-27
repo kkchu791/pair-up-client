@@ -1,4 +1,14 @@
 .container {
-  border: 1px solid orange;
   flex-grow: 3;
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+.goalSelect {
+  margin: 20px 0;
+}
+
+.goalNote {
+  height: 90%;
 }

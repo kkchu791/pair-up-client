@@ -2,21 +2,20 @@ import React from 'react';
 import styles from './Day.module.scss';
 import clsx from 'clsx';
 import { SlotBlock } from './SlotBlock';
+import { useSelector } from 'react-redux';
 
 export const Day = ({
   date,
-  timeBlocks,
-  setSelectedBlocks,
-  selectedBlocks,
+  blocks,
 }) => {
+  const timeBlocks = useSelector(state => state.timeBlocks);
   const renderTimeBlock = (timeBlock) => {
     return (
       <div key={timeBlock.id}>
         <SlotBlock
           timeBlock={timeBlock}
-          setSelectedBlocks={setSelectedBlocks}
-          selectedBlocks={selectedBlocks}
           date={date}
+          blocks={blocks}
         />
       </div>
     )

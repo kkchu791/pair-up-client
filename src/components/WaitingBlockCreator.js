@@ -1,41 +1,44 @@
 import React from 'react';
-import { blockStatuses } from '../constants/blocks';
 import { Button } from '@material-ui/core';
 import styles from './WaitingBlockCreator.module.scss';
-import { removeBlock } from '../api/blocks';
 import {convertTimeTo24} from '../utils';
+import {
+  setBlock,
+  deleteBlock,
+  toggleModal } from '../redux/actions';
+import { useDispatch } from 'react-redux';
 
 export const WaitingBlockCreator = ({
   timeBlock,
-  setSelectedBlocks,
   block,
   date,
-  setStatus,
   userDetails,
-  setBlock,
 }) => {
+  const dispatch = useDispatch();
+
   const cancelClick = async (evt) => {
     evt.stopPropagation();
-    let response = await removeBlock({
+
+    dispatch(deleteBlock({
       userId: userDetails.id,
       blockId: block.id,
-    });
-
-    //needs to remove the block from the selectedBlocksList by the id
-    setSelectedBlocks(prevState => {
-      const newList = prevState[date].filter(bl => bl.id !== response.data.id);
-      prevState[date] = newList;
-      return prevState;
-    });
-
-    setBlock({})
-    setStatus(blockStatuses[0]);
+      date,
+      onSuccess: () => {console.log('success delete')},
+      onError: () => {console.log('error delete')},
+    }));
   }
 
+  const handleBoxClick = (evt) => {
+    dispatch(toggleModal({isOpen: true}));
+    dispatch(setBlock(block));
+  }
 
   return (
-    <div className={styles.container}>
+    <div onClick={handleBoxClick} style={{background: block.color}} className={styles.container}>
       <div className={styles.blockInfo}>
+        <div className={styles.task}>
+          {block.task}
+        </div>
         <div className={styles.time}>
           {convertTimeTo24(timeBlock.start_time)} - {convertTimeTo24(timeBlock.end_time)}
         </div>

@@ -1,11 +1,11 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import styles from './TimeGrids.module.scss';
 import {convertTimeTo24, roundMinutes} from '../utils';
 import clsx from 'clsx';
 
-export const TimeGrids = ({
-  timeBlocks,
-}) => {
+export const TimeGrids = () => {
+  const timeBlocks = useSelector(state => state.timeBlocks);
   const target = useRef(null);
   const userTime = roundMinutes(new Date());
 

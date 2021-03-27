@@ -58,7 +58,7 @@ export const Login = () => {
         message="Successful Sign Up!"
         autoHideDuration={3000}
       />
-      <h2>Log in to your Pair-Up account.</h2>
+      <h2>Log in to your Greatness account.</h2>
       {error && <Error error={error} />}
       <form className={styles.loginForm}>
         <div className={styles.emailField}>

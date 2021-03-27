@@ -26,7 +26,7 @@ export const NavBar = () => {
       </Link>
 
       <div className={styles.logout}>
-      <Button
+        <Button
           onClick={() => handleLogout()}
           color="primary"
           variant="outlined"

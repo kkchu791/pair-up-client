@@ -40,7 +40,7 @@ export const SignUp = () => {
 
   return (
     <div className={styles.container}>
-      <h2>Create your Pair-Up account.</h2>
+      <h2>Create your Greatness account.</h2>
 
       <form className={styles.signUpForm}>
         <div className={styles.nameField}>

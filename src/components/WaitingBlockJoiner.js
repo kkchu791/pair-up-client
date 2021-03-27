@@ -32,7 +32,7 @@ export const WaitingBlockJoiner = ({
 
     let response = await updateBlock({
       joinerId: userDetails.id,
-      blockId: block.id,
+      id: block.id,
       roomUrl: roomResponse.data.url,
     });
 

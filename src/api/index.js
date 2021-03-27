@@ -4,5 +4,7 @@ export {
   createBlock,
   updateBlock,
   removeBlock,
+  getBlocksByDateRange,
 } from './blocks';
 export {login, signUp} from './auth';
+export {getGoals} from './goals';

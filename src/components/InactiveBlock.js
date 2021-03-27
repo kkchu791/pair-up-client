@@ -1,24 +1,30 @@
 import React from 'react';
 import styles from './InactiveBlock.module.scss';
-import { blockStatuses } from '../constants/blocks';
+import {useDispatch} from 'react-redux';
 import clsx from 'clsx';
+import {
+  toggleModal,
+  setBlock,
+} from '../redux/actions';
 
 export const InactiveBlock = ({
-  setStatus,
-  status,
   isDisabled,
+  date,
+  timeBlock
 })  => {
+  const dispatch = useDispatch();
+  
   const handleClick = (evt) => {
     evt.stopPropagation();
 
-    if (isDisabled) {
-      return;
-    }
+    dispatch(toggleModal({
+      isOpen: true,
+    }));
 
-    if (status === 'active') {
-      return;
-    }
-    setStatus(blockStatuses[3]);
+    dispatch(setBlock({
+      date,
+      timeBlockId: timeBlock.id,
+    }))
   }
 
 
@@ -29,10 +35,7 @@ export const InactiveBlock = ({
         {[styles.disabled]: isDisabled}
       )}
       onClick={(evt) => handleClick(evt)}
-
-
     >
-      
     </div>
   )
 }

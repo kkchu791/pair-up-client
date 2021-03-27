@@ -2,12 +2,11 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { blockStatuses } from '../constants/blocks';
 import styles from './PendingBlock.module.scss';
-import { createBlock } from '../api/blocks';
+import { createBlock } from '../api';
 import { useAuthState } from '../context';
 
 export const PendingBlock = ({
   setStatus,
-  setSelectedBlocks,
   timeBlock,
   date,
   setBlock
