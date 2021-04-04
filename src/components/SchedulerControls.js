@@ -17,7 +17,7 @@ export const SchedulerControls = ({
         {startDate.toLocaleString('default', { month: 'long' })} {startDate.getDate()} -
         {endDate.toLocaleString('default', { month: 'long' })} {endDate.getDate()}
       </div>
-
+{/* 
       <div className={styles.view}>
         <Button
           onClick={() => console.log('changing views')}
@@ -26,7 +26,7 @@ export const SchedulerControls = ({
         >
           Day
         </Button>
-      </div>
+      </div> */}
     </div>
   )
 }

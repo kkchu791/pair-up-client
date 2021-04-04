@@ -2,7 +2,7 @@ import {
   SET_BLOCK,
 } from '../actions';
 
-  const initialState = {};
+  const initialState = null;
   
   const blockReducer = (state = initialState, action) => {
     switch (action.type) {

@@ -28,6 +28,16 @@ export {
 } from './date';
 
 export {
+  SET_GOAL,
+  SET_GOALS,
+  setGoal,
+  setGoals,
+  getGoal,
+  getGoals,
+  updateGoal,
+} from './goals';
+
+export {
   SET_TIME_BLOCKS,
   getTimeBlocks,
 } from './timeBlocks';

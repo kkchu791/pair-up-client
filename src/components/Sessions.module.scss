@@ -1,9 +1,13 @@
 .container {
-  border: 1px solid red;
   display: flex;
 }
 
 .dayColumn {
-  border: 1px solid orange;
   margin: 0 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

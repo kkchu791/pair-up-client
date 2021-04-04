@@ -5,14 +5,15 @@ import styles from './SlotBlock.module.scss';
 import { useAuthState } from '../context';
 import clsx from 'clsx';
 import {isStartOfHour} from '../utils';
+import { useSelector } from 'react-redux';
 
 export const SlotBlock = ({
-  timeBlock,
   date,
-  blocks=[],
+  timeBlock,
 }) => {
+  const blocks = useSelector(state => state.blocksByDate[date] || []);
   const {userDetails} = useAuthState();
-  const [block, setBlock] = useState({});
+  const [block, setBlock] = useState(null);
 
   useEffect(() => {
     setBlock(blocks.find(bl => bl.time_block_id === timeBlock.id));

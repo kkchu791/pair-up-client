@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  border: 2px solid blueviolet;
+  border: 1px solid blueviolet;
   justify-content: space-between;
   background: #d4e3ee;
   width: 150px;
@@ -8,4 +8,5 @@
   top: 0;
   left: 0;
   z-index: 1;
+  border-radius: 3px;
 }

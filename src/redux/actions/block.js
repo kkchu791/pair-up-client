@@ -37,7 +37,9 @@ export const createBlock = ({
     }).then((response) => {
       if (response.success) {
         onSuccess(response);
-        const newBlock = response.data
+        const newBlock = response.data;
+
+        console.log(newBlock, 'newBlock');
         dispatch(insertBlocksByDate({
           block: newBlock,
           date

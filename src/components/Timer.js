@@ -4,7 +4,7 @@ export const Timer = ({
   targetTime
 }) => {
   const [time, setTime] = useState('');
-  const startTimer = useCallback((end) => {
+  const startTimer = useCallback((start, end) => {
     var timer  =  setInterval(() => {
       let timeLeft = end - new Date().getTime();
       let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));

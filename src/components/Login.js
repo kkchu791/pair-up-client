@@ -6,12 +6,13 @@ import { loginUser, useAuthState, useAuthDispatch } from '../context';
 import { PasswordField } from './PasswordField';
 import { Error } from './Error';
 import { Snackbar } from '@material-ui/core';
+import { PATH } from '../constants';
 
 export const Login = () => {
   const [user, setUser] = useState({});
   const history = useHistory();
   const isSuccessSignIn = history.location.state && 
-                          history.location.state.previousPath === '/signup';
+                          history.location.state.previousPath === PATH.SIGNUP;
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(isSuccessSignIn);
   const dispatch = useAuthDispatch();
   const { loading } = useAuthState();
@@ -28,7 +29,7 @@ export const Login = () => {
     if (!respUser) {
       setError('Invalid username or password.');
     } else {
-      history.push(`/scheduler`);
+      history.push(PATH.DASHBOARD);
     }
   }
 
@@ -45,7 +46,7 @@ export const Login = () => {
   }
 
   const handleCancel = () => {
-    history.push('./');
+    history.push(PATH.ROOT);
   }
 
 

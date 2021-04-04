@@ -19,24 +19,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const TaskModal = ({
-  closeModal,
+  onClose,
   open,
   children
 }) => {
   const classes = useStyles();
-
   return (
     <Modal
       aria-labelledby="transition-modal-title"
       aria-describedby="transition-modal-description"
       className={classes.modal}
       open={open}
-      onClose={closeModal}
-      closeAfterTransition
+      onClose={onClose}
       BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
+      BackdropProps={{timeout: 500}}
     >
       <Fade in={open}>
         <div className={classes.paper}>

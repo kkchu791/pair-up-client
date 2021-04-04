@@ -9,16 +9,27 @@
   top: 0;
   left: 0;
   z-index: 1;
+  border-radius: 6px;
 }
 
 .blockInfo {
-  
+  margin: 4px 2px;
 }
 
 .blockButton {
-  
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
-.time, .creatorName {
-  
+.task {
+  margin: 2px 0;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 2px;
+}
+
+.cancelConfirm {
+  display: flex;
+  align-items: center;
 }

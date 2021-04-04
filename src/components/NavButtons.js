@@ -18,7 +18,7 @@ export const NavButtons = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.timeZoneButton}>
+      {/* <div className={styles.timeZoneButton}>
       <Button
           onClick={() => console.log('time zone button clicked')}
           color="primary"
@@ -26,7 +26,7 @@ export const NavButtons = () => {
         >
           PST
         </Button>
-      </div>
+      </div> */}
 
       <div className={styles.todayButton}>
         <Button

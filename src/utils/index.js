@@ -1,5 +1,6 @@
 export {
   convertTimeTo24,
+  convertTimeTo24Grid,
   roundMinutes,
   isStartOfHour,
 } from './timeHelper';

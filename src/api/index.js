@@ -7,4 +7,8 @@ export {
   getBlocksByDateRange,
 } from './blocks';
 export {login, signUp} from './auth';
-export {getGoals} from './goals';
+export {
+  getGoals,
+  getGoal,
+  updateGoal,
+} from './goals';

@@ -4,13 +4,10 @@ import { Day } from './Day';
 import { DateBlock } from './DateBlock';
 import { SchedulerControls } from './SchedulerControls';
 import { TimeGrids } from './TimeGrids';
-import { useSelector } from 'react-redux';
 
 export const Scheduler = ({
   dates,
 }) => {
-  const blocks = useSelector(state => state.blocksByDate);
- 
   return (
     <div className={styles.container}>
       <SchedulerControls
@@ -27,7 +24,6 @@ export const Scheduler = ({
           return (
             <Day
               date={formattedDate}
-              blocks={blocks[formattedDate]}
             />
           )
         })}

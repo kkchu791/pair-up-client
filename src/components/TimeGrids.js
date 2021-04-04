@@ -1,7 +1,7 @@
 import React, {useRef, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import styles from './TimeGrids.module.scss';
-import {convertTimeTo24, roundMinutes} from '../utils';
+import {convertTimeTo24Grid, roundMinutes} from '../utils';
 import clsx from 'clsx';
 
 export const TimeGrids = () => {
@@ -16,7 +16,7 @@ export const TimeGrids = () => {
   }, [target.current]);
 
   const renderTimeGrid = (timeBlock) => {
-    const startTime = convertTimeTo24(timeBlock.start_time).split(":");
+    const startTime = convertTimeTo24Grid(timeBlock.start_time).split(":");
 
     if (parseInt(startTime[1]) > 0) {
       return (

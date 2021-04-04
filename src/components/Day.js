@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 export const Day = ({
   date,
-  blocks,
 }) => {
   const timeBlocks = useSelector(state => state.timeBlocks);
   const renderTimeBlock = (timeBlock) => {
@@ -15,7 +14,6 @@ export const Day = ({
         <SlotBlock
           timeBlock={timeBlock}
           date={date}
-          blocks={blocks}
         />
       </div>
     )

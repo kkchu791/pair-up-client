@@ -1,6 +1,13 @@
 export const convertTimeTo24 = (timeString) => {
   let H = +timeString.substr(0, 2);
   let h = H % 12 || 12;
+  let ampm = (H < 12 || H === 24) ? "am" : "pm";
+  return h + timeString.substr(2, 3) + ampm;
+};
+
+export const convertTimeTo24Grid = (timeString) => {
+  let H = +timeString.substr(0, 2);
+  let h = H % 12 || 12;
   let ampm = (H < 12 || H === 24) ? ":A" : ":P";
   return h + timeString.substr(2, 3) + ampm;
 };

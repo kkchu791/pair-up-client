@@ -4,9 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from 'react-select'
 import FormControl from '@material-ui/core/FormControl';
-import {getGoals} from '../api/goals';
+import { getGoals } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import {toggleModal} from '../redux/actions';
+import {
+  toggleModal,
+  setGoal
+} from '../redux/actions';
 import {
   createBlock,
   updateBlock
@@ -33,7 +36,7 @@ const useStyles = makeStyles({
 export const TaskForm = () => {
   const classes = useStyles();
   const block = useSelector(state => state.block);
-  const [goals, setGoals] = useState([]);
+  const goals = useSelector(state => state.goals.list);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
   const [task, setTask] = useState({
@@ -42,11 +45,14 @@ export const TaskForm = () => {
     note: block.note,
     id: block.id,
   });
+  const taskGoal = goals.find(go => go.id === task.goalId) || {};
 
   useEffect(async () => {
-    let {goals} = await getGoals({userId: userDetails.id});
-    let goalOptions = goals.map(goal => ({label: goal.name, value: goal.id}));
-    setGoals(goalOptions);
+    dispatch(getGoals({
+      userId: userDetails.id,
+      onSuccess: () => console.log('on success for get goals'),
+      onError: () => console.log('on error for get goals '),
+    }));
   }, [])
 
   const handleInputChange = evt => {
@@ -97,6 +103,12 @@ export const TaskForm = () => {
         onError: handleError,
       }))
     }
+
+    dispatch(setGoal({
+      id: task.goal_id,
+      name: taskGoal.name,
+      note: taskGoal.note,
+    }));
   }
 
   return (
@@ -126,37 +138,39 @@ export const TaskForm = () => {
           className={classes.formControl}
         >
           <Select
-            options={goals}
+            options={goals.map(goal => ({label: goal.name, value: goal.id}))}
             placeholder='Identity...'
             name='goalId'
             className={classes.goal}
             onChange={({value}) => handleSelectChange({goalId: value})}
-            value={goals.find(go => go.value === task.goalId) || null}
+            value={taskGoal ? {label: taskGoal.name, value: taskGoal.id} : null}
           />
         </FormControl>
 
 
-        <FormControl
-          required
-          variant="outlined"
-          className={classes.formControl}
-        >
-          {/* Text area for Notes goes here */}
-          <TextField
+        {task.id &&
+          <FormControl
+            required
             variant="outlined"
-            margin="normal"
-            fullWidth
-            id="note"
-            label="What did you learn?"
-            name="note"
-            value={task.note || ''}
-            onChange={handleInputChange}
-            multiline={true}
-            rows={30}
-            className={classes.note}
-          />
+            className={classes.formControl}
+          >
+            {/* Text area for Notes goes here */}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              id="note"
+              label="What did you learn?"
+              name="note"
+              value={task.note || ''}
+              onChange={handleInputChange}
+              multiline={true}
+              rows={30}
+              className={classes.note}
+            />
 
-        </FormControl>
+          </FormControl>
+        }
 
         <Button
           type="submit"
