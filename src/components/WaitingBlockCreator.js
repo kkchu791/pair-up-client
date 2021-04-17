@@ -53,7 +53,6 @@ export const WaitingBlockCreator = ({
     dispatch(setGoal({
       id: block.goal_id,
       name: block.goal_name,
-      note: block.goal_note,
     }));
   }
 

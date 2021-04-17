@@ -18,6 +18,20 @@ export const getGoal = async ({id}) => {
   }
 };
 
+export const createGoal = async ({
+  userId,
+  color,
+  name,
+}) => {
+  try {
+    const goalData = {color, name, user_id: userId};
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/goals`, goalData);
+    return {success: true, data: response.data};
+  } catch(e) {
+    return {success: false, error: e.message};
+  }
+};
+
 export const updateGoal = async ({
   note,
   id,

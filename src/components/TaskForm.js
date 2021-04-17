@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import styles from './TaskForm.module.scss';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from 'react-select'
@@ -15,26 +15,9 @@ import {
   updateBlock
 } from '../redux/actions';
 import { useAuthState } from '../context';
-
-const useStyles = makeStyles({
-  formControl: {
-    width: "100%",
-    padding: '15px 0',
-  },
-  goals: {
-    background: 'red',
-  },
-  submit: {
-    marginRight: '10px',
-  },
-  note: {
-    zIndex: '0',
-  }
-
-});
+import { ImageUploader } from './ImageUploader';
 
 export const TaskForm = () => {
-  const classes = useStyles();
   const block = useSelector(state => state.block);
   const goals = useSelector(state => state.goals.list);
   const dispatch = useDispatch();
@@ -44,16 +27,17 @@ export const TaskForm = () => {
     goalId: block.goal_id,
     note: block.note,
     id: block.id,
+    images: block.images || [],
   });
   const taskGoal = goals.find(go => go.id === task.goalId) || {};
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getGoals({
       userId: userDetails.id,
       onSuccess: () => console.log('on success for get goals'),
       onError: () => console.log('on error for get goals '),
     }));
-  }, [])
+  }, [dispatch, userDetails.id])
 
   const handleInputChange = evt => {
     var value = evt.target.value
@@ -88,6 +72,7 @@ export const TaskForm = () => {
         task: task.description,
         goal_id: task.goalId,
         note: task.note,
+        images: task.images,
         onSuccess: handleSuccess,
         onError: handleError,
       }))
@@ -112,12 +97,12 @@ export const TaskForm = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2 id="form-title">Task Form</h2>
       <form onSubmit={handleSubmit}>
         <FormControl
           variant="outlined"
-          className={classes.formControl}
+          className={styles.formControl}
         >
           <TextField
             variant="outlined"
@@ -129,19 +114,18 @@ export const TaskForm = () => {
             value={task.description || ''}
             onChange={handleInputChange}
           />
-
         </FormControl>
 
         <FormControl
           required
           variant="outlined"
-          className={classes.formControl}
+          className={styles.formControl}
         >
           <Select
             options={goals.map(goal => ({label: goal.name, value: goal.id}))}
             placeholder='Identity...'
             name='goalId'
-            className={classes.goal}
+            className={styles.goal}
             onChange={({value}) => handleSelectChange({goalId: value})}
             value={taskGoal ? {label: taskGoal.name, value: taskGoal.id} : null}
           />
@@ -149,34 +133,39 @@ export const TaskForm = () => {
 
 
         {task.id &&
-          <FormControl
-            required
-            variant="outlined"
-            className={classes.formControl}
-          >
-            {/* Text area for Notes goes here */}
-            <TextField
+          <div className={styles.notes}>
+            <FormControl
+              required
               variant="outlined"
-              margin="normal"
-              fullWidth
-              id="note"
-              label="What did you learn?"
-              name="note"
-              value={task.note || ''}
-              onChange={handleInputChange}
-              multiline={true}
-              rows={30}
-              className={classes.note}
-            />
+              className={styles.formControl}
+            >
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="note"
+                label="What did you learn?"
+                name="note"
+                value={task.note || ''}
+                onChange={handleInputChange}
+                multiline={true}
+                rows={10}
+                className={styles.note}
+              />
+            </FormControl>
 
-          </FormControl>
+            <ImageUploader
+              setTask={setTask}
+              task={task}
+            />
+          </div>
         }
 
         <Button
           type="submit"
           variant="contained"
           color="primary"
-          className={classes.submit}
+          className={styles.submit}
         >
             Save Task
         </Button>

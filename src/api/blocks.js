@@ -7,12 +7,14 @@ export const getBlocks = async () => {
 
 export const getBlocksByDateRange = async ({
   startDate,
-  endDate
+  endDate,
+  userId
 }) => {
+  // should be passing in user id and token
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/blocks`,
-      {params: { startDate, endDate }}
+      {params: { startDate, endDate, userId }}
     );
 
     return {success: true, data: response.data};
@@ -65,6 +67,7 @@ export const updateBlock = async ({
   note,
   joinerId,
   roomUrl,
+  images,
 }) => {
   try {
     const blockData = {
@@ -77,8 +80,11 @@ export const updateBlock = async ({
       task,
       goal_id,
       note,
+      images,
     }
+
     const response = await axios.put(`${process.env.REACT_APP_API_URL}/blocks/${id}`, blockData);
+
     return {data: response.data, success: true};
   } catch (e) {
     return {error: e.message, success: false};

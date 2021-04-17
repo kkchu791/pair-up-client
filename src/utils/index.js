@@ -8,3 +8,7 @@ export {
 // export {
 //   getDates,
 // } from './dateHelper';
+
+export {
+  convertToBase64,
+} from './imageHelper';

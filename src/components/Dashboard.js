@@ -1,8 +1,8 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import styles from './Dashboard.module.scss';
 import { Scheduler } from './Scheduler';
 import { Current } from './Current';
-import { Events } from './Events';
+import { ActionsPanel } from './ActionsPanel';
 import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -12,27 +12,32 @@ import {
 } from '../redux/actions';
 import { TaskModal } from './TaskModal';
 import { TaskForm } from './TaskForm';
+import { useAuthState } from '../context';
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const {isOpen} = useSelector(state => state.modal);
-  const date = useSelector(state => state.date);
-  const start = startOfWeek(date, {weekStartsOn: 1});
-  const end = endOfWeek(date, {weekStartsOn: 1});
+  const {currentDate} = useSelector(state => state.date);
+  const start = startOfWeek(currentDate, {weekStartsOn: 1});
+  const end = endOfWeek(currentDate, {weekStartsOn: 1});
+  const {userDetails} = useAuthState();
+
+  useEffect(() => { 
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      userId: userDetails.id,
+      onSuccess: () => console.log('success'),
+      onError: () => console.log('errored'),
+    }));
+  }, [currentDate, dispatch, start, end]);
 
   useEffect(() => {
     dispatch(getTimeBlocks({
       onSuccess: () => console.log('success timeBlock'),
       onError: () => console.log('error timeBlock')
     }));
-
-    dispatch(getBlocksByDate({
-      start, 
-      end,
-      onSuccess: () => console.log('success'),
-      onError: () => console.log('errored'),
-    }));
-  }, [getBlocksByDate, getTimeBlocks]);
+  }, [dispatch]);
 
   const closeModal = () => {
     dispatch(toggleModal(false));
@@ -50,7 +55,7 @@ export const Dashboard = () => {
       <Scheduler
         dates={eachDayOfInterval({start, end})}
       />
-      <Events />
+      <ActionsPanel />
     </div>
   )
 }

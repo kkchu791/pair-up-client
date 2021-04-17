@@ -1,0 +1,20 @@
+.container {
+  border: 1px solid lightgray;
+  cursor: pointer;
+  position:relative;
+}
+
+.display {
+  width: 48px;
+  height: 38px;
+}
+
+.pickerContainer {
+  position: absolute;
+  z-index: 9;
+  bottom: 40px;
+}
+
+.doneButton {
+  width: 100%;
+}

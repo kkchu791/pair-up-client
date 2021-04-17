@@ -38,8 +38,6 @@ export const createBlock = ({
       if (response.success) {
         onSuccess(response);
         const newBlock = response.data;
-
-        console.log(newBlock, 'newBlock');
         dispatch(insertBlocksByDate({
           block: newBlock,
           date
@@ -59,6 +57,7 @@ export const updateBlock = ({
   task,
   goal_id,
   note,
+  images,
   onSuccess,
   onError,
 }) => {
@@ -71,6 +70,7 @@ return async (dispatch, getState) => {
     task,
     goal_id,
     note,
+    images,
   }).then((response) => {
     if (response.success) {
       onSuccess(response);

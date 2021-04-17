@@ -1,11 +1,13 @@
 import {
   getGoal as getGoalApi,
   getGoals as getGoalsApi,
-  updateGoal as updateGoalsApi,
+  updateGoal as updateGoalApi,
+  createGoal as createGoalApi,
 } from '../../api';
 
-export const SET_GOAL = "SET_GOAL";
-export const SET_GOALS = "SET_GOALS";
+export const SET_GOAL = 'SET_GOAL';
+export const SET_GOALS = 'SET_GOALS';
+export const UPDATE_GOALS_LIST = 'UPDATE_GOALS_LIST';
 
 export const setGoal = (payload) => ({
   type: SET_GOAL,
@@ -15,6 +17,11 @@ export const setGoal = (payload) => ({
 export const setGoals = (payload) => ({
   type: SET_GOALS,
   goals: payload
+});
+
+export const updateGoalsList = (payload) => ({
+  type: UPDATE_GOALS_LIST,
+  goal: payload,
 });
 
 export const getGoal = ({
@@ -55,6 +62,29 @@ export const getGoals = ({
   };
 }
 
+export const createGoal= ({
+  color,
+  name,
+  userId,
+  onSuccess,
+  onError,
+}) => {
+  return async (dispatch, getState) => {
+    return await createGoalApi({
+      color,
+      name,
+      userId,
+    }).then((response) => {
+      if (response.success) {
+        dispatch(updateGoalsList(response.data));
+        onSuccess();
+      } else {
+        onError(response.error);
+      }
+    });
+  };
+}
+
 export const updateGoal= ({
   id,
   note,
@@ -63,7 +93,7 @@ export const updateGoal= ({
   onError,
 }) => {
   return async (dispatch, getState) => {
-    return await updateGoalsApi({
+    return await updateGoalApi({
       id,
       note,
       coachesNote,

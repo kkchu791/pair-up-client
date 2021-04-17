@@ -88,7 +88,7 @@ export const Events = () => {
         />
       </div>
 
-      <div className={styles.coachesNote}>
+      {/* <div className={styles.coachesNote}>
         <TextField
           variant="outlined"
           margin="normal"
@@ -104,7 +104,7 @@ export const Events = () => {
           rows={10}
           defaultValue={goal.coaches_note}
         />
-      </div>
+      </div> */}
     </div>
   )
 }

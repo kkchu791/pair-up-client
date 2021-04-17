@@ -12,20 +12,24 @@ import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
 import { IconButton } from '@material-ui/core';
 import { TaskModal } from './TaskModal';
 import { Retrospective } from './Retrospective';
+import { useAuthState } from '../context';
+
 
 export const Sessions = () => {
   const blocksByDate = useSelector(state => state.blocksByDate);
-  const date = useSelector(state => state.date);
+  const {currentDate} = useSelector(state => state.date);
   const { isOpen } = useSelector(state => state.modal);
   const dispatch = useDispatch();
+  const { userDetails } = useAuthState();
 
   useEffect(() => {
-    let start = new Date(date)
+    let start = new Date(currentDate)
     start.setDate(start.getDate() - 6);
-    const end = date;
+    const end = currentDate;
     dispatch(getBlocksByDate({
       start, 
       end,
+      userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
     }));

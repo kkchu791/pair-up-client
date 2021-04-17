@@ -17,13 +17,15 @@
 .body {
   margin: 10px 0;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: initial;
+  overflow-wrap: break-word;
   height: 660px;
 }
 
 .retro {
   margin: 25px 0;
   border-radius: 3px;
+  padding: 15px;
 }
 
 .task {
@@ -34,8 +36,21 @@
 .content {
   margin: 5px 0;
   font-family: Roboto, Helvetica, sans-serif;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .events {
   width: 400px;
+}
+
+.images {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  margin: 5px; 
+  width: 100px;
+  height: 100px;
 }

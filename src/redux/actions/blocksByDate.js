@@ -32,6 +32,7 @@ export const removeBlocksByDate = ({block, date}) => ({
 export const getBlocksByDate = ({
   start,
   end,
+  userId,
   onSuccess,
   onError,
 }) => {
@@ -41,6 +42,7 @@ export const getBlocksByDate = ({
     return await getBlocksByDateRangeApi({
       startDate: start,
       endDate: end,
+      userId,
     }).then((response) => {
       if (response.success) {
         dispatch(setBlocksByDate(response.data));

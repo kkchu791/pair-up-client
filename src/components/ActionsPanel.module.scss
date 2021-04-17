@@ -1,0 +1,21 @@
+.container {
+  border: 1px solid red;
+  flex-grow: 3;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.subNav {
+ display: flex;
+ justify-content: flex-end;
+ margin-top: 20px;
+}
+
+.navLink {
+  margin: 0 10px;
+}
+
+.active {
+  text-decoration: underline;
+}

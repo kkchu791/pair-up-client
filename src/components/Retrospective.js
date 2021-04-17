@@ -13,6 +13,10 @@ export const Retrospective = () => {
   const dayBlocks = useSelector(state => state.blocksByDate[date]);
   const blocks = block ? [block] : dayBlocks;
 
+  const clickImage = (image) => {
+    window.open(image.url);
+  }
+
   const renderRetro = (block) => {
     return (
       <div
@@ -24,10 +28,24 @@ export const Retrospective = () => {
         </div>
 
         <pre>
-          <p className={styles.content}>
+          <div className={styles.content}>
             {block.note}
-          </p>
+          </div>
         </pre>
+
+        <div className={styles.images}>
+          {block.images && 
+            block.images.map(image => {
+            return (
+              <img
+                className={styles.image}
+                src={image.url}
+                alt={image.name}
+                onClick={() => clickImage(image)}
+              />
+            )
+          })}
+        </div>
       </div>
     )
   }

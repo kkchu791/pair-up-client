@@ -8,12 +8,11 @@ import { setDate } from '../redux/actions';
 
 export const NavButtons = () => {
   const dispatch = useDispatch();
-  const date = useSelector(state => state.date);
+  const { currentDate } = useSelector(state => state.date);
   
-  const backClick = () => {
-    date.setDate(date.getDate() - 7);
-    console.log(date, 'date')
-    dispatch(setDate(date));
+  const moveClick = (direction) => {
+    direction === 'forward' ? currentDate.setDate(currentDate.getDate() + 7) : currentDate.setDate(currentDate.getDate() - 7);
+    dispatch(setDate(currentDate));
   }
 
   return (
@@ -40,10 +39,10 @@ export const NavButtons = () => {
 
       <div className={styles.navButtons}>
         <IconButton color='primary'>
-          <ArrowBackIosIcon onClick={() => backClick()} />
+          <ArrowBackIosIcon onClick={() => moveClick('back')} />
         </IconButton>
         <IconButton color='primary'>
-          <ArrowForwardIosIcon />
+          <ArrowForwardIosIcon onClick={() => moveClick('forward')} />
         </IconButton>
       </div>
     </div>
