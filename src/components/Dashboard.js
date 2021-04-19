@@ -30,7 +30,7 @@ export const Dashboard = () => {
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
     }));
-  }, [currentDate, dispatch, start, end]);
+  }, [currentDate, dispatch, start, end, userDetails.id]);
 
   useEffect(() => {
     dispatch(getTimeBlocks({

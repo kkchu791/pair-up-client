@@ -36,10 +36,23 @@ export const updateGoal = async ({
   note,
   id,
   coachesNote,
+  color,
+  name
 }) => {
   try {
-    const goalData = {note, coaches_note: coachesNote};
+    const goalData = {note, coaches_note: coachesNote, color, name};
     const response = await axios.put(`${process.env.REACT_APP_API_URL}/goals/${id}`, goalData);
+    return {success: true, data: response.data};
+  } catch(e) {
+    return {success: false, error: e.message};
+  }
+};
+
+export const removeGoal = async ({
+  id,
+}) => {
+  try {
+    const response = await axios.delete(`${process.env.REACT_APP_API_URL}/goals/${id}`);
     return {success: true, data: response.data};
   } catch(e) {
     return {success: false, error: e.message};

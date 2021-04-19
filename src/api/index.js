@@ -11,5 +11,6 @@ export {
   getGoals,
   getGoal,
   updateGoal,
-  createGoal
+  createGoal,
+  removeGoal,
 } from './goals';

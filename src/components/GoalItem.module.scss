@@ -1,11 +1,46 @@
 .container {
   display: flex;
   margin: 20px;
-  height: 30px;
+  height: 40px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info {
+  display: flex;
+
+  height: 40px;
+  align-items: center;
+}
+
+.actions {
+  display:flex;
+  height: 40px;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.defaultButtons {
+  display:flex;
+  height: 40px;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.deleteConfirm {
+  display:flex;
+  height: 40px;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.button {
+  margin-right: 8px;
 }
 
 .color {
-  width: 40px;
+  width: 50px !important;
+  height: 40px;
 }
 
 .name {

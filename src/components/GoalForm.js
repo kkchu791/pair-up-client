@@ -5,28 +5,43 @@ import {
   TextField
 } from '@material-ui/core';
 import { ColorPicker } from './ColorPicker';
-import { createGoal } from '../redux/actions';
+import {
+  createGoal,
+  updateGoal,
+} from '../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useAuthState } from '../context';
 
 export const GoalForm = ({
   setIsOpen,
+  existingGoal,
 }) => {
   const {userDetails} = useAuthState();
   const dispatch = useDispatch();
   const initialGoalState = {
     color: '#add8e6'
   }
-  const [goal, setGoal] = useState(initialGoalState);
+  const [goal, setGoal] = useState(existingGoal || initialGoalState);
 
   const handleSubmit = () => {
-    dispatch(createGoal({
-      color: goal.color,
-      name: goal.name,
-      userId: userDetails.id,
-      onSuccess: () => setIsOpen(false),
-      onError: () => console.log('error in creating goal'),
-    }))
+    if (goal.id !== undefined) {
+      dispatch(updateGoal({
+        id: goal.id,
+        color: goal.color,
+        name: goal.name,
+        userId: userDetails.id,
+        onSuccess: () => setIsOpen(false),
+        onError: () => console.log('error in updating goal'),
+      }));
+    } else {
+      dispatch(createGoal({
+        color: goal.color,
+        name: goal.name,
+        userId: userDetails.id,
+        onSuccess: () => setIsOpen(false),
+        onError: () => console.log('error in creating goal'),
+      }));
+    }
   }
 
   const handleCancel = () => {
@@ -54,6 +69,7 @@ export const GoalForm = ({
             fullWidth='true'
             size='small'
             onChange={(evt) => handleChange({'name': evt.target.value})}
+            value={goal.name}
           />
         </div>
       </div>

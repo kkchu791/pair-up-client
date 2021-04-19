@@ -37,6 +37,8 @@ export {
   updateGoal,
   UPDATE_GOALS_LIST,
   createGoal,
+  removeGoal,
+  REMOVE_GOAL_FROM_LIST,
 } from './goals';
 
 export {
