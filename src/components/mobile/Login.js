@@ -29,7 +29,7 @@ export const Login = () => {
     if (!respUser) {
       setError('Invalid username or password.');
     } else {
-      history.push(PATH.DASHBOARD);
+      history.push(PATH.START);
     }
   }
 
@@ -49,7 +49,6 @@ export const Login = () => {
     history.push(PATH.ROOT);
   }
 
-
   return (
     <div className={styles.container}>
       <Snackbar
@@ -59,21 +58,21 @@ export const Login = () => {
         message="Successful Sign Up!"
         autoHideDuration={3000}
       />
-      <h2>Log in to your Greatness account.</h2>
+      <h2>Log in to Greatness Go</h2>
       {error && <Error error={error} />}
       <form className={styles.loginForm}>
-        <div className={styles.emailField}>
+        <div className={styles.field}>
           <TextField
             id="email"
             label="Username"
             variant="outlined"
             size="small"
-            style = {{width: 222}}
+            fullWidth='true'
             onChange={(evt) => handleChange({'email': evt.target.value})}
           />
         </div>
 
-        <div className={styles.passwordField}>
+        <div className={styles.field}>
           <PasswordField
             id="password"
             label="Password"
@@ -86,19 +85,18 @@ export const Login = () => {
 
         <div className={styles.loginButton}>
           <Button
-            className={styles.cancelButton}
-            onClick={() => handleCancel()}
-          >
-            Cancel
-          </Button>
-
-          <Button
             variant='contained'
             color='primary'
             disabled={loading}
             onClick={() => handleLogin()}
           >
             Login
+          </Button>
+          <Button
+            className={styles.cancelButton}
+            onClick={() => handleCancel()}
+          >
+            Cancel
           </Button>
         </div>
       </form>

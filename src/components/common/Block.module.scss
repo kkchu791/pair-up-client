@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  border: 2px solid blueviolet;
+  justify-content: space-between;
+  background: #d4e3ee;
+  width: 148px;
+  height: 154px;
+  z-index: 1;
+  border-radius: 6px;
+  position: relative;
+}
+
+.blockInfo {
+  margin: 4px 2px;
+}
+
+.blockButton {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.task {
+  margin: 2px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cancelConfirm {
+  display: flex;
+  align-items: center;
+}

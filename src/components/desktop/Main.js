@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import { Login } from './Login';
 import { Dashboard } from './Dashboard';
 import { Home } from './Home';
@@ -27,11 +27,9 @@ export const Main = () => {
           <SignUp />
         </Route>
         <Route path={PATH.DASHBOARD}>
-          <Suspense fallback={<h1>Loading Dashboard...</h1>} >
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </Suspense>
+          <Layout>
+            <Dashboard />
+          </Layout>
         </Route>
         <Route path={PATH.SESSIONS}>
           <Layout>

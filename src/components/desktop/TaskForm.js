@@ -2,13 +2,13 @@ import React, {useState, useEffect} from 'react';
 import styles from './TaskForm.module.scss';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Select from 'react-select'
+import Select from 'react-select';
 import FormControl from '@material-ui/core/FormControl';
-import { getGoals } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   toggleModal,
-  setGoal
+  setGoal,
+  getGoals
 } from '../../redux/actions';
 import {
   createBlock,
@@ -55,6 +55,11 @@ export const TaskForm = () => {
 
   const handleSuccess = () => {
     dispatch(toggleModal({isOpen: false}));
+
+    dispatch(setGoal({
+      id: task.goal_id,
+      name: taskGoal.name,
+    }));
   }
 
   const handleError = () => {
@@ -88,12 +93,6 @@ export const TaskForm = () => {
         onError: handleError,
       }))
     }
-
-    dispatch(setGoal({
-      id: task.goal_id,
-      name: taskGoal.name,
-      note: taskGoal.note,
-    }));
   }
 
   return (

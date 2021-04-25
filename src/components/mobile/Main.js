@@ -1,7 +1,9 @@
 import React from 'react';
 import { Login } from './Login';
+import { Layout } from './Layout';
 import { Home } from './Home';
 import { SignUp } from './SignUp';
+import { Start } from './Start';
 import { PATH } from '../../constants';
 import {
   BrowserRouter as Router,
@@ -21,6 +23,11 @@ export const Main = () => {
         </Route>
         <Route path={PATH.SIGNUP}>
           <SignUp />
+        </Route>
+        <Route path={PATH.START}>
+          <Layout>
+            <Start />
+          </Layout>
         </Route>
       </Switch>
     </Router>

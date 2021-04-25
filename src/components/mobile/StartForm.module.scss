@@ -1,0 +1,25 @@
+.container {
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+}
+
+.goalSelector {
+  z-index: 9;
+}
+
+.task {
+  margin: 40px 0 100px 0 !important;
+}
+
+.start {
+  padding: 60px 0;
+  height: 200px;
+  width: 200px;
+  border-radius: 100px !important;
+  font-size: 40px !important;
+  margin: 0 auto !important;
+  background: #59dd8c !important;
+  color: black !important;
+  font-style: italic;
+}

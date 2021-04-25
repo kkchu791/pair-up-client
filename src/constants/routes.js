@@ -4,5 +4,6 @@ export const PATH = {
   SIGNUP: '/signup',
   DASHBOARD: '/dashboard',
   SESSIONS: '/sessions',
-  USER: '/users/:user_id'
+  USER: '/users/:user_id',
+  START: '/start',
 }
