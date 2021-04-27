@@ -9,7 +9,8 @@ import { IconButton } from '@material-ui/core';
 import { useAuthState } from '../../context';
 
 export const Block = ({
-  onClick
+  onClick,
+  handleDelete,
 }) => {
   const {userDetails} = useAuthState();
   const currentBlock = useSelector(state => state.block);
@@ -33,8 +34,8 @@ export const Block = ({
     dispatch(deleteBlock({
       userId: userDetails.id,
       blockId: currentBlock.id,
-      date: currentDate,
-      onSuccess: () => {console.log('success delete')},
+      date: currentDate.toISOString().slice(0, 10),
+      onSuccess: () => handleDelete(),
       onError: () => {console.log('error delete')},
     }));
   }

@@ -25,6 +25,7 @@ const blocksByDateReducer = (state = initialState, action) => {
       state[action.date] = updatedBlocks;
       return state;
     case REMOVE_BLOCKS_BY_DATE:
+      console.log(action.date, 'action.date');
       state[action.date] = state[action.date].filter(bl => bl.id !== action.block.id) || [];
       return state;
     default:

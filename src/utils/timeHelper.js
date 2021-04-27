@@ -22,3 +22,11 @@ export const roundMinutes = (date) => {
 export const isStartOfHour = (time) => {
   return time.split(":")[1] === '00';
 };
+
+export const getCurrentTime = () => {
+  const d = new Date();
+  const currentHours = ("0" + d.getHours()).slice(-2);
+  const currentMinutes = ("0" + d.getMinutes()).slice(-2);
+  const currentSeconds = ("0" + d.getSeconds()).slice(-2);
+  return `${currentHours}:${currentMinutes}:${currentSeconds}`;
+}

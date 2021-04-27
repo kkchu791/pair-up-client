@@ -46,7 +46,7 @@ export const getBlocksByDate = ({
     }).then((response) => {
       if (response.success) {
         dispatch(setBlocksByDate(response.data));
-        onSuccess();
+        onSuccess(response.data);
       } else {
         onError(response.error);
       }
