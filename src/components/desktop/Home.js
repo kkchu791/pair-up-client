@@ -8,7 +8,7 @@ export const Home = () => {
     <div className={styles.container}>
       <div className={styles.title}>
         <h1>Greatness Go</h1>
-        <h3>A progress tracking app</h3>
+        <h3>An improvement tracking app</h3>
       </div>
 
       <div className={styles.authButtons}>
