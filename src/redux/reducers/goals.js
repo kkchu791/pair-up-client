@@ -1,5 +1,6 @@
 import {
   SET_GOALS,
+  SET_GOAL_OPTIONS,
   SET_GOAL,
   UPDATE_GOALS_LIST,
   REMOVE_GOAL_FROM_LIST,
@@ -14,6 +15,12 @@ const goalsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_GOALS:
       return {...state, ...{list: action.goals}};
+    case SET_GOAL_OPTIONS:
+      const goalOptions = action.goals.map(goal => ({
+        label: goal.name,
+        value: goal.id
+      }));
+      return {...state, ...{goalOptions}};
     case SET_GOAL:
       const newGoal = {...state.currentGoal, ...action.goal};
       return {...state, ...{currentGoal: newGoal}};

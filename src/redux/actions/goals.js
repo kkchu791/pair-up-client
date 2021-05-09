@@ -8,6 +8,7 @@ import {
 
 export const SET_GOAL = 'SET_GOAL';
 export const SET_GOALS = 'SET_GOALS';
+export const SET_GOAL_OPTIONS = 'SET_GOAL_OPTIONS';
 export const UPDATE_GOALS_LIST = 'UPDATE_GOALS_LIST';
 export const REMOVE_GOAL_FROM_LIST = 'REMOVE_GOAL_FROM_LIST';
 
@@ -19,6 +20,11 @@ export const setGoal = (payload) => ({
 
 export const setGoals = (payload) => ({
   type: SET_GOALS,
+  goals: payload
+});
+
+export const setGoalOptions = (payload) => ({
+  type: SET_GOAL_OPTIONS,
   goals: payload
 });
 
@@ -62,6 +68,7 @@ export const getGoals = ({
     }).then((response) => {
       if (response.success) {
         dispatch(setGoals(response.goals));
+        dispatch(setGoalOptions(response.goals));
         onSuccess();
       } else {
         onError(response.error);

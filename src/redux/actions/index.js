@@ -30,6 +30,7 @@ export {
 export {
   SET_GOAL,
   SET_GOALS,
+  SET_GOAL_OPTIONS,
   setGoal,
   setGoals,
   getGoal,

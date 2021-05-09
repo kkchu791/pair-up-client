@@ -1,25 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import styles from './TaskForm.module.scss';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Select from 'react-select';
 import FormControl from '@material-ui/core/FormControl';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  toggleModal,
-  setGoal,
-  getGoals
-} from '../../redux/actions';
+import { toggleModal } from '../../redux/actions';
 import {
   createBlock,
   updateBlock
 } from '../../redux/actions';
 import { useAuthState } from '../../context';
 import { ImageUploader } from './ImageUploader';
+import { GoalSelector } from '../common';
 
 export const TaskForm = () => {
   const block = useSelector(state => state.block);
-  const goals = useSelector(state => state.goals.list);
+  const {currentGoal} = useSelector(state => state.goals);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
   const [task, setTask] = useState({
@@ -29,24 +25,11 @@ export const TaskForm = () => {
     id: block.id,
     images: block.images || [],
   });
-  const taskGoal = goals.find(go => go.id === task.goalId) || {};
-
-  useEffect(() => {
-    dispatch(getGoals({
-      userId: userDetails.id,
-      onSuccess: () => console.log('on success for get goals'),
-      onError: () => console.log('on error for get goals '),
-    }));
-  }, [dispatch, userDetails.id])
 
   const handleInputChange = evt => {
     var value = evt.target.value
     var name = evt.target.name
     setTask({...task, ...{[name]: value}})
-  }
-
-  const handleSelectChange = (option) => {
-    setTask({...task, ...option})
   }
 
   const handleCancel = evt => {
@@ -55,11 +38,6 @@ export const TaskForm = () => {
 
   const handleSuccess = () => {
     dispatch(toggleModal({isOpen: false}));
-
-    dispatch(setGoal({
-      id: task.goal_id,
-      name: taskGoal.name,
-    }));
   }
 
   const handleError = () => {
@@ -75,7 +53,7 @@ export const TaskForm = () => {
         time_block_id: block.timeBlockId,
         date: new Date(block.date).toISOString().slice(0,10),
         task: task.description,
-        goal_id: task.goalId,
+        goal_id: currentGoal.id,
         note: task.note,
         images: task.images,
         onSuccess: handleSuccess,
@@ -87,7 +65,7 @@ export const TaskForm = () => {
         time_block_id: block.timeBlockId,
         date: block.date,
         task: task.description,
-        goal_id: task.goalId,
+        goal_id: currentGoal.id,
         note: task.note,
         onSuccess: handleSuccess,
         onError: handleError,
@@ -120,14 +98,7 @@ export const TaskForm = () => {
           variant="outlined"
           className={styles.formControl}
         >
-          <Select
-            options={goals.map(goal => ({label: goal.name, value: goal.id}))}
-            placeholder='Identity...'
-            name='goalId'
-            className={styles.goal}
-            onChange={({value}) => handleSelectChange({goalId: value})}
-            value={taskGoal ? {label: taskGoal.name, value: taskGoal.id} : null}
-          />
+          <GoalSelector />
         </FormControl>
 
 
@@ -143,7 +114,7 @@ export const TaskForm = () => {
                 margin="normal"
                 fullWidth
                 id="note"
-                label="What did you learn?"
+                label="What can you improve on?"
                 name="note"
                 value={task.note || ''}
                 onChange={handleInputChange}
