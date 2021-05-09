@@ -1,24 +1,18 @@
 import React, {useEffect} from 'react';
 import styles from './Events.module.scss';
-import Select from 'react-select';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setGoal,
-  getGoal,
   getGoals,
   updateGoal,
 } from '../../redux/actions';
 import {TextField} from '@material-ui/core';
 import { useAuthState } from '../../context';
+import { GoalSelector } from '../common';
 
 export const Events = () => {
   const dispatch = useDispatch();
   const goal = useSelector(state => state.goals.currentGoal);
-  const goals = useSelector(state => state.goals.list);
-  const goalOptions = goals.map(goal => ({
-    label: goal.name,
-    value: goal.id
-  }));
   const {userDetails} = useAuthState();
 
   useEffect(async () => {
@@ -28,14 +22,6 @@ export const Events = () => {
       onError: () => console.log('error get goals'),
     }));
   }, []);
-
-  const handleSelectChange = async (option) => {
-    dispatch(getGoal({
-      id: option.goalId,
-      onSuccess: () => console.log('success get goal'),
-      onError: () => console.log('error get goal')
-    }));
-  }
 
   const handleInputChange = async (goal) => {
     dispatch(setGoal(goal));
@@ -54,20 +40,7 @@ export const Events = () => {
   return (
     <div className={styles.container}>
       <div className={styles.goalSelect}>
-        <Select
-          options={goalOptions}
-          placeholder='Select Identity/Goal'
-          name='goalId'
-          onChange={({value}) => handleSelectChange({goalId: value})}
-          defaultValue={{
-            label: goal.name,
-            value: goal.id
-          }}
-          value={{
-            label: goal.name,
-            value: goal.id
-          } || {}}
-        />
+        <GoalSelector />
       </div>
 
       <div className={styles.goalNote}>

@@ -1,22 +1,20 @@
 import React, {useState} from 'react';
 import styles from './StartForm.module.scss';
 import {TextField, Button} from '@material-ui/core';
-import Select from 'react-select';
 import { useAuthState } from '../../context';
 import {
   createBlock,
-  setBlock,
-  setGoal
+  setBlock
 } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import {GoalSelector} from '../common';
 
 export const StartForm = () => {
   const [task, setTask] = useState({});
   const {userDetails} = useAuthState();
-  const goals = useSelector(state => state.goals.list);
+  const {currentGoal} = useSelector(state => state.goals);
   const timeBlocks = useSelector(state => state.timeBlocks);
   const {currentDate} = useSelector(state => state.date);
-  const taskGoal = goals.find(go => go.id === task.goalId) || {};
   const dispatch = useDispatch();
 
   const getNearestTimeBlock = () => {
@@ -27,10 +25,6 @@ export const StartForm = () => {
       const blockStart = new Date(`1/01/2021 ${tb.start_time}`);
       return current < blockStart;
     });
-  }
-
-  const handleSelectChange = (option) => {
-    setTask({...task, ...option});
   }
 
   const handleInputChange = evt => {
@@ -45,12 +39,8 @@ export const StartForm = () => {
       ...{
             start_time: start,
             end_time: end,
-            color: taskGoal.color
+            color: currentGoal.color
          }
-    }));
-    dispatch(setGoal({
-      id: task.goalId,
-      name: taskGoal.name,
     }));
   }
 
@@ -61,7 +51,7 @@ export const StartForm = () => {
       time_block_id: closeTB.id,
       date: currentDate.toISOString().slice(0,10),
       task: task.description,
-      goal_id: task.goalId,
+      goal_id: currentGoal.id,
       onSuccess: (resp) => onSuccess(resp, closeTB.start_time, closeTB.end_time),
       onError: () => console.log('error'),
     }));
@@ -69,14 +59,7 @@ export const StartForm = () => {
 
   return (
     <div className={styles.container}>
-      <Select
-        placeholder='Identity...'
-        name='goalId'
-        className={styles.goalSelector}
-        options={goals.map(goal => ({label: goal.name, value: goal.id}))}
-        onChange={({value}) => handleSelectChange({goalId: value})}
-        value={taskGoal ? {label: taskGoal.name, value: taskGoal.id} : {}}
-      />
+      <GoalSelector />
 
       <TextField
         variant="outlined"
