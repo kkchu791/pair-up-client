@@ -11,7 +11,7 @@ export const ActionsPanel = () => {
     ACTION_BLOCKS: 1,
     GOALS: 2
   }
-  const [currentView, setCurrentView] = useState(VIEWS.ACTIONS);
+  const [currentView, setCurrentView] = useState(VIEWS.ACTION_BLOCKS);
 
   const ACTION_PANEL_COMPONENTS = {
     0: <Events />,
@@ -30,12 +30,12 @@ export const ActionsPanel = () => {
   return (
     <div className={styles.container}>
       <div className={styles.subNav}>
-        <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTIONS)})} onClick={() => handleClick(VIEWS.ACTIONS)}>
-          Actions
-        </div>
-
         <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTION_BLOCKS)})} onClick={() => handleClick(VIEWS.ACTION_BLOCKS)}>
           Action Blocks
+        </div>
+
+        <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTIONS)})} onClick={() => handleClick(VIEWS.ACTIONS)}>
+          Actions
         </div>
 
         <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.GOALS)})} onClick={() => handleClick(VIEWS.GOALS)}>

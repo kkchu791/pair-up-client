@@ -41,9 +41,11 @@ export const ImageUploader = ({
       
       <div className={styles.images}>
         {
-          images.map((image) => {
+          images.map((image, index) => {
             return (
-              <ImageItem image={image} />
+              <div key={index}>
+                <ImageItem image={image} />
+              </div>
             )
           })
         }

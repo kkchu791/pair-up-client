@@ -106,6 +106,16 @@ export const removeBlock = async ({
   } catch (e) {
     return {error: e.message, success: false};
   }
-  
-
 } 
+
+export const getActionBlocks = async ({
+  userId,
+  goalId,
+}) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/blocks/action`, {params: { goalId, userId }});
+    return {success: true, data: response.data};
+  } catch(e) {
+    return {success: false, error: e.message};
+  }
+};

@@ -13,3 +13,7 @@ export {
 export {
   convertToBase64,
 } from './imageHelper';
+
+export {
+  getNearestTimeBlock,
+} from './timeBlockHelper';

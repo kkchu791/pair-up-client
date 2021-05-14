@@ -46,3 +46,14 @@ export {
   SET_TIME_BLOCKS,
   getTimeBlocks,
 } from './timeBlocks';
+
+export {
+  SET_ACTION_BLOCKS,
+  getActionBlocks,
+  INSERT_ACTION_BLOCK,
+  insertActionBlock,
+  UPDATE_ACTION_BLOCK,
+  updateActionBlock,
+  REMOVE_ACTION_BLOCK,
+  removeActionBlock,
+} from './blocks';

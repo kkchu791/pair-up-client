@@ -1,36 +1,44 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './Block.module.scss';
 import {convertTimeTo24} from '../../utils';
-import { deleteBlock } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-import CheckIcon from '@material-ui/icons/Check';
-import { IconButton } from '@material-ui/core';
 import { useAuthState } from '../../context';
+import { CancellingButtons } from './CancellingButtons';
+import { RescheduleButtons } from './RescheduleButtons';
+import {
+  deleteBlock,
+  toggleModal,
+  setBlock,
+  setGoal,
+} from '../../redux/actions';
 
 export const Block = ({
-  onClick,
-  handleDelete,
+  block,
+  onScheduleClick,
 }) => {
   const {userDetails} = useAuthState();
-  const currentBlock = useSelector(state => state.block);
+  let currentBlock = useSelector(state => state.block);
   const {currentDate} = useSelector(state => state.date);
   const dispatch = useDispatch();
-  const [isCanceling, setIsCanceling] = useState(false);
+  currentBlock = block ? block : currentBlock;
 
-  const cancelClick = async (evt) => {
-    evt.stopPropagation();
-    setIsCanceling(true);
+  const handleBoxClick = (evt) => {
+    dispatch(toggleModal({
+      isOpen: true,
+    }));
+    dispatch(setBlock(block));
+    console.log(block, 'block')
+    dispatch(setGoal({
+      id: block.goal_id,
+      name: block.goal_name,
+    }));
   }
 
-  const cancelCancelClick = (evt) => {
-    evt.stopPropagation();
-    setIsCanceling(false);
+  const handleDelete = () => {
+    dispatch(setBlock(null));
   }
 
-  const confirmCancelClick = (evt) => {
-    evt.stopPropagation();
-
+  const confirmingCancelClick = () => {
     dispatch(deleteBlock({
       userId: userDetails.id,
       blockId: currentBlock.id,
@@ -40,8 +48,8 @@ export const Block = ({
     }));
   }
 
-  const handleBoxClick = (evt) => {
-   onClick();
+  const confirmingRescheduleClick = () => {
+    onScheduleClick(block);
   }
 
   return (
@@ -51,42 +59,28 @@ export const Block = ({
       className={styles.container}
     >
       <div className={styles.blockInfo}>
-        <div className={styles.time}>
-          {convertTimeTo24(currentBlock.start_time)} - 
-          {convertTimeTo24(currentBlock.end_time)}
-        </div>
+        {currentBlock.time_block_id &&
+          <div className={styles.time}>
+            {convertTimeTo24(currentBlock.start_time)} - 
+            {convertTimeTo24(currentBlock.end_time)}
+          </div>
+        }
         <div className={styles.task}>
           {currentBlock.task}
         </div>
       </div>
       
-      <div className={styles.blockButton}>
-        {isCanceling ?
-          <div className={styles.cancelConfirm}>
-            <div className={styles.confirmText}>Are you sure?</div>
-            <div className={styles.cancel}>
-              <IconButton
-                size={'small'}
-              >
-                <CloseOutlinedIcon onClick={(evt) => cancelCancelClick(evt)} />
-              </IconButton>
-            </div>
-            <div className={styles.confirm}>
-              <IconButton
-                size={'small'}
-              >
-                <CheckIcon onClick={(evt) => confirmCancelClick(evt)} />
-              </IconButton>
-            </div>
-          </div>
-          :
-          <IconButton
-            size={'small'}
-          >
-            <CloseOutlinedIcon onClick={(evt) => cancelClick(evt)} />
-          </IconButton>
-
-        }
+      <div className={styles.blockButtonsContainer}>
+        <div className={styles.blockButtons}>
+          <RescheduleButtons
+            isScheduled={currentBlock.time_block_id > 0}
+            confirmingRescheduleClick={confirmingRescheduleClick}
+          />
+          <CancellingButtons
+            confirmingCancelClick={confirmingCancelClick}
+          />
+        </div>
+       
       </div>
     </div>
   )

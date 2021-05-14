@@ -1,23 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { WaitingBlockCreator } from './WaitingBlockCreator';
 import { InactiveBlock } from './InactiveBlock';
 import styles from './SlotBlock.module.scss';
-import { useAuthState } from '../../context';
 import clsx from 'clsx';
 import {isStartOfHour} from '../../utils';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Block } from '../common/Block';
+import {
+  updateBlock,
+  setGoal,
+} from '../../redux/actions';
 
 export const SlotBlock = ({
   date,
   timeBlock,
 }) => {
   const blocks = useSelector(state => state.blocksByDate[date] || []);
-  const {userDetails} = useAuthState();
   const [block, setBlock] = useState(null);
+  const dispatch = useDispatch();  
 
   useEffect(() => {
     setBlock(blocks.find(bl => bl.time_block_id === timeBlock.id));
   }, [blocks]);
+
+  const handleScheduleSuccess = () => {
+    dispatch(setGoal({
+      id: block.goal_id,
+      name: block.goal_name,
+    }));
+  }
+
+  const onScheduleClick = () => {
+    // it needs to update to block to have null timeID
+    dispatch(updateBlock({
+      id: block.id,
+      time_block_id: null,
+      date,
+      onSuccess: () => handleScheduleSuccess(),
+      onError: () => console.log('error update block')
+    }))
+  }
 
   return (
     <div
@@ -34,11 +55,9 @@ export const SlotBlock = ({
         timeBlock={timeBlock}
       />
       {block && 
-        <WaitingBlockCreator
-          timeBlock={timeBlock}
-          date={date}
-          userDetails={userDetails}
+        <Block
           block={block}
+          onScheduleClick={onScheduleClick}
         />
       }
     </div>
@@ -46,22 +65,6 @@ export const SlotBlock = ({
 }
 
 export default SlotBlock;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import { PendingBlock } from './PendingBlock';

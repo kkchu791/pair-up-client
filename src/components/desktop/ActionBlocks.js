@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ActionBlocks.module.scss';
 import { Button } from '@material-ui/core';
 import { GoalSelector } from '../common';
+import { ActionBlockList } from './ActionBlockList';
 
 export const ActionBlocks = () => {
   const handleClick = () => {
@@ -27,7 +28,7 @@ export const ActionBlocks = () => {
       </div>
 
       <div className={styles.actionBlockList}>
-
+        <ActionBlockList />
       </div>
     </div>
   )

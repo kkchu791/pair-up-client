@@ -4,10 +4,14 @@ import {
   updateBlock as updateBlockApi,
 } from '../../api'
 import {
-  updateBlocksByDate,
   removeBlocksByDate,
   insertBlocksByDate,
 } from './blocksByDate';
+import {
+  updateActionBlock,
+  removeActionBlock,
+  insertActionBlock,
+} from './blocks';
 
 export const SET_BLOCK = 'SET_BLOCK';
 
@@ -74,11 +78,28 @@ return async (dispatch, getState) => {
   }).then((response) => {
     if (response.success) {
       onSuccess(response);
-      const updatedBlock = response.data
-      dispatch(updateBlocksByDate({
-        block: updatedBlock,
-        date
-      }));
+      const updatedBlock = response.data;
+
+      if (updatedBlock.time_block_id) {
+        dispatch(insertBlocksByDate({
+          block: updatedBlock,
+          date
+        }));
+
+        dispatch(removeActionBlock(updatedBlock));
+      } else {
+        dispatch(removeBlocksByDate({
+          block: updatedBlock,
+          date
+        }));
+
+        const actionBlockIds = getState().blocks.actionBlocks.map(bl => bl.id);
+        if (actionBlockIds.includes(updatedBlock.id)) {
+          dispatch(updateActionBlock(updatedBlock));
+        } else {
+          dispatch(insertActionBlock(updatedBlock));
+        }
+      }
     } else {
       onError(response.error);
     }
@@ -105,6 +126,7 @@ export const deleteBlock = ({
           block: removedBlock,
           date
         }));
+        dispatch(removeActionBlock(removedBlock))
       } else {
         onError(response.error);
       }

@@ -37,6 +37,7 @@ export const GoalSelector = () => {
         placeholder='Select Identity/Goal'
         name='goalId'
         onChange={({value}) => handleSelectChange({goalId: value})}
+        className={styles.selector}
         defaultValue={{
           label: goal.name,
           value: goal.id

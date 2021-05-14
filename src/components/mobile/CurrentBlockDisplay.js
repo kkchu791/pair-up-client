@@ -12,10 +12,6 @@ export const CurrentBlockDisplay = () => {
   const handleBlockClick = () => {
     console.log('clicking on the block')
   }
-  
-  const handleDelete = () => {
-    dispatch(setBlock(null));
-  }
  
   return (
     <div className={styles.container}>
@@ -33,8 +29,8 @@ export const CurrentBlockDisplay = () => {
 
       <div className={styles.currentBlockContainer}>
         <Block
-          onClick={handleBlockClick}
-          handleDelete={handleDelete}
+          block={currentBlock}
+          onScheduleClick={() => console.log('scheduled for later')}
         />
       </div>
     </div>
