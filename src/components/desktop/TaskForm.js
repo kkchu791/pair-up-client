@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import styles from './TaskForm.module.scss';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
+import {
+  TextField,
+  Button,
+  FormControl
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from '../../redux/actions';
 import {
@@ -10,20 +12,23 @@ import {
   updateBlock
 } from '../../redux/actions';
 import { useAuthState } from '../../context';
-import { ImageUploader } from './ImageUploader';
-import { GoalSelector } from '../common';
+import {
+  GoalSelector,
+  ImageUploader,
+} from '../common';
+import {format} from 'date-fns';
 
 export const TaskForm = () => {
-  const block = useSelector(state => state.block);
+  const {currentBlock} = useSelector(state => state.blocks);
   const {currentGoal} = useSelector(state => state.goals);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
   const [task, setTask] = useState({
-    description: block.task,
-    goalId: block.goal_id,
-    note: block.note,
-    id: block.id,
-    images: block.images || [],
+    description: currentBlock.task,
+    goalId: currentBlock.goal_id,
+    note: currentBlock.note,
+    id: currentBlock.id,
+    images: currentBlock.images || [],
   });
 
   const handleInputChange = evt => {
@@ -44,14 +49,15 @@ export const TaskForm = () => {
     console.log('create block error')
   }
 
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (task.id) {
       dispatch(updateBlock({
         id: task.id,
         creator_id: userDetails.id,
-        time_block_id: block.timeBlockId,
-        date: new Date(block.date).toISOString().slice(0,10),
+        time_block_id: currentBlock.timeBlockId,
+        date: format(new Date(currentBlock.date), 'yyyy-MM-dd'),
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
@@ -62,11 +68,12 @@ export const TaskForm = () => {
     } else {
       dispatch(createBlock({
         creator_id: userDetails.id,
-        time_block_id: block.timeBlockId,
-        date: block.date,
+        time_block_id: currentBlock.timeBlockId,
+        date: currentBlock.date,
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        type: currentBlock.type,
         onSuccess: handleSuccess,
         onError: handleError,
       }))

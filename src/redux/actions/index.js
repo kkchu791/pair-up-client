@@ -4,14 +4,6 @@ export {
 } from './modal';
 
 export {
-  SET_BLOCK,
-  setBlock,
-  createBlock,
-  deleteBlock,
-  updateBlock,
-} from './block';
-
-export {
   SET_BLOCKS_BY_DATE,
   setBlocksByDate,
   INSERT_BLOCKS_BY_DATE,
@@ -56,4 +48,9 @@ export {
   updateActionBlock,
   REMOVE_ACTION_BLOCK,
   removeActionBlock,
+  SET_BLOCK,
+  setBlock,
+  createBlock,
+  deleteBlock,
+  updateBlock,
 } from './blocks';

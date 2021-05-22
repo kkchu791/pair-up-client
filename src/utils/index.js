@@ -3,7 +3,7 @@ export {
   convertTimeTo24Grid,
   roundMinutes,
   isStartOfHour,
-  getCurrentTime,
+  getCurrentMilitaryTime,
 } from './timeHelper';
 
 // export {

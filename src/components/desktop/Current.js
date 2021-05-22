@@ -7,7 +7,7 @@ import { Timer } from './Timer';
 
 export const Current = () => {
 
-  // const block = useSelector(state => state.block); 
+  // const {currentBlock} = useSelector(state => state.blocks); 
   // const dateStr = new Date(block.date).toISOString().slice(0,10);    
   // const timeStr = block.start_time;
   // let targetTime = dateStr + ' ' + timeStr;

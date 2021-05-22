@@ -9,9 +9,9 @@ import {
 
 export const Retrospective = () => {
   const {date} = useSelector(state => state.modal);
-  const block = useSelector(state => state.block);
+  const { currentBlock } = useSelector(state => state.blocks);
   const dayBlocks = useSelector(state => state.blocksByDate[date]);
-  const blocks = block ? [block] : dayBlocks;
+  const blocks = currentBlock ? [currentBlock] : dayBlocks;
 
   const clickImage = (image) => {
     window.open(image.url);

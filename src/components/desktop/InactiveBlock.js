@@ -6,6 +6,7 @@ import {
   toggleModal,
   setBlock,
 } from '../../redux/actions';
+import { BLOCK_TYPE } from '../../constants';
 
 export const InactiveBlock = ({
   isDisabled,
@@ -24,9 +25,9 @@ export const InactiveBlock = ({
     dispatch(setBlock({
       date,
       timeBlockId: timeBlock.id,
+      type: BLOCK_TYPE.REGULAR,
     }))
   }
-
 
   return (
     <div 

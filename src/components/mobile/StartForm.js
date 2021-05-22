@@ -9,6 +9,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {GoalSelector} from '../common';
 import { getNearestTimeBlock } from '../../utils';
+import { format } from 'date-fns';
+import { BLOCK_TYPE } from '../../constants';
 
 export const StartForm = () => {
   const [task, setTask] = useState({});
@@ -40,9 +42,10 @@ export const StartForm = () => {
     dispatch(createBlock({
       creator_id: userDetails.id,
       time_block_id: closeTB.id,
-      date: currentDate.toISOString().slice(0,10),
+      date: format(currentDate, 'yyyy-MM-dd'),
       task: task.description,
       goal_id: currentGoal.id,
+      type: BLOCK_TYPE.REGULAR,
       onSuccess: (resp) => onSuccess(resp, closeTB.start_time, closeTB.end_time),
       onError: () => console.log('error'),
     }));

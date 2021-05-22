@@ -4,3 +4,9 @@ export const blockStatuses = {
   2: 'active',
   3: 'pending',
 }
+
+export const BLOCK_TYPE = {
+  'NONE': 0,
+  'REGULAR': 1,
+  'IMPROVEMENT': 2,
+}

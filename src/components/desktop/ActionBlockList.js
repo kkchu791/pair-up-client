@@ -6,6 +6,7 @@ import { getActionBlocks } from '../../redux/actions';
 import { useAuthState } from '../../context';
 import { getNearestTimeBlock } from '../../utils';
 import { updateBlock } from '../../redux/actions'
+import { format } from 'date-fns';
 
 export const ActionBlockList = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export const ActionBlockList = () => {
 
   const onScheduleClick = (block) => {
     const timeBlockId = getNearestTimeBlock(timeBlocks).id;
-    const date = new Date().toISOString().slice(0,10);
+    const date = format(new Date(), 'yyyy-MM-dd');
     dispatch(updateBlock({
       id: block.id,
       time_block_id: timeBlockId,

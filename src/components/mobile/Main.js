@@ -24,7 +24,7 @@ export const Main = () => {
         <Route path={PATH.SIGNUP}>
           <SignUp />
         </Route>
-        <Route path={PATH.START}>
+        <Route path={PATH.DASHBOARD}>
           <Layout>
             <Start />
           </Layout>

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   getGoal,
   getGoals,
+  setGoal,
 } from '../../redux/actions';
 import { useAuthState } from '../../context'
 
@@ -23,6 +24,10 @@ export const GoalSelector = () => {
   }, []);
 
   const handleSelectChange = async (option) => {
+    if (option.goalId === 0) {
+      dispatch(setGoal({id: 0, name: 'None'}))
+    }
+
     dispatch(getGoal({
       id: option.goalId,
       onSuccess: () => console.log('success get goal'),

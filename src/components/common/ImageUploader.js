@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import styles from './ImageUploader.module.scss';
 import clsx from 'clsx';
-import { ImageItem } from './ImageItem';
+import { ImageItem } from '../desktop/ImageItem';
 import { convertToBase64 } from '../../utils';
 
 export const ImageUploader = ({

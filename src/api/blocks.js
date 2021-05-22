@@ -39,6 +39,7 @@ export const createBlock = async ({
   task,
   goal_id,
   note,
+  type,
 }) => {
   try {
     const blockData = {
@@ -48,6 +49,7 @@ export const createBlock = async ({
       task,
       goal_id,
       note,
+      type,
     };
     const response = await axios.post(`${process.env.REACT_APP_API_URL}/blocks`, blockData);
 
