@@ -16,7 +16,6 @@ import { getCurrentMilitaryTime } from '../../utils';
 export const Start = () => {
   const {currentDate} = useSelector(state => state.date);
   const { currentBlock } = useSelector(state => state.blocks);
-  const blockList = useSelector(state => state.blocksByDate[currentDate.toISOString(0, 10)]);
   const start = startOfWeek(currentDate, {weekStartsOn: 1});
   const end = endOfWeek(currentDate, {weekStartsOn: 1});
   const dispatch = useDispatch();

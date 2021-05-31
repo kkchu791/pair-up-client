@@ -17,24 +17,44 @@ import {
   ImageUploader,
 } from '../common';
 import {format} from 'date-fns';
+import clsx from 'clsx';
+import { SlateEditor } from '../common';
 
 export const TaskForm = () => {
   const {currentBlock} = useSelector(state => state.blocks);
   const {currentGoal} = useSelector(state => state.goals);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
+  const defaultText = [
+    {
+      type: 'paragraph',
+      children: [{ text: 'Beta testing...' }],
+    },
+  ];
   const [task, setTask] = useState({
     description: currentBlock.task,
     goalId: currentBlock.goal_id,
     note: currentBlock.note,
+    text: currentBlock.text ? JSON.parse(currentBlock.text) : defaultText,
     id: currentBlock.id,
     images: currentBlock.images || [],
   });
+
+  const EDITOR = {
+    REGULAR: 'regular',
+    SLATE: 'slate',
+  }
+
+  const [editor, setEditor] = useState(EDITOR.REGULAR);
 
   const handleInputChange = evt => {
     var value = evt.target.value
     var name = evt.target.name
     setTask({...task, ...{[name]: value}})
+  }
+
+  const handleEditorChange = (val) => {
+    setTask({...task, ...{['text']: val}})
   }
 
   const handleCancel = evt => {
@@ -48,7 +68,6 @@ export const TaskForm = () => {
   const handleError = () => {
     console.log('create block error')
   }
-
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -61,6 +80,7 @@ export const TaskForm = () => {
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        text: JSON.stringify(task.text),
         images: task.images,
         onSuccess: handleSuccess,
         onError: handleError,
@@ -73,6 +93,7 @@ export const TaskForm = () => {
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        text: JSON.stringify(task.text),
         type: currentBlock.type,
         onSuccess: handleSuccess,
         onError: handleError,
@@ -81,55 +102,75 @@ export const TaskForm = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h2 id="form-title">Task Form</h2>
+    <div
+      className={clsx(styles.container, {[styles.creating]: !task.id})}
+    >
       <form onSubmit={handleSubmit}>
-        <FormControl
-          variant="outlined"
-          className={styles.formControl}
-        >
+        <h2>Task Form</h2>
+        <div className={styles.description}>
           <TextField
             variant="outlined"
             margin="normal"
             fullWidth
+            size='small'
             id="description"
             label="Description"
             name="description"
             value={task.description || ''}
             onChange={handleInputChange}
           />
-        </FormControl>
+        </div>
 
-        <FormControl
-          required
-          variant="outlined"
-          className={styles.formControl}
-        >
-          <GoalSelector />
-        </FormControl>
-
+        <div className={styles.goalSelector}>
+            <GoalSelector />
+        </div>
 
         {task.id &&
           <div className={styles.notes}>
-            <FormControl
-              required
-              variant="outlined"
-              className={styles.formControl}
-            >
-              <TextField
+            <div className={styles.subNavEditor}>
+              <div
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR.REGULAR})}
+                onClick={() => setEditor(EDITOR.REGULAR)}
+              >
+                Regular
+              </div>
+
+              <div
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR.SLATE})}
+                onClick={() => setEditor(EDITOR.SLATE)}
+              >
+                Slate
+              </div>
+            </div>
+
+            {editor === EDITOR.REGULAR ? 
+              <FormControl
+                required
                 variant="outlined"
-                margin="normal"
-                fullWidth
-                id="note"
-                label="What can you improve on?"
-                name="note"
-                value={task.note || ''}
-                onChange={handleInputChange}
-                multiline={true}
-                rows={10}
-                className={styles.note}
+                className={styles.formControl}
+              >
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="note"
+                  label="What can you improve on?"
+                  name="note"
+                  onChange={handleInputChange}
+                  value={task.note}
+                  multiline={true}
+                  rows={30}
+                  className={styles.note}
+                />
+              </FormControl>
+
+              :
+              
+              <SlateEditor
+                handleInputChange={handleEditorChange}
+                value={task.text}
               />
-            </FormControl>
+            }
 
             <ImageUploader
               setTask={setTask}
@@ -138,22 +179,24 @@ export const TaskForm = () => {
           </div>
         }
 
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={styles.submit}
-        >
+        <div className={styles.actionButtons}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={styles.submit}
+          >
             Save Task
-        </Button>
+          </Button>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={(evt) => handleCancel(evt)}
-        >
-          Cancel
-        </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={(evt) => handleCancel(evt)}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </div>
   );

@@ -15,16 +15,18 @@ export const Scheduler = ({
         endDate={dates[6]}
       />
       <div className={styles.dates}>
-        {dates.map(date => <DateBlock date={date} />)}
+        {dates.map(date => <div key={date}><DateBlock date={date} /></div>)}
       </div>
       <div className={styles.grids}>
         <TimeGrids />
         {dates.map(date => {
           const formattedDate = date.toISOString().slice(0,10);
           return (
-            <Day
-              date={formattedDate}
-            />
+            <div key={formattedDate}>
+              <Day
+                date={formattedDate}
+              />
+            </div>
           )
         })}
       </div>

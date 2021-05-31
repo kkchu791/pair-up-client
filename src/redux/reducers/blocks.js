@@ -8,14 +8,13 @@ import {
 
   const initialState = {
     actionBlocks: [],
-    currentBlock: {},
+    currentBlock: {note: []},
   };
   const blocksReducer = (state = initialState, action) => {
     let list;
     switch (action.type) {
       case SET_BLOCK:
-        const block = {...state.currentBlock, ...action.block};
-        return {...state, ...{currentBlock: block}};
+        return {...state, ...{currentBlock: action.block}};
       case SET_ACTION_BLOCKS:
         return {...state, ...{actionBlocks: action.blocks || []}};
       case INSERT_ACTION_BLOCK:

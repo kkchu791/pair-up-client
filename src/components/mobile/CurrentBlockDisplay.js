@@ -21,9 +21,7 @@ export const CurrentBlockDisplay = () => {
 
       <div className={styles.timer}>
         {
-          <Timer
-            currentBlock={currentBlock}
-          />
+          <Timer />
         }
       </div>
 

@@ -11,7 +11,10 @@ export const DateBlock = ({
   const improvementBlocksCount = blocks && blocks.filter(bl => bl.type === BLOCK_TYPE['IMPROVEMENT']).length;
 
   return (
-    <div className={styles.container} key={new Date(date).valueOf()}>
+    <div
+      className={styles.container}
+      key={new Date(date).valueOf()}
+    >
       <div className={styles.dayName}>
         {date.toLocaleDateString('en-US', { weekday: 'short' })}
       </div>

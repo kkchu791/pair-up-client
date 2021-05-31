@@ -3,3 +3,7 @@ export { Timer } from './Timer';
 export { GoalSelector } from './GoalSelector';
 export { BlockForm } from './BlockForm';
 export { ImageUploader } from './ImageUploader';
+export { Filter } from './Filter';
+export { Summary } from './Summary';
+export { SessionBlock } from './SessionBlock';
+export { SlateEditor } from './SlateEditor';

@@ -7,6 +7,11 @@ import { useAuthState } from '../../context';
 import { getNearestTimeBlock } from '../../utils';
 import { updateBlock } from '../../redux/actions'
 import { format } from 'date-fns';
+import {
+  setGoal,
+  toggleModal,
+  setBlock as setBlockAction,
+} from '../../redux/actions';
 
 export const ActionBlockList = () => {
   const dispatch = useDispatch();
@@ -36,6 +41,19 @@ export const ActionBlockList = () => {
     }));
   }
 
+  const handleBlockClick = (block) => {
+    dispatch(toggleModal({
+      isOpen: true,
+    }));
+
+    dispatch(setBlockAction(block));
+
+    dispatch(setGoal({
+      id: block.goal_id,
+      name: block.goal_name,
+    }));
+  }
+
   return (
     <div className={styles.container}>
       {actionBlocks.map(block => {
@@ -44,6 +62,7 @@ export const ActionBlockList = () => {
             <Block
               block={block}
               onScheduleClick={onScheduleClick}
+              onBoxClick={handleBlockClick}
             />
           </div>
         )

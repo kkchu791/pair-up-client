@@ -1,4 +1,5 @@
 import {getBlocksByDateRange as getBlocksByDateRangeApi} from '../../api';
+import {format} from 'date-fns';
 
 export const SET_BLOCKS_BY_DATE = 'SET_BLOCKS_BY_DATE';
 export const UPDATE_BLOCKS_BY_DATE = 'UPDATE_BLOCKS_BY_DATE';
@@ -37,8 +38,8 @@ export const getBlocksByDate = ({
   onError,
 }) => {
   return async (dispatch, getState) => {
-    start = start.toISOString().slice(0,10);
-    end = end.toISOString().slice(0,10);
+    start = format(start, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
+    end = format(end, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
     return await getBlocksByDateRangeApi({
       startDate: start,
       endDate: end,

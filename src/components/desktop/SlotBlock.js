@@ -8,6 +8,8 @@ import { Block } from '../common/Block';
 import {
   updateBlock,
   setGoal,
+  toggleModal,
+  setBlock as setBlockAction,
 } from '../../redux/actions';
 
 export const SlotBlock = ({
@@ -23,6 +25,19 @@ export const SlotBlock = ({
   }, [blocks]);
 
   const handleScheduleSuccess = () => {
+    dispatch(setGoal({
+      id: block.goal_id,
+      name: block.goal_name,
+    }));
+  }
+
+  const handleBlockClick = (block) => {
+    dispatch(toggleModal({
+      isOpen: true,
+    }));
+
+    dispatch(setBlockAction(block));
+ 
     dispatch(setGoal({
       id: block.goal_id,
       name: block.goal_name,
@@ -58,6 +73,7 @@ export const SlotBlock = ({
         <Block
           block={block}
           onScheduleClick={onScheduleClick}
+          onBoxClick={handleBlockClick}
         />
       }
     </div>

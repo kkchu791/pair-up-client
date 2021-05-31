@@ -14,7 +14,7 @@ export const getBlocksByDateRange = async ({
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/blocks`,
-      {params: { startDate, endDate, userId }}
+      {params: {startDate, endDate, userId }}
     );
 
     return {success: true, data: response.data};
@@ -39,6 +39,7 @@ export const createBlock = async ({
   task,
   goal_id,
   note,
+  text,
   type,
 }) => {
   try {
@@ -49,6 +50,7 @@ export const createBlock = async ({
       task,
       goal_id,
       note,
+      text,
       type,
     };
     const response = await axios.post(`${process.env.REACT_APP_API_URL}/blocks`, blockData);
@@ -67,6 +69,7 @@ export const updateBlock = async ({
   task,
   goal_id,
   note,
+  text,
   joinerId,
   roomUrl,
   images,
@@ -83,6 +86,7 @@ export const updateBlock = async ({
       goal_id,
       note,
       images,
+      text,
     }
 
     const response = await axios.put(`${process.env.REACT_APP_API_URL}/blocks/${id}`, blockData);

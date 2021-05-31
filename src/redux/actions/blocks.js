@@ -68,6 +68,7 @@ export const createBlock = ({
     task,
     goal_id,
     note,
+    text,
     type,
     onSuccess,
     onError,
@@ -80,6 +81,7 @@ export const createBlock = ({
       task,
       goal_id,
       note,
+      text,
       type,
     }).then((response) => {
       if (response.success) {
@@ -109,6 +111,7 @@ export const updateBlock = ({
   task,
   goal_id,
   note,
+  text,
   images,
   onSuccess,
   onError,
@@ -120,6 +123,7 @@ return async (dispatch, getState) => {
     time_block_id,
     date,
     task,
+    text,
     goal_id,
     note,
     images,

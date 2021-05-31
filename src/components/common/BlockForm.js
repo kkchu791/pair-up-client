@@ -49,8 +49,6 @@ export const BlockForm = ({
     console.log('error in creating or updating');
   }
 
-  console.log(currentBlock, 'currentBlock')
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (task.id) {
@@ -107,35 +105,37 @@ export const BlockForm = ({
           value={task.note || ''}
           onChange={handleInputChange}
           multiline={true}
-          rows={3}
+          rows={10}
           className={styles.note}
         />
       </div>
 
       <div className={styles.imageUploader}>
-        {/* <ImageUploader
-          setTask={(block) => dispatch(setBlock(block))}
+        <ImageUploader
+          setTask={setTask}
           task={currentBlock}
-        /> */}
+        />
       </div>
 
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className={styles.submit}
-        onClick={handleSubmit}
-      >
-          Save Task
-      </Button>
+      <div className={styles.buttonsContainer}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          className={styles.submit}
+          onClick={handleSubmit}
+        >
+            Save Task
+        </Button>
 
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={(evt) => handleCancel(evt)}
-      >
-        Cancel
-      </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={(evt) => handleCancel(evt)}
+        >
+          Cancel
+        </Button>
+      </div>
     </div>
   )
 }

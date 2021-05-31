@@ -2,25 +2,28 @@ import React, { useState } from 'react';
 import styles from './SubNav.module.scss';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
-import { PAGES, PATH } from '../../constants';
+import { PATH } from '../../constants';
+import { useLocation } from 'react-router-dom'
+
 
 export const SubNav = () => {
-  const [isActive, setIsActive] = useState(PAGES.START);
+  const location = useLocation();
+  const [isActive, setIsActive] = useState(location.pathname);
 
   return (
     <div className={styles.container}>
       <Link 
-        className={clsx(styles.link, {[styles.active]: isActive === PAGES.START})}
-        to={PATH.START}
-        onClick={() => setIsActive(PAGES.START)}
+        className={clsx(styles.link, {[styles.active]: isActive === PATH.DASHBOARD})}
+        to={PATH.DASHBOARD}
+        onClick={() => setIsActive(PATH.DASHBOARD)}
       >
         Start
       </Link>
 
       <Link
-        className={clsx(styles.link, {[styles.active]: isActive === PAGES.SESSIONS})}
+        className={clsx(styles.link, {[styles.active]: isActive === PATH.SESSIONS})}
         to={PATH.SESSIONS}
-        onClick={() => setIsActive(PAGES.SESSIONS)}
+        onClick={() => setIsActive(PATH.SESSIONS)}
       >
         Sessions
       </Link>

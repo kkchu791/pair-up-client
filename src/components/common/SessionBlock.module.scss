@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  border: 0.5px solid rgb(49, 31, 140);
+  border-radius: 3px;
+  height: 75px;
+  width: 290px;
+  margin: 20px;
+}
+
+.imageContainer {
+  width: 100px !important;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 100% !important;
+  height: 100%;
+}
+
+.blockInfoContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.note {
+  height: 90%;
+  width: 200px;
+  overflow-y: scroll;
+  margin: 5px 0 5px 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  white-space: pre;
+}

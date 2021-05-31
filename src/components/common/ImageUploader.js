@@ -9,7 +9,7 @@ export const ImageUploader = ({
   setTask,
   task
 }) => {
-  const [images, setImages] = useState(task.images);
+  const [images, setImages] = useState(task.images || []);
 
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];

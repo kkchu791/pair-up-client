@@ -1,0 +1,23 @@
+.container {
+  border: 1px solid black;
+  display: flex;
+  height: 250px;
+  flex-direction: column;
+}
+
+.totalBlocksCount {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total {
+  font-size: 28px;
+  margin-left: 10px;
+}
+
+.audio {
+  border: 1px solid black;
+  margin-right: 10px;
+}

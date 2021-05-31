@@ -35,27 +35,26 @@ export const RescheduleButtons = ({
           <div className={styles.reschedule}>
             <IconButton
               size={'small'}
+              onClick={(evt) => cancelRescheduleClick(evt)}
             >
-              <CloseOutlinedIcon onClick={(evt) => cancelRescheduleClick(evt)} />
+              <CloseOutlinedIcon />
             </IconButton>
           </div>
           <div className={styles.confirm}>
             <IconButton
               size={'small'}
+              onClick={(evt) => confirmRescheduleClick(evt)}
             >
-              <CheckIcon onClick={(evt) => confirmRescheduleClick(evt)} />
+              <CheckIcon />
             </IconButton>
           </div>
         </div>
         :
         <IconButton
           size={'small'}
+          onClick={(evt) => rescheduleClick(evt)}
         >
-          {isScheduled ? 
-            <NavigateNextIcon onClick={(evt) => rescheduleClick(evt)} />
-            :
-            <NavigateBeforeIcon onClick={(evt) => rescheduleClick(evt)} />
-          }
+          {isScheduled ? <NavigateNextIcon /> : <NavigateBeforeIcon /> }
         </IconButton>
       }
     </div>

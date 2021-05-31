@@ -73,7 +73,7 @@ export const Sessions = () => {
 
                 <div className={styles.date}>
                   {new Date(date + ' 00:00:00').toLocaleDateString('en-US', { weekday: 'short' })}&nbsp;
-                  {new Date(date).getMonth()}/{new Date(date).getDate()}
+                  {new Date(date + ' 00:00:00').getMonth()}/{new Date(date + ' 00:00:00').getDate()}
                 </div>
 
                 <div className={styles.noteIcon}>

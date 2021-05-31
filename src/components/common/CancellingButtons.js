@@ -33,23 +33,26 @@ export const CancellingButtons = ({
           <div className={styles.cancel}>
             <IconButton
               size={'small'}
+              onClick={(evt) => cancelCancelClick(evt)}
             >
-              <CloseOutlinedIcon onClick={(evt) => cancelCancelClick(evt)} />
+              <CloseOutlinedIcon />
             </IconButton>
           </div>
           <div className={styles.confirm}>
             <IconButton
               size={'small'}
+              onClick={(evt) => confirmCancelClick(evt)}
             >
-              <CheckIcon onClick={(evt) => confirmCancelClick(evt)} />
+              <CheckIcon />
             </IconButton>
           </div>
         </div>
         :
         <IconButton
           size={'small'}
+          onClick={(evt) => cancelClick(evt)}
         >
-          <CloseOutlinedIcon onClick={(evt) => cancelClick(evt)} />
+          <CloseOutlinedIcon />
         </IconButton>
       }
     </div>

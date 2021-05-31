@@ -29,7 +29,7 @@ export const Login = () => {
     if (!respUser) {
       setError('Invalid username or password.');
     } else {
-      history.push(PATH.START);
+      history.push(PATH.DASHBOARD);
     }
   }
 

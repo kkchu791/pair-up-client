@@ -7,14 +7,12 @@ import { CancellingButtons } from './CancellingButtons';
 import { RescheduleButtons } from './RescheduleButtons';
 import {
   deleteBlock,
-  toggleModal,
   setBlock,
-  setGoal,
 } from '../../redux/actions';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { IconButton } from '@material-ui/core';
 import { BLOCK_TYPE } from '../../constants';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
 export const Block = ({
   block,
@@ -26,22 +24,6 @@ export const Block = ({
   const {currentDate} = useSelector(state => state.date);
   const dispatch = useDispatch();
   currentBlock = block ? block : currentBlock;
-
-
-  console.log(currentBlock, block)
-
-  const handleBoxClick = (evt) => {
-    dispatch(toggleModal({
-      isOpen: true,
-    }));
-
-    dispatch(setBlock(block));
- 
-    dispatch(setGoal({
-      id: block.goal_id,
-      name: block.goal_name,
-    }));
-  }
 
   const handleDelete = () => {
     dispatch(setBlock(null));
@@ -63,7 +45,7 @@ export const Block = ({
 
   return (
     <div
-      onClick={onBoxClick}
+      onClick={() => onBoxClick(currentBlock)}
       style={{background: currentBlock.color}}
       className={styles.container}
     >
