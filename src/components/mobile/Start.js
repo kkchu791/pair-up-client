@@ -61,7 +61,7 @@ export const Start = () => {
 
   return (
     <div className={styles.container}>
-      {Object.keys(currentBlock).length > 0 ? <CurrentBlockDisplay /> : <StartForm />}
+      {Object.keys(currentBlock) && Object.keys(currentBlock).length > 0 ? <CurrentBlockDisplay /> : <StartForm />}
     </div>
   )
 }

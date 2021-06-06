@@ -87,10 +87,9 @@ export const updateBlock = async ({
       note,
       images,
       text,
-    }
+    };
 
     const response = await axios.put(`${process.env.REACT_APP_API_URL}/blocks/${id}`, blockData);
-
     return {data: response.data, success: true};
   } catch (e) {
     return {error: e.message, success: false};

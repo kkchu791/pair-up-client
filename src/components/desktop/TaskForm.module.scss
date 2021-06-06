@@ -1,5 +1,7 @@
 .container {
   width: 70vw;
+  max-height: 70vh;
+  overflow: scroll;
 }
 
 .formControl {
@@ -22,6 +24,7 @@
 
 .creating {
   width: 500px;
+  overflow: revert !important;
 }
 
 .description {
@@ -51,4 +54,9 @@
 
 .active {
   text-decoration: underline;
+}
+
+.spinner {
+  color: whitesmoke;
+  margin-left: 6px;
 }

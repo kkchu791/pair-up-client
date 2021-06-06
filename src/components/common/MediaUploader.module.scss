@@ -1,0 +1,31 @@
+
+.container {
+  
+}
+
+.dropZone {
+  border: 2px dashed #e0dddd;
+  border-radius: 3px;
+  height: 70px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.active {
+  background: rgba(173, 216, 230, 0.2);
+  border: 2px dashed #5264ce;
+}
+
+.dropTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.acceptedTypes {
+  font-size: 10px;
+}

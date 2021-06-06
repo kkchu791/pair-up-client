@@ -1,10 +1,10 @@
 .container {
   display: flex;
-  height: 800px;
+  height: 70vh;
+  width: 70vw;
 }
 
 .retrospective {
-  width: 600px;
   overflow-x: unset;
   margin: 20px;
 }
@@ -41,7 +41,7 @@
 }
 
 .events {
-  width: 400px;
+  width: 100%;
 }
 
 .images {

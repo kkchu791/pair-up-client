@@ -9,3 +9,4 @@ export {
   FILTERS,
   FILTER_DATES,
 } from './sessions';
+export { MEDIA_TYPES } from './uploader';

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Retrospective.module.scss';
 import { useSelector } from 'react-redux';
 import { Events } from './Events';
+import { MediaList } from '../common';
 import { format } from 'date-fns';
 import {
   convertTimeTo24
@@ -34,17 +35,9 @@ export const Retrospective = () => {
         </pre>
 
         <div className={styles.images}>
-          {block.images && 
-            block.images.map(image => {
-            return (
-              <img
-                className={styles.image}
-                src={image.url}
-                alt={image.name}
-                onClick={() => clickImage(image)}
-              />
-            )
-          })}
+          <MediaList
+            mediums={block.images || []}
+          />
         </div>
       </div>
     )

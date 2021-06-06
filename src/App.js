@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { useMediaQuery } from '@material-ui/core';
 import { Helmet } from 'react-helmet';
-import { Timer } from './components/common';
 
 const App = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
@@ -20,7 +19,7 @@ const App = () => {
           <Helmet>
             <meta charSet="utf-8" />
             <title>
-              Greatness Go
+              Greatness Go - {process.env.NODE_ENV}
             </title>
             <link rel="greatness go" href="https://greatnessgo.com/" />
           </Helmet>

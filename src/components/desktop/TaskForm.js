@@ -14,11 +14,12 @@ import {
 import { useAuthState } from '../../context';
 import {
   GoalSelector,
-  ImageUploader,
+  MediaUploader,
 } from '../common';
 import {format} from 'date-fns';
 import clsx from 'clsx';
 import { SlateEditor } from '../common';
+import {CircularProgress} from '@material-ui/core';
 
 export const TaskForm = () => {
   const {currentBlock} = useSelector(state => state.blocks);
@@ -39,6 +40,7 @@ export const TaskForm = () => {
     id: currentBlock.id,
     images: currentBlock.images || [],
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const EDITOR = {
     REGULAR: 'regular',
@@ -62,6 +64,7 @@ export const TaskForm = () => {
   }
 
   const handleSuccess = () => {
+    setIsSubmitting(false);
     dispatch(toggleModal({isOpen: false}));
   }
 
@@ -71,6 +74,8 @@ export const TaskForm = () => {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
+
     if (task.id) {
       dispatch(updateBlock({
         id: task.id,
@@ -159,7 +164,7 @@ export const TaskForm = () => {
                   onChange={handleInputChange}
                   value={task.note}
                   multiline={true}
-                  rows={30}
+                  rows={10}
                   className={styles.note}
                 />
               </FormControl>
@@ -172,7 +177,7 @@ export const TaskForm = () => {
               />
             }
 
-            <ImageUploader
+            <MediaUploader
               setTask={setTask}
               task={task}
             />
@@ -186,7 +191,20 @@ export const TaskForm = () => {
             color="primary"
             className={styles.submit}
           >
-            Save Task
+            {isSubmitting ? 
+              <div className={styles.submitting}>
+                Saving...
+                <CircularProgress
+                  className={styles.spinner}
+                  size={20}
+                />
+              </div>
+              :
+              <div className={styles.submitText}>
+                Save Task
+              </div>
+           }
+            
           </Button>
 
           <Button

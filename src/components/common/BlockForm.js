@@ -4,7 +4,7 @@ import {
   TextField,
   Button
 } from '@material-ui/core';
-import { ImageUploader } from './ImageUploader';
+import { MediaUploader } from './MediaUploader';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createBlock,
@@ -111,7 +111,7 @@ export const BlockForm = ({
       </div>
 
       <div className={styles.imageUploader}>
-        <ImageUploader
+        <MediaUploader
           setTask={setTask}
           task={currentBlock}
         />
@@ -125,7 +125,7 @@ export const BlockForm = ({
           className={styles.submit}
           onClick={handleSubmit}
         >
-            Save Task
+          Save Task
         </Button>
 
         <Button
