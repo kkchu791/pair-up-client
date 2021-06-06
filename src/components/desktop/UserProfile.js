@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './UserProfile.module.scss';
-import image from '../../images/demo.jpg';
+// import image from '../../images/demo.jpg';
 
-export const UserProfile = ({
-  match
-}) => {
+export const UserProfile = () => {
   return (
     <div className={styles.container}>
       {/* <div className={styles.userPhoto}>

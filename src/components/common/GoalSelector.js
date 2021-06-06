@@ -15,13 +15,13 @@ export const GoalSelector = () => {
   const {goalOptions} = useSelector(state => state.goals)
   const {userDetails} = useAuthState();
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getGoals({
       userId: userDetails.id,
       onSuccess: () => console.log('success get goals'),
       onError: () => console.log('error get goals'),
     }));
-  }, []);
+  }, [dispatch, userDetails.id]);
 
   const handleSelectChange = async (option) => {
     if (option.goalId === 0) {

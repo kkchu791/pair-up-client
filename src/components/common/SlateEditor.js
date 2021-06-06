@@ -1,5 +1,5 @@
 
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styles from './SlateEditor.module.scss';
 import { createEditor, Editor, Transforms, Text } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
@@ -50,6 +50,10 @@ export const SlateEditor = ({
                 event.preventDefault()
                 CustomEditor.toggleBoldMark(editor)
                 break
+              }
+
+              default: {
+                event.preventDefault();
               }
             }
           }}

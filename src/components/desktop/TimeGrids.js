@@ -13,7 +13,7 @@ export const TimeGrids = () => {
     if (target.current) {
       target.current.scrollIntoView();
     }
-  }, [target.current]);
+  }, []);
 
   const renderTimeGrid = (timeBlock) => {
     const startTime = convertTimeTo24Grid(timeBlock.start_time).split(":");

@@ -28,7 +28,7 @@ export const Timer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [currentBlock, dispatch])
+  }, [currentBlock, dispatch, isStarting, seconds])
   
   return (
     <div className={styles.container}>

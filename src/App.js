@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react';
+import React from 'react';
 import { Main } from './components/desktop';
 import { Main as MobileMain } from './components/mobile';
 import './App.css';
@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 
 const App = () => {
   const isMobile = useMediaQuery('(max-width:600px)');
-  const [timer, setTimer] = useState('50');
+
   return (
     <div className="App">
       <Provider store={store}>

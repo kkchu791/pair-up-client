@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './Current.module.scss';
 //import { Upcoming } from './Upcoming';
 // import {Network} from './Network';
-import { useSelector } from 'react-redux';
-import { Timer } from './Timer'; 
+// import { useSelector } from 'react-redux';
+// import { Timer } from './Timer'; 
 
 export const Current = () => {
 

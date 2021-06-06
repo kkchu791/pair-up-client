@@ -22,7 +22,7 @@ export const SlotBlock = ({
 
   useEffect(() => {
     setBlock(blocks.find(bl => bl.time_block_id === timeBlock.id));
-  }, [blocks]);
+  }, [blocks, timeBlock.id]);
 
   const handleScheduleSuccess = () => {
     dispatch(setGoal({

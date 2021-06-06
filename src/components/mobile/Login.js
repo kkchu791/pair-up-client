@@ -4,7 +4,7 @@ import {TextField, Button} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { loginUser, useAuthState, useAuthDispatch } from '../../context';
 import { PasswordField } from './PasswordField';
-import { Error } from './Error';
+import { Error } from '../common';
 import { Snackbar } from '@material-ui/core';
 import { PATH } from '../../constants';
 

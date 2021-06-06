@@ -32,7 +32,7 @@ export const Sessions = () => {
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
     }));
-  }, [getBlocksByDate]);
+  }, [currentDate, dispatch, userDetails.id]);
 
   const handleNoteClick = (date) => {
     const blocks = blocksByDate[date];

@@ -1,18 +1,10 @@
 import React from 'react';
 import styles from './SessionList.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { SessionBlock } from '../common';
 
 export const SessionList = () => {
   const {blocksByDate} = useSelector(state => state);
-
-  const renderSessionBlock = (block) => {
-    return (
-      <div className={styles.sessionBlock}>
-        {block.task}
-      </div>
-    )
-  }
 
   return (
     <div className={styles.container}>

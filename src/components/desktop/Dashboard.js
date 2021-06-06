@@ -9,28 +9,27 @@ import {
   toggleModal,
   getBlocksByDate,
   getTimeBlocks,
-  setBlock
+  // setBlock
 } from '../../redux/actions';
 import { TaskModal } from './TaskModal';
 import { TaskForm } from './TaskForm';
-import { Timer } from '../common';
+// import { Timer } from '../common';
 import { useAuthState } from '../../context';
-import { format } from 'date-fns';
-import { getCurrentMilitaryTime } from '../../utils';
+// import { format } from 'date-fns';
+// import { getCurrentMilitaryTime } from '../../utils';
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const {isOpen} = useSelector(state => state.modal);
   const {currentDate} = useSelector(state => state.date);
-  const {currentBlock} = useSelector(state => state.blocks);
   const start = startOfWeek(currentDate, {weekStartsOn: 1});
   const end = endOfWeek(currentDate, {weekStartsOn: 1});
   const {userDetails} = useAuthState();
 
-  const handleGetBlocksSuccess = (resp) => {
-    let list = resp[format(new Date(), 'yyyy-MM-dd')];
-    getActiveBlock(list);
-  }
+  // const handleGetBlocksSuccess = (resp) => {
+  //   let list = resp[format(new Date(), 'yyyy-MM-dd')];
+  //   getActiveBlock(list);
+  // }
 
   useEffect(() => { 
     dispatch(getBlocksByDate({
@@ -53,13 +52,13 @@ export const Dashboard = () => {
     dispatch(toggleModal(false));
   }
 
-  const getActiveBlock = (list) => {
-    let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
+  // const getActiveBlock = (list) => {
+  //   let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
 
-    if (currentBlock) {
-      dispatch(setBlock(currentBlock));
-    }
-  }
+  //   if (currentBlock) {
+  //     dispatch(setBlock(currentBlock));
+  //   }
+  // }
 
   return (
     <div className={styles.container}>

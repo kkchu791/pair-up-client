@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import { StartForm } from './StartForm';
 import { CurrentBlockDisplay } from './CurrentBlockDisplay';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,17 +16,27 @@ import { getCurrentMilitaryTime } from '../../utils';
 export const Start = () => {
   const {currentDate} = useSelector(state => state.date);
   const { currentBlock } = useSelector(state => state.blocks);
-  const start = startOfWeek(currentDate, {weekStartsOn: 1});
-  const end = endOfWeek(currentDate, {weekStartsOn: 1});
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
 
-  const handleGetBlocksSuccess = (resp) => {
+  const handleGetBlocksSuccess = useCallback((resp) => {
+    const getCurrentBlock = (list) => {
+      let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
+  
+      if (currentBlock) {
+        dispatch(setBlock(currentBlock));
+      }
+    }
+
     let list = resp[new Date().toISOString().slice(0,10)];
     getCurrentBlock(list);
-  }
+  }, [dispatch]);
 
   useEffect(() => { 
+
+    const start = startOfWeek(currentDate, {weekStartsOn: 1});
+    const end = endOfWeek(currentDate, {weekStartsOn: 1});
+
     dispatch(getBlocksByDate({
       start, 
       end,
@@ -34,7 +44,7 @@ export const Start = () => {
       onSuccess: (resp) => handleGetBlocksSuccess(resp),
       onError: () => console.log('errored'),
     }));
-  }, [currentDate, dispatch, userDetails.id]);
+  }, [currentDate, dispatch, userDetails.id, handleGetBlocksSuccess]);
 
   useEffect(() => {
     dispatch(getGoals({
@@ -50,14 +60,6 @@ export const Start = () => {
       onError: () => console.log('error timeBlock')
     }));
   }, [dispatch]);
-
-  const getCurrentBlock = (list) => {
-    let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
-
-    if (currentBlock) {
-      dispatch(setBlock(currentBlock));
-    }
-  }
 
   return (
     <div className={styles.container}>

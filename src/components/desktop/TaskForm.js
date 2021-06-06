@@ -51,7 +51,7 @@ export const TaskForm = () => {
   }
 
   const handleEditorChange = (val) => {
-    setTask({...task, ...{['text']: val}})
+    setTask({...task, ...{'text': val}})
   }
 
   const handleCancel = evt => {
