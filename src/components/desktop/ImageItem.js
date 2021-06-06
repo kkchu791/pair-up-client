@@ -23,10 +23,6 @@ export const ImageItem = ({
           alt='image-item-thumbnail'
         />
       </div>
-       
-      <div className={styles.name}>
-        {image.name}
-      </div>
     </div>
   )
 }

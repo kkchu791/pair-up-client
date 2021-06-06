@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import styles from './TaskForm.module.scss';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
+import {
+  TextField,
+  Button,
+  FormControl
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from '../../redux/actions';
 import {
@@ -10,21 +12,42 @@ import {
   updateBlock
 } from '../../redux/actions';
 import { useAuthState } from '../../context';
-import { ImageUploader } from './ImageUploader';
-import { GoalSelector } from '../common';
+import {
+  GoalSelector,
+  MediaUploader,
+} from '../common';
+import {format} from 'date-fns';
+import clsx from 'clsx';
+import { SlateEditor } from '../common';
+import {CircularProgress} from '@material-ui/core';
 
 export const TaskForm = () => {
-  const block = useSelector(state => state.block);
+  const {currentBlock} = useSelector(state => state.blocks);
   const {currentGoal} = useSelector(state => state.goals);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
+  const defaultText = [
+    {
+      type: 'paragraph',
+      children: [{ text: 'Beta testing...' }],
+    },
+  ];
   const [task, setTask] = useState({
-    description: block.task,
-    goalId: block.goal_id,
-    note: block.note,
-    id: block.id,
-    images: block.images || [],
+    description: currentBlock.task,
+    goalId: currentBlock.goal_id,
+    note: currentBlock.note,
+    text: currentBlock.text ? JSON.parse(currentBlock.text) : defaultText,
+    id: currentBlock.id,
+    images: currentBlock.images || [],
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const EDITOR = {
+    REGULAR: 'regular',
+    SLATE: 'slate',
+  }
+
+  const [editor, setEditor] = useState(EDITOR.REGULAR);
 
   const handleInputChange = evt => {
     var value = evt.target.value
@@ -32,29 +55,37 @@ export const TaskForm = () => {
     setTask({...task, ...{[name]: value}})
   }
 
+  const handleEditorChange = (val) => {
+    setTask({...task, ...{['text']: val}})
+  }
+
   const handleCancel = evt => {
     dispatch(toggleModal({isOpen: false}));
   }
 
   const handleSuccess = () => {
+    setIsSubmitting(false);
     dispatch(toggleModal({isOpen: false}));
   }
 
   const handleError = () => {
     console.log('create block error')
   }
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
+
     if (task.id) {
       dispatch(updateBlock({
         id: task.id,
         creator_id: userDetails.id,
-        time_block_id: block.timeBlockId,
-        date: new Date(block.date).toISOString().slice(0,10),
+        time_block_id: currentBlock.timeBlockId,
+        date: format(new Date(currentBlock.date), 'yyyy-MM-dd'),
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        text: JSON.stringify(task.text),
         images: task.images,
         onSuccess: handleSuccess,
         onError: handleError,
@@ -62,11 +93,13 @@ export const TaskForm = () => {
     } else {
       dispatch(createBlock({
         creator_id: userDetails.id,
-        time_block_id: block.timeBlockId,
-        date: block.date,
+        time_block_id: currentBlock.timeBlockId,
+        date: currentBlock.date,
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        text: JSON.stringify(task.text),
+        type: currentBlock.type,
         onSuccess: handleSuccess,
         onError: handleError,
       }))
@@ -74,79 +107,114 @@ export const TaskForm = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <h2 id="form-title">Task Form</h2>
+    <div
+      className={clsx(styles.container, {[styles.creating]: !task.id})}
+    >
       <form onSubmit={handleSubmit}>
-        <FormControl
-          variant="outlined"
-          className={styles.formControl}
-        >
+        <h2>Task Form</h2>
+        <div className={styles.description}>
           <TextField
             variant="outlined"
             margin="normal"
             fullWidth
+            size='small'
             id="description"
             label="Description"
             name="description"
             value={task.description || ''}
             onChange={handleInputChange}
           />
-        </FormControl>
+        </div>
 
-        <FormControl
-          required
-          variant="outlined"
-          className={styles.formControl}
-        >
-          <GoalSelector />
-        </FormControl>
-
+        <div className={styles.goalSelector}>
+            <GoalSelector />
+        </div>
 
         {task.id &&
           <div className={styles.notes}>
-            <FormControl
-              required
-              variant="outlined"
-              className={styles.formControl}
-            >
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="note"
-                label="What can you improve on?"
-                name="note"
-                value={task.note || ''}
-                onChange={handleInputChange}
-                multiline={true}
-                rows={10}
-                className={styles.note}
-              />
-            </FormControl>
+            <div className={styles.subNavEditor}>
+              <div
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR.REGULAR})}
+                onClick={() => setEditor(EDITOR.REGULAR)}
+              >
+                Regular
+              </div>
 
-            <ImageUploader
+              <div
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR.SLATE})}
+                onClick={() => setEditor(EDITOR.SLATE)}
+              >
+                Slate
+              </div>
+            </div>
+
+            {editor === EDITOR.REGULAR ? 
+              <FormControl
+                required
+                variant="outlined"
+                className={styles.formControl}
+              >
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="note"
+                  label="What can you improve on?"
+                  name="note"
+                  onChange={handleInputChange}
+                  value={task.note}
+                  multiline={true}
+                  rows={10}
+                  className={styles.note}
+                />
+              </FormControl>
+
+              :
+              
+              <SlateEditor
+                handleInputChange={handleEditorChange}
+                value={task.text}
+              />
+            }
+
+            <MediaUploader
               setTask={setTask}
               task={task}
             />
           </div>
         }
 
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          className={styles.submit}
-        >
-            Save Task
-        </Button>
+        <div className={styles.actionButtons}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={styles.submit}
+          >
+            {isSubmitting ? 
+              <div className={styles.submitting}>
+                Saving...
+                <CircularProgress
+                  className={styles.spinner}
+                  size={20}
+                />
+              </div>
+              :
+              <div className={styles.submitText}>
+                Save Task
+              </div>
+           }
+            
+          </Button>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={(evt) => handleCancel(evt)}
-        >
-          Cancel
-        </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={(evt) => handleCancel(evt)}
+          >
+            Cancel
+          </Button>
+        </div>
       </form>
     </div>
   );

@@ -5,6 +5,7 @@ export {
   updateBlock,
   removeBlock,
   getBlocksByDateRange,
+  getActionBlocks,
 } from './blocks';
 export {login, signUp} from './auth';
 export {

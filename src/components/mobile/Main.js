@@ -4,6 +4,7 @@ import { Layout } from './Layout';
 import { Home } from './Home';
 import { SignUp } from './SignUp';
 import { Start } from './Start';
+import { Sessions } from './Sessions';
 import { PATH } from '../../constants';
 import {
   BrowserRouter as Router,
@@ -24,9 +25,14 @@ export const Main = () => {
         <Route path={PATH.SIGNUP}>
           <SignUp />
         </Route>
-        <Route path={PATH.START}>
+        <Route path={PATH.DASHBOARD}>
           <Layout>
             <Start />
+          </Layout>
+        </Route>
+        <Route path={PATH.SESSIONS}>
+          <Layout>
+            <Sessions />
           </Layout>
         </Route>
       </Switch>

@@ -38,11 +38,17 @@ export const NavButtons = () => {
       </div>
 
       <div className={styles.navButtons}>
-        <IconButton color='primary'>
-          <ArrowBackIosIcon onClick={() => moveClick('back')} />
+        <IconButton
+          color='primary'
+          onClick={() => moveClick('back')}
+        >
+          <ArrowBackIosIcon />
         </IconButton>
-        <IconButton color='primary'>
-          <ArrowForwardIosIcon onClick={() => moveClick('forward')} />
+        <IconButton
+          color='primary'
+          onClick={() => moveClick('forward')}
+        >
+          <ArrowForwardIosIcon />
         </IconButton>
       </div>
     </div>

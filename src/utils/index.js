@@ -3,7 +3,7 @@ export {
   convertTimeTo24Grid,
   roundMinutes,
   isStartOfHour,
-  getCurrentTime,
+  getCurrentMilitaryTime,
 } from './timeHelper';
 
 // export {
@@ -13,3 +13,7 @@ export {
 export {
   convertToBase64,
 } from './imageHelper';
+
+export {
+  getNearestTimeBlock,
+} from './timeBlockHelper';

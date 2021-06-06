@@ -11,12 +11,11 @@ import {
 import styles from './Start.module.scss';
 import { useAuthState } from '../../context';
 import { startOfWeek, endOfWeek } from 'date-fns';
-import { getCurrentTime } from '../../utils';
+import { getCurrentMilitaryTime } from '../../utils';
 
 export const Start = () => {
   const {currentDate} = useSelector(state => state.date);
-  const currentBlock = useSelector(state => state.block);
-  const blockList = useSelector(state => state.blocksByDate[currentDate.toISOString(0, 10)]);
+  const { currentBlock } = useSelector(state => state.blocks);
   const start = startOfWeek(currentDate, {weekStartsOn: 1});
   const end = endOfWeek(currentDate, {weekStartsOn: 1});
   const dispatch = useDispatch();
@@ -53,17 +52,16 @@ export const Start = () => {
   }, [dispatch]);
 
   const getCurrentBlock = (list) => {
-    let currentBlock = list.find(bl => bl.end_time > getCurrentTime());
+    let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
 
     if (currentBlock) {
-      console.log('does it reset here', currentBlock)
       dispatch(setBlock(currentBlock));
     }
   }
 
   return (
     <div className={styles.container}>
-      {currentBlock ? <CurrentBlockDisplay /> : <StartForm />}
+      {Object.keys(currentBlock) && Object.keys(currentBlock).length > 0 ? <CurrentBlockDisplay /> : <StartForm />}
     </div>
   )
 }

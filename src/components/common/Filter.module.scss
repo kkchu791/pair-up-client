@@ -1,0 +1,15 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 0 0 10px 0;
+}
+
+.button {
+  width: 85px;
+}
+
+.active {
+  background: #1776d1 !important;
+  color: white !important;
+}

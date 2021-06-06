@@ -1,0 +1,14 @@
+.container {
+  display:flex;
+  width: 100%;
+  flex-wrap: wrap;
+  //height: 620px;
+  overflow-y: scroll;
+}
+
+.block {
+  margin: 4px 4px 4px 8px;
+  position: relative;
+  width: 148px;
+  height: 154px;
+}

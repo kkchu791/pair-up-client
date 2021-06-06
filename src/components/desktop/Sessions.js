@@ -14,7 +14,6 @@ import { TaskModal } from './TaskModal';
 import { Retrospective } from './Retrospective';
 import { useAuthState } from '../../context';
 
-
 export const Sessions = () => {
   const blocksByDate = useSelector(state => state.blocksByDate);
   const {currentDate} = useSelector(state => state.date);
@@ -73,8 +72,8 @@ export const Sessions = () => {
               <div className={styles.header}>
 
                 <div className={styles.date}>
-                  {new Date(date + ' 00:00').toLocaleDateString('en-US', { weekday: 'short' })}&nbsp;
-                  {new Date(date).getMonth()}/{new Date(date).getDate()}
+                  {new Date(date + ' 00:00:00').toLocaleDateString('en-US', { weekday: 'short' })}&nbsp;
+                  {new Date(date + ' 00:00:00').getMonth()}/{new Date(date + ' 00:00:00').getDate()}
                 </div>
 
                 <div className={styles.noteIcon}>
@@ -86,7 +85,7 @@ export const Sessions = () => {
               </div>
               {blocksByDate[date].map(block => {
                 return (
-                  <div key={block.id}>
+                  <div key={block.id} className={styles.blockContainer}>
                     <PastBlock
                       block={block}
                     />

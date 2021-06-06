@@ -16,10 +16,12 @@ const goalsReducer = (state = initialState, action) => {
     case SET_GOALS:
       return {...state, ...{list: action.goals}};
     case SET_GOAL_OPTIONS:
+      const noneOption = {label: 'None', value: 0}
       const goalOptions = action.goals.map(goal => ({
         label: goal.name,
         value: goal.id
       }));
+      goalOptions.unshift(noneOption);
       return {...state, ...{goalOptions}};
     case SET_GOAL:
       const newGoal = {...state.currentGoal, ...action.goal};

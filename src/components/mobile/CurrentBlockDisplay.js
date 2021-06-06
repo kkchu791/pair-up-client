@@ -1,20 +1,16 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import { useSelector } from 'react-redux';
 import styles from './CurrentBlockDisplay.module.scss';
 import { Block, Timer } from '../common';
-import { setBlock } from '../../redux/actions';
+import { BlockForm } from '../common';
 
 export const CurrentBlockDisplay = () => {
-  const currentBlock = useSelector(state => state.block);
+  const { currentBlock } = useSelector(state => state.blocks);
   const {currentGoal} = useSelector(state => state.goals);
-  const dispatch = useDispatch();
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleBlockClick = () => {
-    console.log('clicking on the block')
-  }
-  
-  const handleDelete = () => {
-    dispatch(setBlock(null));
+    setIsEditing(true);
   }
  
   return (
@@ -25,18 +21,26 @@ export const CurrentBlockDisplay = () => {
 
       <div className={styles.timer}>
         {
-          <Timer
-            currentBlock={currentBlock}
-          />
+          <Timer />
         }
       </div>
 
-      <div className={styles.currentBlockContainer}>
-        <Block
-          onClick={handleBlockClick}
-          handleDelete={handleDelete}
-        />
-      </div>
+      
+      {isEditing ?
+        <div className={styles.blockForm}>
+          <BlockForm
+            onClose={() => setIsEditing(false)}
+          />
+        </div>
+        :
+        <div className={styles.currentBlockContainer}>
+          <Block
+            block={currentBlock}
+            onScheduleClick={() => console.log('scheduled for later')}
+            onBoxClick={handleBlockClick}
+          />
+        </div>
+      }
     </div>
   )
 }

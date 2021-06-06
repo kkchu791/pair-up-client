@@ -5,5 +5,4 @@ export const PATH = {
   DASHBOARD: '/dashboard',
   SESSIONS: '/sessions',
   USER: '/users/:user_id',
-  START: '/start',
 }

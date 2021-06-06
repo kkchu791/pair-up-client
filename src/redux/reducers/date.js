@@ -1,8 +1,10 @@
 import {
   SET_DATE,
 } from '../actions';
+import {format} from 'date-fns';
 
-const initialState = {currentDate: new Date()};
+const currDate = format(new Date(), 'yyyy-MM-dd');
+const initialState = {currentDate: new Date(`${currDate} 00:00:00`)};
 
 const dateReducer = (state = initialState, action) => {
   switch (action.type) {

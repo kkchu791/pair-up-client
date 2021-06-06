@@ -31,8 +31,9 @@ export const ActionsPanel = () => {
     <div className={styles.container}>
       <div className={styles.subNav}>
         <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTIONS)})} onClick={() => handleClick(VIEWS.ACTIONS)}>
-          Actions
+          Notes
         </div>
+
 
         <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTION_BLOCKS)})} onClick={() => handleClick(VIEWS.ACTION_BLOCKS)}>
           Action Blocks

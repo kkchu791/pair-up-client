@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export const convertTimeTo24 = (timeString) => {
   let H = +timeString.substr(0, 2);
   let h = H % 12 || 12;
@@ -23,10 +25,7 @@ export const isStartOfHour = (time) => {
   return time.split(":")[1] === '00';
 };
 
-export const getCurrentTime = () => {
-  const d = new Date();
-  const currentHours = ("0" + d.getHours()).slice(-2);
-  const currentMinutes = ("0" + d.getMinutes()).slice(-2);
-  const currentSeconds = ("0" + d.getSeconds()).slice(-2);
-  return `${currentHours}:${currentMinutes}:${currentSeconds}`;
+export const getCurrentMilitaryTime = () => {
+  console.log(format(new Date(), 'kk:mm:ss'));
+  return format(new Date(), 'kk:mm:ss');
 }

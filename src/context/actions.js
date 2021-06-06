@@ -4,7 +4,7 @@ export const loginUser = async (dispatch, loginPayload) => {
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
     let {data} = await login({
-      email: loginPayload.email,
+      email: loginPayload.email.toLowerCase(),
       password: loginPayload.password
     });
  
@@ -13,10 +13,6 @@ export const loginUser = async (dispatch, loginPayload) => {
       localStorage.setItem('currentUser', JSON.stringify({user: data.user, token: data.session}));
       return data.user;
     }
-
-    console.log(data, 'data')
-
-    console.log(data.errors[0], 'anything')
  
     dispatch({ type: 'LOGIN_ERROR', error: data.errors[0] });
     return;

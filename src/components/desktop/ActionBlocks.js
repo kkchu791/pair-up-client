@@ -2,10 +2,27 @@ import React from 'react';
 import styles from './ActionBlocks.module.scss';
 import { Button } from '@material-ui/core';
 import { GoalSelector } from '../common';
+import { ActionBlockList } from './ActionBlockList';
+import { useDispatch } from 'react-redux';
+import { toggleModal, setBlock } from '../../redux/actions';
+import { BLOCK_TYPE } from '../../constants';
+import { format } from 'date-fns';
 
 export const ActionBlocks = () => {
-  const handleClick = () => {
-    console.log('adding Action Block');
+  const dispatch = useDispatch();
+
+  const addBlockClick = (evt) => {
+    evt.stopPropagation();
+
+    dispatch(toggleModal({
+      isOpen: true,
+    }));
+
+    dispatch(setBlock({
+      date: format(new Date(), 'yyyy-MM-dd'),
+      timeBlockId: null,
+      type: BLOCK_TYPE.IMPROVEMENT,
+    }));
   }
 
   return (
@@ -15,7 +32,7 @@ export const ActionBlocks = () => {
           variant='contained'
           color='primary'
           className={styles.goalCreationButton}
-          onClick={handleClick}
+          onClick={addBlockClick}
         >
           + Add Action Block
         </Button>
@@ -27,7 +44,7 @@ export const ActionBlocks = () => {
       </div>
 
       <div className={styles.actionBlockList}>
-
+        <ActionBlockList />
       </div>
     </div>
   )
