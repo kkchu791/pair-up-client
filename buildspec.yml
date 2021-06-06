@@ -3,12 +3,12 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - echo Installing dependencies...
       - yarn
   build:
     commands:
-      # - yarn build
-      - npm run-script build
-
+      - echo Building ...
+      - yarn build
 artifacts:
   files:
     - '**/*'
