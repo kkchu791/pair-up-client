@@ -6,7 +6,8 @@ phases:
       - yarn
   build:
     commands:
-      - yarn build
+      # - yarn build
+      - npm run-script build
 
 artifacts:
   files:
