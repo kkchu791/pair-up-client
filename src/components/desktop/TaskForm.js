@@ -20,6 +20,7 @@ import {format} from 'date-fns';
 import clsx from 'clsx';
 import { SlateEditor } from '../common';
 import {CircularProgress} from '@material-ui/core';
+import { EDITOR_TYPES } from '../../constants';
 
 export const TaskForm = () => {
   const {currentBlock} = useSelector(state => state.blocks);
@@ -41,13 +42,7 @@ export const TaskForm = () => {
     images: currentBlock.images || [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const EDITOR = {
-    REGULAR: 'regular',
-    SLATE: 'slate',
-  }
-
-  const [editor, setEditor] = useState(EDITOR.REGULAR);
+  const [editor, setEditor] = useState(EDITOR_TYPES.SLATE);
 
   const handleInputChange = evt => {
     var value = evt.target.value
@@ -134,21 +129,21 @@ export const TaskForm = () => {
           <div className={styles.notes}>
             <div className={styles.subNavEditor}>
               <div
-                className={clsx(styles.link, {[styles.active]: editor === EDITOR.REGULAR})}
-                onClick={() => setEditor(EDITOR.REGULAR)}
-              >
-                Regular
-              </div>
-
-              <div
-                className={clsx(styles.link, {[styles.active]: editor === EDITOR.SLATE})}
-                onClick={() => setEditor(EDITOR.SLATE)}
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR_TYPES.SLATE})}
+                onClick={() => setEditor(EDITOR_TYPES.SLATE)}
               >
                 Slate
               </div>
+
+              <div
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR_TYPES.REGULAR})}
+                onClick={() => setEditor(EDITOR_TYPES.REGULAR)}
+              >
+                Regular
+              </div>
             </div>
 
-            {editor === EDITOR.REGULAR ? 
+            {editor === EDITOR_TYPES.REGULAR ? 
               <FormControl
                 required
                 variant="outlined"

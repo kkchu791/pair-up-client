@@ -10,3 +10,4 @@ export {
   FILTER_DATES,
 } from './sessions';
 export { MEDIA_TYPES } from './uploader';
+export { EDITOR_TYPES } from './taskForm';
