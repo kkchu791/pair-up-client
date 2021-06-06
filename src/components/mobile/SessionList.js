@@ -10,16 +10,21 @@ export const SessionList = () => {
     <div className={styles.container}>
       {Object.keys(blocksByDate).map(date => {
         return (
-          <div className={styles.dateContainer}>
+          <div
+            className={styles.dateContainer}
+            key={date}
+          >
             <div className={styles.date}>
               {date}
             </div>
 
             {blocksByDate[date].map(block => {
               return (
-                <SessionBlock
-                  block={block}
-                />
+                <div key={block.id}>
+                  <SessionBlock
+                    block={block}
+                  />
+                </div>
               )
             })}
           </div>

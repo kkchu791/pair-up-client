@@ -67,7 +67,7 @@ export const Login = () => {
             label="Username"
             variant="outlined"
             size="small"
-            fullWidth='true'
+            fullWidth={true}
             onChange={(evt) => handleChange({'email': evt.target.value})}
           />
         </div>

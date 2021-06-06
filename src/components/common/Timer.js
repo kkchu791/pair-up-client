@@ -4,7 +4,7 @@ import { differenceInSeconds } from 'date-fns'
 import { setBlock } from '../../redux/actions';
 import { getCurrentMilitaryTime } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 export const Timer = () => {
   const dispatch = useDispatch();

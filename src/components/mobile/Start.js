@@ -12,6 +12,7 @@ import styles from './Start.module.scss';
 import { useAuthState } from '../../context';
 import { startOfWeek, endOfWeek } from 'date-fns';
 import { getCurrentMilitaryTime } from '../../utils';
+import { format } from 'date-fns';
 
 export const Start = () => {
   const {currentDate} = useSelector(state => state.date);
@@ -28,7 +29,8 @@ export const Start = () => {
       }
     }
 
-    let list = resp[new Date().toISOString().slice(0,10)];
+    let list = resp[format(new Date(), 'yyyy-MM-dd')];
+
     getCurrentBlock(list);
   }, [dispatch]);
 
