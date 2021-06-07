@@ -19,7 +19,7 @@ export const Timer = () => {
       const startDate = new Date('01/01/2001 ' + start);
       const endDate = new Date('01/01/2001 ' + end);
       const seconds = differenceInSeconds(endDate, startDate);
-      setSeconds(seconds);
+      setSeconds(seconds > 1 ? seconds : 0);
     }, 1000);
 
     if (seconds < 0) {

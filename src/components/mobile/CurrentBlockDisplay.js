@@ -20,9 +20,9 @@ export const CurrentBlockDisplay = () => {
       </div>
 
       <div className={styles.timer}>
-        {
+        {/* {
           <Timer />
-        }
+        } */}
       </div>
 
       
