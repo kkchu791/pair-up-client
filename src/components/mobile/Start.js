@@ -22,6 +22,7 @@ export const Start = () => {
 
   const handleGetBlocksSuccess = useCallback((resp) => {
     const getCurrentBlock = (list) => {
+      if (!list) return
       let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
   
       if (currentBlock) {
@@ -30,7 +31,7 @@ export const Start = () => {
     }
 
     let list = resp[format(new Date(), 'yyyy-MM-dd')];
-
+  
     getCurrentBlock(list);
   }, [dispatch]);
 

@@ -19,7 +19,7 @@ export const Timer = () => {
       const startDate = new Date('01/01/2001 ' + start);
       const endDate = new Date('01/01/2001 ' + end);
       const seconds = differenceInSeconds(endDate, startDate);
-      setSeconds(seconds > 1 ? seconds : 0);
+      setSeconds(seconds);
     }, 1000);
 
     if (seconds < 0) {
@@ -28,7 +28,7 @@ export const Timer = () => {
     }
 
     return () => clearInterval(interval);
-  }, [currentBlock, dispatch, isStarting, seconds])
+  }, [currentBlock, dispatch, isStarting, seconds]);
   
   return (
     <div className={styles.container}>
