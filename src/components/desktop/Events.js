@@ -15,13 +15,13 @@ export const Events = () => {
   const goal = useSelector(state => state.goals.currentGoal);
   const {userDetails} = useAuthState();
 
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getGoals({
       userId: userDetails.id,
       onSuccess: () => console.log('success get goals'),
       onError: () => console.log('error get goals'),
     }));
-  }, []);
+  }, [dispatch, userDetails.id]);
 
   const handleInputChange = async (goal) => {
     dispatch(setGoal(goal));

@@ -20,7 +20,7 @@ export const ActionBlocks = () => {
 
     dispatch(setBlock({
       date: format(new Date(), 'yyyy-MM-dd'),
-      timeBlockId: null,
+      time_block_id: null,
       type: BLOCK_TYPE.IMPROVEMENT,
     }));
   }

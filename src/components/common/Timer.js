@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import styles from './Timer.module.scss';
-import { differenceInSeconds } from 'date-fns'
-import { setBlock } from '../../redux/actions';
+import { differenceInSeconds } from 'date-fns';
 import { getCurrentMilitaryTime } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
-export const Timer = () => {
+export const Timer = ({
+  isShowing,
+  onBeginning,
+  onEnding,
+}) => {
   const dispatch = useDispatch();
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(null);
   const { currentBlock } = useSelector(state => state.blocks);
   const isStarting = getCurrentMilitaryTime() < currentBlock.start_time;
 
@@ -22,13 +25,27 @@ export const Timer = () => {
       setSeconds(seconds);
     }, 1000);
 
-    if (seconds < 0) {
-      dispatch(setBlock(null));
-      return () => clearInterval(interval);
+    console.log(seconds, 'seconds')
+  
+    if (seconds === 1 && isStarting) {
+      onBeginning();
+      clearInterval(interval)
+    }
+
+    if (seconds < 0 && !isStarting) {
+      onEnding();
+      clearInterval(interval)
     }
 
     return () => clearInterval(interval);
-  }, [currentBlock, dispatch])
+  }, [
+    currentBlock,
+    dispatch,
+    isStarting,
+    seconds,
+    onBeginning,
+    onEnding,
+  ]);
   
   return (
     <div className={styles.container}>
@@ -40,7 +57,7 @@ export const Timer = () => {
         <link rel="greatness go" href="https://greatnessgo.com/" />
       </Helmet>
 
-      <div>{new Date(seconds * 1000).toISOString().substr(11, 8)}</div>
+      {isShowing ? <div>{new Date(seconds * 1000).toISOString().substr(11, 8)}</div> : null }
     </div>
   )
 }

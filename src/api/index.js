@@ -6,6 +6,8 @@ export {
   removeBlock,
   getBlocksByDateRange,
   getActionBlocks,
+  getCurrentBlock,
+  getUpcomingBlock,
 } from './blocks';
 export {login, signUp} from './auth';
 export {

@@ -4,6 +4,8 @@ import styles from './SessionBlock.module.scss';
 export const SessionBlock = ({
   block
 }) => {
+
+
   return (
     <div
       className={styles.container}
@@ -13,11 +15,16 @@ export const SessionBlock = ({
         {block.images && 
           block.images.map(image => {
           return (
-            <img
-              className={styles.image}
-              src={image.url}
-              alt={image.name}
-            />
+            <div
+              className={styles.imageContainer}
+              key={image.url}
+            >
+              <img
+                className={styles.image}
+                src={image.url}
+                alt={image.name}
+              />
+            </div>
           )
         })}
       </div>

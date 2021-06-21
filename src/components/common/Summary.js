@@ -1,17 +1,17 @@
 import React from 'react';
 import { GoalBlockCount } from './GoalBlockCount';
 import styles from './Summary.module.scss';
-import Speech from 'react-speech';
-import May16Audio from '../../audio/May16.m4a';
-import ReactAudioPlayer from 'react-audio-player';
+// import Speech from 'react-speech';
+// import May16Audio from '../../audio/May16.m4a';
+// import ReactAudioPlayer from 'react-audio-player';
 export const Summary = ({
   blocks
 }) => {
-  const text = blocks.reduce((acc, block) => {
-    acc += 'task:' + block.task;
-    acc += 'improvement:' + block.note;
-    return acc;
-  }, '')
+  // const text = blocks.reduce((acc, block) => {
+  //   acc += 'task:' + block.task;
+  //   acc += 'improvement:' + block.note;
+  //   return acc;
+  // }, '')
 
   return (
     <div className={styles.container}>
@@ -24,11 +24,11 @@ export const Summary = ({
       <div
         className={styles.audio}
       >
-        <ReactAudioPlayer
+        {/* <ReactAudioPlayer
           src={May16Audio}
           autoPlay
           controls
-        />
+        /> */}
       </div>
 
       <GoalBlockCount

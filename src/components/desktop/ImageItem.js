@@ -20,7 +20,7 @@ export const ImageItem = ({
         <img
           className={styles.thumbnail}
           src={imageUrl}
-          alt='image-item-thumbnail'
+          alt='large-thumbnail'
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import styles from './Dashboard.module.scss';
+import styles from './Calendar.module.scss';
 import { Scheduler } from './Scheduler';
-import { Current } from './Current';
+// import { Current } from './Current';
 import { ActionsPanel } from './ActionsPanel';
 import { startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,28 +9,28 @@ import {
   toggleModal,
   getBlocksByDate,
   getTimeBlocks,
-  setBlock
+  // setBlock
 } from '../../redux/actions';
 import { TaskModal } from './TaskModal';
 import { TaskForm } from './TaskForm';
-import { Timer } from '../common';
+// import { Timer } from '../common';
 import { useAuthState } from '../../context';
-import { format } from 'date-fns';
-import { getCurrentMilitaryTime } from '../../utils';
+// import { format } from 'date-fns';
+// import { getCurrentMilitaryTime } from '../../utils';
+import { DrawerToggle } from './DrawerToggle';
 
-export const Dashboard = () => {
+export const Calendar = () => {
   const dispatch = useDispatch();
   const {isOpen} = useSelector(state => state.modal);
-  const {currentDate} = useSelector(state => state.date);
-  const {currentBlock} = useSelector(state => state.blocks);
-  const start = startOfWeek(currentDate, {weekStartsOn: 1});
-  const end = endOfWeek(currentDate, {weekStartsOn: 1});
+  const {currentDateObj} = useSelector(state => state.date);
+  const start = startOfWeek(currentDateObj, {weekStartsOn: 1});
+  const end = endOfWeek(currentDateObj, {weekStartsOn: 1});
   const {userDetails} = useAuthState();
 
-  const handleGetBlocksSuccess = (resp) => {
-    let list = resp[format(new Date(), 'yyyy-MM-dd')];
-    getActiveBlock(list);
-  }
+  // const handleGetBlocksSuccess = (resp) => {
+  //   let list = resp[format(new Date(), 'yyyy-MM-dd')];
+  //   getActiveBlock(list);
+  // }
 
   useEffect(() => { 
     dispatch(getBlocksByDate({
@@ -40,7 +40,7 @@ export const Dashboard = () => {
       onSuccess: (resp) => console.log('success'),
       onError: () => console.log('errored'),
     }));
-  }, [currentDate, dispatch, start, end, userDetails.id]);
+  }, [currentDateObj, dispatch, start, end, userDetails.id]);
 
   useEffect(() => {
     dispatch(getTimeBlocks({
@@ -53,13 +53,13 @@ export const Dashboard = () => {
     dispatch(toggleModal(false));
   }
 
-  const getActiveBlock = (list) => {
-    let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
+  // const getActiveBlock = (list) => {
+  //   let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
 
-    if (currentBlock) {
-      dispatch(setBlock(currentBlock));
-    }
-  }
+  //   if (currentBlock) {
+  //     dispatch(setBlock(currentBlock));
+  //   }
+  // }
 
   return (
     <div className={styles.container}>
@@ -70,13 +70,14 @@ export const Dashboard = () => {
       >
         <TaskForm />
       </TaskModal>
-      <Current />
+      {/* <Current /> */}
       <Scheduler
         dates={eachDayOfInterval({start, end})}
       />
+      <DrawerToggle />
       <ActionsPanel />
     </div>
   )
 }
 
-export default Dashboard;
+export default Calendar;

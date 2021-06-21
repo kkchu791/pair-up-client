@@ -27,7 +27,7 @@ export const ActionBlockList = () => {
       onSuccess: () => console.log('success get action blocks'),
       onError: () => console.log('error on fetching action blocks')
     }))
-  }, [currentGoal]);
+  }, [currentGoal, dispatch, userDetails.id]);
 
   const onScheduleClick = (block) => {
     const timeBlockId = getNearestTimeBlock(timeBlocks).id;

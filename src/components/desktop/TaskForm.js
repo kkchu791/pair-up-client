@@ -6,20 +6,20 @@ import {
   FormControl
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleModal } from '../../redux/actions';
 import {
   createBlock,
-  updateBlock
+  updateBlock,
+  toggleModal
 } from '../../redux/actions';
 import { useAuthState } from '../../context';
 import {
   GoalSelector,
   MediaUploader,
 } from '../common';
-import {format} from 'date-fns';
 import clsx from 'clsx';
 import { SlateEditor } from '../common';
 import {CircularProgress} from '@material-ui/core';
+import { EDITOR_TYPES } from '../../constants';
 
 export const TaskForm = () => {
   const {currentBlock} = useSelector(state => state.blocks);
@@ -29,7 +29,7 @@ export const TaskForm = () => {
   const defaultText = [
     {
       type: 'paragraph',
-      children: [{ text: 'Beta testing...' }],
+      children: [{ text: '' }],
     },
   ];
   const [task, setTask] = useState({
@@ -41,13 +41,7 @@ export const TaskForm = () => {
     images: currentBlock.images || [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const EDITOR = {
-    REGULAR: 'regular',
-    SLATE: 'slate',
-  }
-
-  const [editor, setEditor] = useState(EDITOR.REGULAR);
+  const [editor, setEditor] = useState(EDITOR_TYPES.SLATE);
 
   const handleInputChange = evt => {
     var value = evt.target.value
@@ -56,7 +50,7 @@ export const TaskForm = () => {
   }
 
   const handleEditorChange = (val) => {
-    setTask({...task, ...{['text']: val}})
+    setTask({...task, ...{'text': val}})
   }
 
   const handleCancel = evt => {
@@ -80,8 +74,8 @@ export const TaskForm = () => {
       dispatch(updateBlock({
         id: task.id,
         creator_id: userDetails.id,
-        time_block_id: currentBlock.timeBlockId,
-        date: format(new Date(currentBlock.date), 'yyyy-MM-dd'),
+        time_block_id: currentBlock.time_block_id,
+        date: currentBlock.date.split('T')[0],
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
@@ -89,12 +83,12 @@ export const TaskForm = () => {
         images: task.images,
         onSuccess: handleSuccess,
         onError: handleError,
-      }))
+      }));
     } else {
       dispatch(createBlock({
         creator_id: userDetails.id,
-        time_block_id: currentBlock.timeBlockId,
-        date: currentBlock.date,
+        time_block_id: currentBlock.time_block_id,
+        date: currentBlock.date.split('T')[0],
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
@@ -102,7 +96,7 @@ export const TaskForm = () => {
         type: currentBlock.type,
         onSuccess: handleSuccess,
         onError: handleError,
-      }))
+      }));
     }
   }
 
@@ -111,44 +105,46 @@ export const TaskForm = () => {
       className={clsx(styles.container, {[styles.creating]: !task.id})}
     >
       <form onSubmit={handleSubmit}>
-        <h2>Task Form</h2>
-        <div className={styles.description}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            fullWidth
-            size='small'
-            id="description"
-            label="Description"
-            name="description"
-            value={task.description || ''}
-            onChange={handleInputChange}
-          />
-        </div>
+        <div className={styles.textFieldWrapper}>
+          <div className={styles.description}>
+            <TextField
+              fullWidth
+              size='small'
+              id="description"
+              inputProps={{style: {
+                fontSize: 40,
+                fontWeight: '600'
+              }}}
+              name="description"
+              value={task.description || ''}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div className={styles.goalSelector}>
-            <GoalSelector />
+          <div className={styles.goalSelector}>
+              <GoalSelector />
+          </div>
         </div>
 
         {task.id &&
           <div className={styles.notes}>
             <div className={styles.subNavEditor}>
               <div
-                className={clsx(styles.link, {[styles.active]: editor === EDITOR.REGULAR})}
-                onClick={() => setEditor(EDITOR.REGULAR)}
-              >
-                Regular
-              </div>
-
-              <div
-                className={clsx(styles.link, {[styles.active]: editor === EDITOR.SLATE})}
-                onClick={() => setEditor(EDITOR.SLATE)}
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR_TYPES.SLATE})}
+                onClick={() => setEditor(EDITOR_TYPES.SLATE)}
               >
                 Slate
               </div>
+
+              <div
+                className={clsx(styles.link, {[styles.active]: editor === EDITOR_TYPES.REGULAR})}
+                onClick={() => setEditor(EDITOR_TYPES.REGULAR)}
+              >
+                Regular
+              </div>
             </div>
 
-            {editor === EDITOR.REGULAR ? 
+            {editor === EDITOR_TYPES.REGULAR ? 
               <FormControl
                 required
                 variant="outlined"

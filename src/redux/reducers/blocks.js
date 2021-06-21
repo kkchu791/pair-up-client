@@ -1,5 +1,6 @@
 import {
   SET_BLOCK,
+  SET_ACTIVE_BLOCK,
   SET_ACTION_BLOCKS,
   INSERT_ACTION_BLOCK,
   UPDATE_ACTION_BLOCK,
@@ -8,13 +9,16 @@ import {
 
   const initialState = {
     actionBlocks: [],
-    currentBlock: {note: []},
+    currentBlock: {},
+    activeBlock: {},
   };
   const blocksReducer = (state = initialState, action) => {
     let list;
     switch (action.type) {
       case SET_BLOCK:
         return {...state, ...{currentBlock: action.block}};
+      case SET_ACTIVE_BLOCK:
+        return {...state, ...{activeBlock: action.block}};
       case SET_ACTION_BLOCKS:
         return {...state, ...{actionBlocks: action.blocks || []}};
       case INSERT_ACTION_BLOCK:

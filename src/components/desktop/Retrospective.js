@@ -14,10 +14,6 @@ export const Retrospective = () => {
   const dayBlocks = useSelector(state => state.blocksByDate[date]);
   const blocks = currentBlock ? [currentBlock] : dayBlocks;
 
-  const clickImage = (image) => {
-    window.open(image.url);
-  }
-
   const renderRetro = (block) => {
     return (
       <div

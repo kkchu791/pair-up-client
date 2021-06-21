@@ -10,9 +10,9 @@ export const MediaUploader = ({
   task
 }) => {
   const [mediums, setMediums] = useState(task.images || []);
-  const maxSize = 27000000;
+  // const maxSize = 27000000;
 
-  const processMedia = async (file) => {
+  const processMedia = useCallback(async (file) => {
     setMediums(prevState => [...prevState, file]);
     let base64Media = await convertToBase64(file);
     
@@ -21,13 +21,13 @@ export const MediaUploader = ({
       prevState['images'] = newMediums;
       return prevState;
     });
-  }
+  }, [setTask]);
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach(file => {
       processMedia(file);
     });
-  }, []);
+  }, [processMedia]);
 
   const {
     getRootProps,
@@ -36,7 +36,6 @@ export const MediaUploader = ({
   } = useDropzone({
     onDrop,
     accept: 'image/*,audio/*,video/*',
-    maxSize,
   })
 
   return (

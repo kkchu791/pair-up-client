@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import {Fade} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 export const TaskModal = ({
   onClose,
   open,
@@ -36,11 +37,14 @@ export const TaskModal = ({
       BackdropComponent={Backdrop}
       BackdropProps={{timeout: 500}}
     >
-      <Fade in={open}>
-        <div className={classes.paper}>
-          {children}
-        </div>
-      </Fade>
+        <Fade
+          in={open}
+          disableStrictModeCompat={true}
+        >
+          <div className={classes.paper}>
+            {children}
+          </div>
+        </Fade>
     </Modal>
   );
 }

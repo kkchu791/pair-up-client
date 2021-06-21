@@ -4,7 +4,7 @@ import {TextField, Button} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { loginUser, useAuthState, useAuthDispatch } from '../../context';
 import { PasswordField } from './PasswordField';
-import { Error } from './Error';
+import { Error } from '../common';
 import { Snackbar } from '@material-ui/core';
 import { PATH } from '../../constants';
 
@@ -67,7 +67,7 @@ export const Login = () => {
             label="Username"
             variant="outlined"
             size="small"
-            fullWidth='true'
+            fullWidth={true}
             onChange={(evt) => handleChange({'email': evt.target.value})}
           />
         </div>

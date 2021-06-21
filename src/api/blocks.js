@@ -23,14 +23,6 @@ export const getBlocksByDateRange = async ({
   }
 };
 
-export const getUpcomingBlock = async ({userId}) => {
-  const response = await axios.get(
-    `${process.env.REACT_APP_API_URL}/blocks/upcoming`,
-    {params: { user_id: userId }}
-  );
-
-  return {data: response.data};
-};
 
 export const createBlock = async ({
   creator_id,
@@ -119,6 +111,28 @@ export const getActionBlocks = async ({
 }) => {
   try {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/blocks/action`, {params: { goalId, userId }});
+    return {success: true, data: response.data};
+  } catch(e) {
+    return {success: false, error: e.message};
+  }
+};
+
+export const getCurrentBlock = async ({
+  userId
+}) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/blocks/current`, {params: { user_id: userId }});
+    return {success: true, data: response.data};
+  } catch(e) {
+    return {success: false, error: e.message};
+  }
+};
+
+export const getUpcomingBlock = async ({
+  userId
+}) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/blocks/upcoming`, {params: { user_id: userId }});
     return {success: true, data: response.data};
   } catch(e) {
     return {success: false, error: e.message};

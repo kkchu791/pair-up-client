@@ -1,5 +1,12 @@
 export const PAGES = {
+  DASHBOARD: 'dashboard',
   CALENDAR: 'calendar',
   SESSIONS: 'sessions',
-  DASHBOARD: 'dashboard',
+}
+
+
+export const PAGE_PATH = {
+  '/dashboard': 'dashboard',
+  '/calendar': 'calendar',
+  '/sessions': 'sessions',
 }

@@ -17,7 +17,6 @@ export const loginUser = async (dispatch, loginPayload) => {
     dispatch({ type: 'LOGIN_ERROR', error: data.errors[0] });
     return;
   } catch (error) {
-    console.log(error.message, 'anything 2')
     dispatch({ type: 'LOGIN_ERROR', error: error.message });
   }
 }

@@ -7,7 +7,9 @@ export const Layout = ({
   children
 }) => {
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+    >
       <NavBar />
       <SubNav />
       {children}

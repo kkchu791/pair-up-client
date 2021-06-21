@@ -16,7 +16,10 @@ export const GoalBlockCount = ({
 
   const renderGoalBlock = (goalId) => {
     return (
-      <div className={styles.goalBlock}>
+      <div
+        className={styles.goalBlock}
+        key={goalId}
+      >
         <div
           className={styles.color}
           style={{background: goalBlocks[goalId][0].color || 'lightblue'}}

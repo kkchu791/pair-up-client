@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './Sessions.module.scss';
 import { Filter, Summary } from '../common';
 import { SessionList } from './SessionList';
@@ -15,10 +15,6 @@ export const Sessions = () => {
   blocks = Object.keys(blocks).reduce((acc, date) => {
     return [...acc, ...blocks[date]];
   }, []);
-
-  useEffect(() => {
-
-  }, [])
 
   const handleFilterClick = (filter) => {
     const [start, end] = FILTER_DATES[filter];

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './SchedulerControls.module.scss';
-import { Button } from '@material-ui/core';
+// import { Button } from '@material-ui/core';
 import { NavButtons } from './NavButtons';
 
 export const SchedulerControls = ({

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Login } from './Login';
-import { Dashboard } from './Dashboard';
+import { QuickSched } from './QuickSched';
+import { Calendar } from './Calendar';
 import { Home } from './Home';
 import { SignUp } from './SignUp';
 import { Layout } from './Layout';
@@ -28,7 +29,12 @@ export const Main = () => {
         </Route>
         <Route path={PATH.DASHBOARD}>
           <Layout>
-            <Dashboard />
+            <QuickSched />
+          </Layout>
+        </Route>
+        <Route path={PATH.CALENDAR}>
+          <Layout>
+            <Calendar />
           </Layout>
         </Route>
         <Route path={PATH.SESSIONS}>

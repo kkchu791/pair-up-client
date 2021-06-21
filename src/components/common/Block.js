@@ -12,28 +12,27 @@ import {
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { IconButton } from '@material-ui/core';
 import { BLOCK_TYPE } from '../../constants';
-import { format } from 'date-fns';
 
 export const Block = ({
   block,
   onScheduleClick,
   onBoxClick = () => console.log('on box click'),
 }) => {
-  const {userDetails} = useAuthState();
+  const { userDetails } = useAuthState();
   let { currentBlock } = useSelector(state => state.blocks);
-  const {currentDate} = useSelector(state => state.date);
+  const { currentDateStr } = useSelector(state => state.date);
   const dispatch = useDispatch();
   currentBlock = block ? block : currentBlock;
 
   const handleDelete = () => {
-    dispatch(setBlock(null));
+    dispatch(setBlock({}));
   }
 
   const confirmingCancelClick = () => {
     dispatch(deleteBlock({
       userId: userDetails.id,
       blockId: currentBlock.id,
-      date: format(currentDate, 'yyyy-MM-dd'),
+      date: currentDateStr,
       onSuccess: () => handleDelete(),
       onError: () => {console.log('error delete')},
     }));

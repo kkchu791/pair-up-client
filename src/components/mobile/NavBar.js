@@ -6,8 +6,8 @@ import {
   useAuthDispatch,
 } from '../../context';
 import { Button } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import { Link } from "react-router-dom";
+import { useHistory, Link } from 'react-router-dom';
+
 
 export const NavBar = () => {
   const {userDetails} = useAuthState();

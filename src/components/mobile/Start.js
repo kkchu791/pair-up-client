@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import { StartForm } from './StartForm';
 import { CurrentBlockDisplay } from './CurrentBlockDisplay';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,21 +12,34 @@ import styles from './Start.module.scss';
 import { useAuthState } from '../../context';
 import { startOfWeek, endOfWeek } from 'date-fns';
 import { getCurrentMilitaryTime } from '../../utils';
+import { format } from 'date-fns';
 
 export const Start = () => {
-  const {currentDate} = useSelector(state => state.date);
+  const { currentDateObj } = useSelector(state => state.date);
   const { currentBlock } = useSelector(state => state.blocks);
-  const start = startOfWeek(currentDate, {weekStartsOn: 1});
-  const end = endOfWeek(currentDate, {weekStartsOn: 1});
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
 
-  const handleGetBlocksSuccess = (resp) => {
-    let list = resp[new Date().toISOString().slice(0,10)];
+  const handleGetBlocksSuccess = useCallback((resp) => {
+    const getCurrentBlock = (list) => {
+      if (!list) return
+      let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
+  
+      if (currentBlock) {
+        dispatch(setBlock(currentBlock));
+      }
+    }
+
+    let list = resp[format(new Date(), 'yyyy-MM-dd')];
+  
     getCurrentBlock(list);
-  }
+  }, [dispatch]);
 
   useEffect(() => { 
+
+    const start = startOfWeek(currentDateObj, {weekStartsOn: 1});
+    const end = endOfWeek(currentDateObj, {weekStartsOn: 1});
+
     dispatch(getBlocksByDate({
       start, 
       end,
@@ -34,7 +47,7 @@ export const Start = () => {
       onSuccess: (resp) => handleGetBlocksSuccess(resp),
       onError: () => console.log('errored'),
     }));
-  }, [currentDate, dispatch, userDetails.id]);
+  }, [currentDateObj, dispatch, userDetails.id, handleGetBlocksSuccess]);
 
   useEffect(() => {
     dispatch(getGoals({
@@ -51,17 +64,9 @@ export const Start = () => {
     }));
   }, [dispatch]);
 
-  const getCurrentBlock = (list) => {
-    let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
-
-    if (currentBlock) {
-      dispatch(setBlock(currentBlock));
-    }
-  }
-
   return (
     <div className={styles.container}>
-      {Object.keys(currentBlock) && Object.keys(currentBlock).length > 0 ? <CurrentBlockDisplay /> : <StartForm />}
+      {Object.keys(currentBlock) && Object.keys(currentBlock).length > 1 ? <CurrentBlockDisplay /> : <StartForm />}
     </div>
   )
 }

@@ -8,8 +8,7 @@ import { MediaUploader } from './MediaUploader';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createBlock,
-  updateBlock,
-  setBlock
+  updateBlock
 } from '../../redux/actions';
 import {
   useAuthState

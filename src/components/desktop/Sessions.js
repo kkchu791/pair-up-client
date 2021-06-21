@@ -16,15 +16,15 @@ import { useAuthState } from '../../context';
 
 export const Sessions = () => {
   const blocksByDate = useSelector(state => state.blocksByDate);
-  const {currentDate} = useSelector(state => state.date);
+  const {currentDateObj} = useSelector(state => state.date);
   const { isOpen } = useSelector(state => state.modal);
   const dispatch = useDispatch();
   const { userDetails } = useAuthState();
 
   useEffect(() => {
-    let start = new Date(currentDate)
+    let start = currentDateObj;
     start.setDate(start.getDate() - 6);
-    const end = currentDate;
+    const end = currentDateObj;
     dispatch(getBlocksByDate({
       start, 
       end,
@@ -32,7 +32,7 @@ export const Sessions = () => {
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
     }));
-  }, [getBlocksByDate]);
+  }, [currentDateObj, dispatch, userDetails.id]);
 
   const handleNoteClick = (date) => {
     const blocks = blocksByDate[date];
@@ -41,7 +41,7 @@ export const Sessions = () => {
       date,
     }));
 
-    dispatch(setBlock(null));
+    dispatch(setBlock({}));
 
     dispatch(setGoal({
       id: blocks[0].goal_id,

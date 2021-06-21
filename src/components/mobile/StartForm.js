@@ -9,7 +9,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {GoalSelector} from '../common';
 import { getNearestTimeBlock } from '../../utils';
-import { format } from 'date-fns';
 import { BLOCK_TYPE } from '../../constants';
 
 export const StartForm = () => {
@@ -17,7 +16,7 @@ export const StartForm = () => {
   const {userDetails} = useAuthState();
   const {currentGoal} = useSelector(state => state.goals);
   const timeBlocks = useSelector(state => state.timeBlocks);
-  const {currentDate} = useSelector(state => state.date);
+  const {currentDateStr} = useSelector(state => state.date);
   const dispatch = useDispatch();
 
   const handleInputChange = evt => {
@@ -42,7 +41,7 @@ export const StartForm = () => {
     dispatch(createBlock({
       creator_id: userDetails.id,
       time_block_id: closeTB.id,
-      date: format(currentDate, 'yyyy-MM-dd'),
+      date: currentDateStr,
       task: task.description,
       goal_id: currentGoal.id,
       type: BLOCK_TYPE.REGULAR,
