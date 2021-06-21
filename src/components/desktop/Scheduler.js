@@ -8,6 +8,8 @@ import { TimeGrids } from './TimeGrids';
 export const Scheduler = ({
   dates,
 }) => {
+  
+
   return (
     <div className={styles.container}>
       <SchedulerControls

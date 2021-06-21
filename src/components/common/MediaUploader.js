@@ -10,7 +10,7 @@ export const MediaUploader = ({
   task
 }) => {
   const [mediums, setMediums] = useState(task.images || []);
-  const maxSize = 27000000;
+  // const maxSize = 27000000;
 
   const processMedia = useCallback(async (file) => {
     setMediums(prevState => [...prevState, file]);
@@ -36,7 +36,6 @@ export const MediaUploader = ({
   } = useDropzone({
     onDrop,
     accept: 'image/*,audio/*,video/*',
-    maxSize,
   })
 
   return (

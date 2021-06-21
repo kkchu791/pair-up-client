@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  border: 2px solid blueviolet;
+  justify-content: center;
+  align-items: center;
+  background: #d4e3ee;
+  width: 600px;
+  height: 600px;
+  z-index: 1;
+  border-radius: 6px;
+  position: relative;
+}
+
+.blockInfo {
+  margin: 4px 2px;
+  text-align: center;
+}
+
+.blockButtons {
+  position: absolute;
+  right:0;
+  bottom: 0;
+}
+
+.task {
+  margin: 2px;
+  font-size: 36px;
+}

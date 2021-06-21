@@ -4,8 +4,12 @@ import {Events} from './Events';
 import {ActionBlocks} from './ActionBlocks';
 import {Goals} from './Goals';
 import clsx from 'clsx';
+import { Slide } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 export const ActionsPanel = () => {
+  const drawerIsOpen = useSelector(state => state.drawer.isOpen);
+
   const VIEWS = {
     ACTIONS: 0,
     ACTION_BLOCKS: 1,
@@ -28,25 +32,33 @@ export const ActionsPanel = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.subNav}>
-        <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTIONS)})} onClick={() => handleClick(VIEWS.ACTIONS)}>
-          Notes
+    <Slide
+      direction='left'
+      in={drawerIsOpen}
+      mountOnEnter
+      unmountOnExit
+    >
+      <div className={styles.container}>
+        <div className={styles.subNav}>
+          <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTIONS)})} onClick={() => handleClick(VIEWS.ACTIONS)}>
+            Notes
+          </div>
+
+
+          <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTION_BLOCKS)})} onClick={() => handleClick(VIEWS.ACTION_BLOCKS)}>
+            Action Blocks
+          </div>
+
+          <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.GOALS)})} onClick={() => handleClick(VIEWS.GOALS)}>
+            Goals
+          </div>
         </div>
 
-
-        <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.ACTION_BLOCKS)})} onClick={() => handleClick(VIEWS.ACTION_BLOCKS)}>
-          Action Blocks
-        </div>
-
-        <div className={clsx(styles.navLink, {[styles.active]: isActive(VIEWS.GOALS)})} onClick={() => handleClick(VIEWS.GOALS)}>
-          Goals
+        <div className={styles.actionContainer}>
+          {ACTION_PANEL_COMPONENTS[currentView]}
         </div>
       </div>
-
-
-      {ACTION_PANEL_COMPONENTS[currentView]}
-    </div>
+    </Slide>
   )
 }
 

@@ -15,7 +15,7 @@ import { getCurrentMilitaryTime } from '../../utils';
 import { format } from 'date-fns';
 
 export const Start = () => {
-  const {currentDate} = useSelector(state => state.date);
+  const { currentDateObj } = useSelector(state => state.date);
   const { currentBlock } = useSelector(state => state.blocks);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
@@ -37,8 +37,8 @@ export const Start = () => {
 
   useEffect(() => { 
 
-    const start = startOfWeek(currentDate, {weekStartsOn: 1});
-    const end = endOfWeek(currentDate, {weekStartsOn: 1});
+    const start = startOfWeek(currentDateObj, {weekStartsOn: 1});
+    const end = endOfWeek(currentDateObj, {weekStartsOn: 1});
 
     dispatch(getBlocksByDate({
       start, 
@@ -47,7 +47,7 @@ export const Start = () => {
       onSuccess: (resp) => handleGetBlocksSuccess(resp),
       onError: () => console.log('errored'),
     }));
-  }, [currentDate, dispatch, userDetails.id, handleGetBlocksSuccess]);
+  }, [currentDateObj, dispatch, userDetails.id, handleGetBlocksSuccess]);
 
   useEffect(() => {
     dispatch(getGoals({

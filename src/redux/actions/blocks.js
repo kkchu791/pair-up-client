@@ -3,6 +3,8 @@ import {
   removeBlock as removeBlockApi,
   updateBlock as updateBlockApi,
   getActionBlocks as getActionBlocksApi,
+  getCurrentBlock as getCurrentBlockApi,
+  getUpcomingBlock as getUpcomingBlockApi,
 } from '../../api'
 import {
   removeBlocksByDate,
@@ -10,6 +12,7 @@ import {
 } from './blocksByDate';
 
 export const SET_BLOCK = 'SET_BLOCK';
+export const SET_ACTIVE_BLOCK = 'SET_ACTIVE_BLOCK';
 export const SET_ACTION_BLOCKS = 'SET_ACTION_BLOCKS';
 export const INSERT_ACTION_BLOCK = 'INSERT_ACTION_BLOCK';
 export const UPDATE_ACTION_BLOCK = 'UPDATE_ACTION_BLOCK';
@@ -17,6 +20,11 @@ export const REMOVE_ACTION_BLOCK = 'REMOVE_ACTION_BLOCK';
 
 export const setBlock = (block) => ({
   type: SET_BLOCK,
+  block
+});
+
+export const setActiveBlock = (block) => ({
+  type: SET_ACTIVE_BLOCK,
   block
 });
 
@@ -61,6 +69,51 @@ export const getActionBlocks = ({
   };
 }
 
+export const getActiveBlock = ({
+  userId,
+  onSuccess,
+  onError,
+}) => {
+  return async (dispatch, getState) => {
+    return await getCurrentBlockApi({
+      userId
+    }).then((response) => {
+      if (response.success) {
+        if (response.data.length === 0) {
+          dispatch(getUpcomingBlock({userId}));
+        } else {
+          dispatch(setActiveBlock(response.data));
+          dispatch(setBlock(response.data));
+        }
+        onSuccess();
+      } else {
+        onError(response.error);
+      }
+    });
+  };
+}
+
+export const getUpcomingBlock = ({
+  userId,
+  onSuccess = () => console.log('get upcoming success'),
+  onError = () => console.log('get upcoming failure'),
+}) => {
+  return async (dispatch, getState) => {
+    return await getUpcomingBlockApi({
+      userId
+    }).then((response) => {
+      if (response.success) {
+        dispatch(setActiveBlock(response.data));
+        dispatch(setBlock(response.data));
+        onSuccess();
+      } else {
+        onError(response.error);
+      }
+    });
+  };
+}
+
+
 export const createBlock = ({
     creator_id,
     time_block_id,
@@ -87,7 +140,6 @@ export const createBlock = ({
       if (response.success) {
         onSuccess(response);
         const newBlock = response.data;
-
         if (newBlock.time_block_id) {
           dispatch(insertBlocksByDate({
             block: newBlock,
@@ -96,6 +148,9 @@ export const createBlock = ({
         } else {
           dispatch(insertActionBlock(newBlock));
         }
+
+        dispatch(setBlock(response.data));
+        dispatch(setActiveBlock(response.data));
       } else {
         onError(response.error);
       }
@@ -153,6 +208,7 @@ return async (dispatch, getState) => {
       }
 
       dispatch(setBlock(response.data));
+      getState().timer.status === 'end'  ? dispatch(setActiveBlock({})) : dispatch(setActiveBlock(response.data));
     } else {
       onError(response.error);
     }

@@ -11,7 +11,7 @@ const blocksByDateReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_BLOCKS_BY_DATE:
       return action.blocks;
-    case INSERT_BLOCKS_BY_DATE:    
+    case INSERT_BLOCKS_BY_DATE:
       state[action.date] = [...state[action.date], action.block];
       return state;
     case UPDATE_BLOCKS_BY_DATE:      

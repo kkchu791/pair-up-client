@@ -1,24 +1,24 @@
 import React from 'react';
-import styles from './Block.module.scss';
-import {convertTimeTo24} from '../../utils';
+import styles from './QuickSchedBlock.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuthState } from '../../context';
-import { CancellingButtons } from './CancellingButtons';
-import { RescheduleButtons } from './RescheduleButtons';
+import { CancellingButtons } from '../common/CancellingButtons';
+import { RescheduleButtons } from '../common/RescheduleButtons';
 import {
   deleteBlock,
   setBlock,
+  toggleModal,
+  setGoal,
 } from '../../redux/actions';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { IconButton } from '@material-ui/core';
 import { BLOCK_TYPE } from '../../constants';
 
-export const Block = ({
+export const QuickSchedBlock = ({
   block,
-  onScheduleClick,
-  onBoxClick = () => console.log('on box click'),
+  onScheduleClick = () => console.log('on schedule click'),
 }) => {
-  const { userDetails } = useAuthState();
+  const {userDetails} = useAuthState();
   let { currentBlock } = useSelector(state => state.blocks);
   const { currentDateStr } = useSelector(state => state.date);
   const dispatch = useDispatch();
@@ -26,6 +26,15 @@ export const Block = ({
 
   const handleDelete = () => {
     dispatch(setBlock({}));
+  }
+
+  const onBoxClick = () => {
+    dispatch(toggleModal({isOpen: true}))
+
+    dispatch(setGoal({
+      id: currentBlock.goal_id,
+      name: currentBlock.goal_name,
+    }));
   }
 
   const confirmingCancelClick = () => {
@@ -49,19 +58,13 @@ export const Block = ({
       className={styles.container}
     >
       <div className={styles.blockInfo}>
-        {currentBlock.time_block_id &&
-          <div className={styles.time}>
-            {convertTimeTo24(currentBlock.start_time)} - 
-            {convertTimeTo24(currentBlock.end_time)}
-          </div>
-        }
         <div className={styles.task}>
           {currentBlock.task}
         </div>
       </div>
 
       <div className={styles.blockType}>
-        {block.type === BLOCK_TYPE['IMPROVEMENT'] ?
+        {currentBlock.type === BLOCK_TYPE['IMPROVEMENT'] ?
           <IconButton
             size={'small'}
           >
@@ -83,4 +86,4 @@ export const Block = ({
   )
 }
 
-export default Block;
+export default QuickSchedBlock;

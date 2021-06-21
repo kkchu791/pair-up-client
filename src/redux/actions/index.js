@@ -50,7 +50,26 @@ export {
   removeActionBlock,
   SET_BLOCK,
   setBlock,
+  SET_ACTIVE_BLOCK,
+  setActiveBlock,
   createBlock,
   deleteBlock,
   updateBlock,
+  getActiveBlock,
 } from './blocks';
+
+export {
+  TOGGLE_DRAWER,
+  toggleDrawer,
+} from './drawer';
+
+
+export {
+  PLAY_AUDIO,
+  playAudio,
+} from './audio';
+
+export {
+  SET_TIMER,
+  setTimer,
+} from './timer';

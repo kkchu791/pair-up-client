@@ -1,6 +1,7 @@
 export const SET_DATE = "SET_DATE";
 
-export const setDate = (payload) => ({
+export const setDate = ({dateObj, dateStr}) => ({
   type: SET_DATE,
-  date: payload
+  dateObj: dateObj,
+  dateStr: dateStr,
 });

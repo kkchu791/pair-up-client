@@ -24,7 +24,7 @@ export const InactiveBlock = ({
 
     dispatch(setBlock({
       date,
-      timeBlockId: timeBlock.id,
+      time_block_id: timeBlock.id,
       type: BLOCK_TYPE.REGULAR,
     }))
   }

@@ -5,14 +5,18 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {useDispatch, useSelector} from 'react-redux';
 import { setDate } from '../../redux/actions';
+import { format } from 'date-fns';
 
 export const NavButtons = () => {
   const dispatch = useDispatch();
-  const { currentDate } = useSelector(state => state.date);
+  const { currentDateObj } = useSelector(state => state.date);
   
   const moveClick = (direction) => {
-    direction === 'forward' ? currentDate.setDate(currentDate.getDate() + 7) : currentDate.setDate(currentDate.getDate() - 7);
-    dispatch(setDate(currentDate));
+    direction === 'forward' ? currentDateObj.setDate(currentDateObj.getDate() + 7) : currentDateObj.setDate(currentDateObj.getDate() - 7);
+    dispatch(setDate({
+      dateObj: currentDateObj,
+      dateStr: format(currentDateObj, 'yyyy-MM-dd'),
+    }));
   }
 
   return (

@@ -17,8 +17,8 @@ export const convertTimeTo24Grid = (timeString) => {
 export const roundMinutes = (date) => {
   date.setHours(date.getHours() + Math.floor(date.getMinutes()/60));
   date.setMinutes(0, 0, 0);
-  date = date.toTimeString().split(' ')[0];
-  return date;
+  const time = date.toTimeString().split(' ')[0];
+  return time;
 };
 
 export const isStartOfHour = (time) => {
@@ -26,6 +26,5 @@ export const isStartOfHour = (time) => {
 };
 
 export const getCurrentMilitaryTime = () => {
-  console.log(format(new Date(), 'kk:mm:ss'));
   return format(new Date(), 'kk:mm:ss');
 }

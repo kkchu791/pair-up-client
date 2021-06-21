@@ -3,7 +3,7 @@ export {
   blockStatuses,
   BLOCK_TYPE
 } from './blocks';
-export { PAGES } from './subnav';
+export { PAGES, PAGE_PATH } from './subnav';
 export { PATH } from './routes';
 export {
   FILTERS,

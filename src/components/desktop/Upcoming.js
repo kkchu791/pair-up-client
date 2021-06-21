@@ -18,7 +18,7 @@ export const Upcoming = () => {
       if (response.data) {
         setBlock(response.data)
       } else {
-        setBlock(null);
+        setBlock({};
       }
     };
 
