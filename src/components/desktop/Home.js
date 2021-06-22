@@ -7,8 +7,8 @@ export const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>
-        <h1>Greatness Go - Prod</h1>
-        <h3>An improvement tracking app</h3>
+        <h1>Greatness Go - Productions</h1>
+        <h3>An improvement tracking app - changes</h3>
       </div>
 
       <div className={styles.authButtons}>
