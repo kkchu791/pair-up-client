@@ -24,15 +24,15 @@ export const Timer = ({
       const seconds = differenceInSeconds(endDate, startDate);
       setSeconds(seconds);
     }, 1000);
-
-    console.log(seconds, 'seconds')
   
     if (seconds === 1 && isStarting) {
+      console.log('is begin')
       onBeginning();
       clearInterval(interval)
     }
 
     if (seconds < 0 && !isStarting) {
+      console.log('is ending')
       onEnding();
       clearInterval(interval)
     }
@@ -43,8 +43,7 @@ export const Timer = ({
     dispatch,
     isStarting,
     seconds,
-    onBeginning,
-    onEnding,
+
   ]);
   
   return (

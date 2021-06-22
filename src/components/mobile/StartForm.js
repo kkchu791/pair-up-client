@@ -36,6 +36,8 @@ export const StartForm = () => {
     }));
   }
 
+  console.log(currentDateStr, 'what is this')
+
   const handleStartClick = () => {
     let closeTB = getNearestTimeBlock(timeBlocks);
     dispatch(createBlock({
