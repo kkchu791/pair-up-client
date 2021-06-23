@@ -10,11 +10,11 @@ export const MediaList = ({
 }) => {
   const renderMedia = (media) => {
     if (MEDIA_TYPES.IMAGE.includes(media.type)) {
-      return <ImageItem image={media} />
+      return <div key={media.url}><ImageItem image={media} /></div>
     } else if (MEDIA_TYPES.AUDIO.includes(media.type)) {
-      return <AudioItem audio={media} />
+      return  <div key={media.url}><AudioItem audio={media} /></div>
     } else if (MEDIA_TYPES.VIDEO.includes(media.type)) {
-      return <VideoItem video={media} />
+      return  <div key={media.url}><VideoItem video={media} /></div>
     }
   }
 

@@ -3,17 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './CurrentBlockDisplay.module.scss';
 import { Block, Timer, BlockForm } from '../common';
 import {
-  toggleModal,
   playAudio, 
-  setGoal,
   setTimer,
+  setActiveBlock,
  } from '../../redux/actions';
 import lets_go from '../../audio/lets_go.wav';
 import ReactAudioPlayer from 'react-audio-player';
 
 export const CurrentBlockDisplay = () => {
   const { activeBlock } = useSelector(state => state.blocks);
-  const {currentGoal} = useSelector(state => state.goals);
   const {isPlaying} = useSelector(state => state.audio);
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
@@ -24,22 +22,20 @@ export const CurrentBlockDisplay = () => {
 
   const handleBeginning = () => {
     dispatch(playAudio({isPlaying: true}));
-    dispatch(toggleModal({isOpen: true}));
-    dispatch(setGoal({ id: activeBlock.goal_id, name: activeBlock.goal_name }));
     dispatch(setTimer({status: 'start'}))
   }
 
   const handleEnding = () => {
     dispatch(playAudio({isPlaying: true}));
-    dispatch(toggleModal({isOpen: true}));
-    dispatch(setGoal({ id: activeBlock.goal_id, name: activeBlock.goal_name }));
+    dispatch(setActiveBlock({}));
     dispatch(setTimer({ status: 'end' }));
+    
   }
  
   return (
     <div className={styles.container}>
       <div className={styles.goal}>
-        {activeBlock.goal_name || currentGoal.name}
+        {activeBlock.goal_name}
       </div>
 
       <div className={styles.timer}>
@@ -49,12 +45,6 @@ export const CurrentBlockDisplay = () => {
           onEnding={handleEnding}
         />
       </div>
-
-      {isPlaying && <ReactAudioPlayer
-        src={lets_go}
-        autoPlay
-        controls={false}
-      />}
 
       
       {isEditing ?
@@ -72,6 +62,12 @@ export const CurrentBlockDisplay = () => {
           />
         </div>
       }
+
+      {isPlaying && <ReactAudioPlayer
+        src={lets_go}
+        autoPlay
+        controls={false}
+      />}
     </div>
   )
 }

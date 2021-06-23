@@ -9,7 +9,9 @@ import {
 import {
   removeBlocksByDate,
   insertBlocksByDate,
+  updateBlocksByDate,
 } from './blocksByDate';
+import { BLOCK_TYPE } from '../../constants'
 
 export const SET_BLOCK = 'SET_BLOCK';
 export const SET_ACTIVE_BLOCK = 'SET_ACTIVE_BLOCK';
@@ -113,7 +115,6 @@ export const getUpcomingBlock = ({
   };
 }
 
-
 export const createBlock = ({
     creator_id,
     time_block_id,
@@ -187,10 +188,17 @@ return async (dispatch, getState) => {
       onSuccess(response);
       const updatedBlock = response.data;
       if (updatedBlock.time_block_id) {
-        dispatch(insertBlocksByDate({
-          block: updatedBlock,
-          date
-        }));
+        if (updatedBlock.type === BLOCK_TYPE.IMPROVEMENT) {
+          dispatch(insertBlocksByDate({
+            block: updatedBlock,
+            date
+          }));  
+        } else {
+          dispatch(updateBlocksByDate({
+            block: updatedBlock,
+            date
+          }));  
+        }
 
         dispatch(removeActionBlock(updatedBlock));
       } else {

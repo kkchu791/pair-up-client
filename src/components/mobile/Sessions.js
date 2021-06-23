@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './Sessions.module.scss';
-import { Filter, Summary } from '../common';
 import { SessionList } from './SessionList';
 import {useSelector, useDispatch} from 'react-redux';
-import { getBlocksByDate } from '../../redux/actions';
+import { getBlocksByDate, toggleModal } from '../../redux/actions';
 import { FILTER_DATES} from '../../constants';
 import { useAuthState } from '../../context';
+import { Filter, Summary, BlockForm } from '../common';
 
 export const Sessions = () => {
   let blocks = useSelector(state => state.blocksByDate);
+  let {isOpen} = useSelector(state => state.modal);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
 
@@ -27,27 +28,47 @@ export const Sessions = () => {
     }));
   }
 
+  useEffect(() => {
+    const [start, end] = FILTER_DATES.day;
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      userId: userDetails.id,
+      onSuccess: (resp) => console.log('success'),
+      onError: () => console.log('errored'),
+    }));
+  }, [dispatch, userDetails.id]);
+
   return (
     <div className={styles.container}>
-      <div className={styles.filters}>
-        <Filter
-          onFilterClick={handleFilterClick}
-        />
-      </div>
 
-      <div className={styles.blockSummary}>
-        <Summary
-          blocks={blocks}
-        />
-      </div>
+      {isOpen ?
+        <div className={styles.blockForm}>
+          <BlockForm
+            onClose={() => dispatch(toggleModal({isOpen: false}))}
+          />
+        </div>
 
-      <div className={styles.list}>
-        <SessionList
+        :
 
-        />
-      </div>
+        <div>
+          <div className={styles.filters}>
+            <Filter
+              onFilterClick={handleFilterClick}
+            />
+          </div>
 
+          <div className={styles.blockSummary}>
+            <Summary
+              blocks={blocks}
+            />
+          </div>
 
+          <div className={styles.list}>
+            <SessionList />
+          </div>
+        </div>
+      }
     </div>
   )
 }

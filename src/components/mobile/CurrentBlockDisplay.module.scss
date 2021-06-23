@@ -3,16 +3,16 @@
 }
 
 .goal {
-  border:1px solid black;
-  height: 80px;
+  border: 1px solid black;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 18px;
 }
 
 .timer {
-  border:1px solid black;
+  border: 1px solid black;
   height: 100px;
   display: flex;
   align-items: center;
@@ -23,7 +23,7 @@
 }
 
 .currentBlockContainer {
-  top: 25%;
+  top: 15%;
   transform: translateY(-25%);
   position: relative;
   margin: 0 auto;

@@ -15,6 +15,7 @@ export const AudioItem = ({
         src={audioUrl}
         controls
         type="audio/mpeg"
+        className={styles.thumbnail}
       />
     </div>
   )
