@@ -118,6 +118,7 @@ export const TaskForm = () => {
               name="description"
               value={task.description || ''}
               onChange={handleInputChange}
+              placeholder='task...'
             />
           </div>
 

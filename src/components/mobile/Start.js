@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect } from 'react';
 import { StartForm } from './StartForm';
 import { CurrentBlockDisplay } from './CurrentBlockDisplay';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,37 +6,27 @@ import {
   getGoals,
   getTimeBlocks,
   getBlocksByDate,
-  setBlock,
+  getActiveBlock,
 } from '../../redux/actions';
 import styles from './Start.module.scss';
 import { useAuthState } from '../../context';
 import { startOfWeek, endOfWeek } from 'date-fns';
-import { getCurrentMilitaryTime } from '../../utils';
-import { format } from 'date-fns';
 
 export const Start = () => {
   const { currentDateObj } = useSelector(state => state.date);
-  const { currentBlock } = useSelector(state => state.blocks);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
-
-  const handleGetBlocksSuccess = useCallback((resp) => {
-    const getCurrentBlock = (list) => {
-      if (!list) return
-      let currentBlock = list.find(bl => bl.end_time > getCurrentMilitaryTime());
-  
-      if (currentBlock) {
-        dispatch(setBlock(currentBlock));
-      }
-    }
-
-    let list = resp[format(new Date(), 'yyyy-MM-dd')];
-  
-    getCurrentBlock(list);
-  }, [dispatch]);
+  const { activeBlock } = useSelector(state => state.blocks);
 
   useEffect(() => { 
+    dispatch(getActiveBlock({
+      userId: userDetails.id,
+      onSuccess: () => console.log(' on success fetch current'),
+      onError: () => console.log('on error fetch current'),
+    }))
+  }, [dispatch, userDetails.id]);
 
+  useEffect(() => {
     const start = startOfWeek(currentDateObj, {weekStartsOn: 1});
     const end = endOfWeek(currentDateObj, {weekStartsOn: 1});
 
@@ -44,10 +34,10 @@ export const Start = () => {
       start, 
       end,
       userId: userDetails.id,
-      onSuccess: (resp) => handleGetBlocksSuccess(resp),
+      onSuccess: (resp) => console.log('success'),
       onError: () => console.log('errored'),
     }));
-  }, [currentDateObj, dispatch, userDetails.id, handleGetBlocksSuccess]);
+  }, [currentDateObj, dispatch, userDetails.id]);
 
   useEffect(() => {
     dispatch(getGoals({
@@ -66,7 +56,7 @@ export const Start = () => {
 
   return (
     <div className={styles.container}>
-      {Object.keys(currentBlock) && Object.keys(currentBlock).length > 1 ? <CurrentBlockDisplay /> : <StartForm />}
+      {Object.keys(activeBlock).length > 4 ? <CurrentBlockDisplay /> : <StartForm />}
     </div>
   )
 }

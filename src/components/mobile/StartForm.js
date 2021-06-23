@@ -36,8 +36,6 @@ export const StartForm = () => {
     }));
   }
 
-  console.log(currentDateStr, 'what is this')
-
   const handleStartClick = () => {
     let closeTB = getNearestTimeBlock(timeBlocks);
     dispatch(createBlock({
@@ -54,19 +52,26 @@ export const StartForm = () => {
 
   return (
     <div className={styles.container}>
-      <GoalSelector />
 
-      <TextField
-        variant="outlined"
-        margin="normal"
-        id="description"
-        label="Task"
-        name="description"
-        size='small'
-        value={task.description || ''}
-        className={styles.task}
-        onChange={handleInputChange}
-      />
+
+      <div className={styles.description}>
+        <TextField
+          fullWidth
+          size='small'
+          id="description"
+          inputProps={{style: {
+            fontSize: 40,
+            fontWeight: '600'
+          }}}
+          name="description"
+          value={task.description || ''}
+          onChange={handleInputChange}
+        />
+      </div>
+
+      <div className={styles.goalSelector}>
+        <GoalSelector />
+      </div>
 
       <Button
         variant="contained"

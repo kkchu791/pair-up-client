@@ -46,11 +46,11 @@ export const GoalSelector = () => {
         defaultValue={{
           label: goal.name,
           value: goal.id
-        }}
+        } || ''}
         value={{
           label: goal.name,
           value: goal.id
-        }}
+        } || ''}
       />
     </div>
   )

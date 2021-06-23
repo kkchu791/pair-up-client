@@ -11,7 +11,7 @@ export const VideoItem = ({
       className={styles.container}
       key={videoUrl}
     >
-      <video width="750" height="500" controls >
+      <video controls  className={styles.thumbnail}>
         <source
           src={videoUrl}
           type="video/mp4"

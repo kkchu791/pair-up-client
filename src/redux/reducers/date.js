@@ -3,11 +3,9 @@ import {
 } from '../actions';
 import {format} from 'date-fns';
 
-const currDate = format(new Date(), 'yyyy-MM-dd');
-
 const initialState = {
-  currentDateObj: new Date(`${currDate} 00:00:00`),
-  currentDateStr: currDate, 
+  currentDateObj: new Date(),
+  currentDateStr: format(new Date(), 'yyyy-MM-dd'), 
 };
 
 const dateReducer = (state = initialState, action) => {

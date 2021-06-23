@@ -2,4 +2,11 @@
   padding: 15px;
   height: 83%;
   overflow-y: scroll;
+  height: 100%;
+}
+
+.blockForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

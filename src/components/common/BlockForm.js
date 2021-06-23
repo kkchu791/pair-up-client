@@ -14,6 +14,7 @@ import {
   useAuthState
 } from '../../context';
 import { format } from 'date-fns';
+import {CircularProgress} from '@material-ui/core';
 
 export const BlockForm = ({
   onClose
@@ -22,6 +23,7 @@ export const BlockForm = ({
   const {currentGoal} = useSelector(state => state.goals);
   const dispatch = useDispatch();
   const { userDetails } = useAuthState();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [task, setTask] = useState({
     description: currentBlock.task,
     goalId: currentBlock.goal_id,
@@ -41,6 +43,7 @@ export const BlockForm = ({
   }
 
   const handleSuccess = () => {
+    setIsSubmitting(false);
     onClose(false)
   }
 
@@ -48,8 +51,10 @@ export const BlockForm = ({
     console.log('error in creating or updating');
   }
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true);
     if (task.id) {
       dispatch(updateBlock({
         id: task.id,
@@ -82,11 +87,13 @@ export const BlockForm = ({
     <div className={styles.container}>
       <div className={styles.description}>
         <TextField
-          variant="outlined"
-          margin="normal"
           fullWidth
+          size='small'
           id="description"
-          label="Description"
+          inputProps={{style: {
+            fontSize: 40,
+            fontWeight: '600'
+          }}}
           name="description"
           value={task.description || ''}
           onChange={handleInputChange}
@@ -124,7 +131,19 @@ export const BlockForm = ({
           className={styles.submit}
           onClick={handleSubmit}
         >
-          Save Task
+          {isSubmitting ? 
+            <div className={styles.submitting}>
+              Saving...
+              <CircularProgress
+                className={styles.spinner}
+                size={20}
+              />
+            </div>
+            :
+            <div className={styles.submitText}>
+              Save Task
+            </div>
+          }
         </Button>
 
         <Button

@@ -1,42 +1,32 @@
 import React from 'react';
 import styles from './SessionBlock.module.scss';
+import { useDispatch } from 'react-redux';
+import {
+  setBlock,
+  toggleModal,
+} from '../../redux/actions';
 
 export const SessionBlock = ({
   block
 }) => {
+  const dispatch = useDispatch();
 
+  const onBlockClick = () => {
+    dispatch(setBlock(block));
+    dispatch(toggleModal({isOpen: true}))
+  }
 
   return (
-    <div
-      className={styles.container}
-      style={{border: `3px solid ${block.color}`}}
+    <div className={styles.container}
+      onClick={() => onBlockClick()}
     >
-      <div className={styles.imageContainer}>
-        {block.images && 
-          block.images.map(image => {
-          return (
-            <div
-              className={styles.imageContainer}
-              key={image.url}
-            >
-              <img
-                className={styles.image}
-                src={image.url}
-                alt={image.name}
-              />
-            </div>
-          )
-        })}
+      <div
+        className={styles.color}
+        style={{background: block.color}}
+      >
       </div>
-
-      <div className={styles.blockInfoContainer}>
-        <div className={styles.name}>
-          {block.task}
-        </div>
-
-        <div className={styles.note}>
-          {block.note}
-        </div>
+      <div className={styles.name}>
+        {block.task}
       </div>
     </div>
   )

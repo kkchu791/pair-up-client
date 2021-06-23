@@ -1,3 +1,11 @@
 .container {
-  border: 1px dotted lightgrey;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+.thumbnail {
+  width: 100%;
 }
