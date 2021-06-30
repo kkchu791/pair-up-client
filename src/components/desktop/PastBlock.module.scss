@@ -3,10 +3,14 @@
   border: 1px solid blueviolet;
   justify-content: space-between;
   background: #d4e3ee;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   top: 0;
   left: 0;
   z-index: 1;
   border-radius: 3px;
+}
+
+.task {
+  font-size: 10px;
 }

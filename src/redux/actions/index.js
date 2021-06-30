@@ -73,3 +73,8 @@ export {
   SET_TIMER,
   setTimer,
 } from './timer';
+
+export {
+  SET_FILTER,
+  setFilter,
+} from './filter';

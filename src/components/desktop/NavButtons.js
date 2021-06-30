@@ -4,18 +4,45 @@ import { Button, IconButton } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import {useDispatch, useSelector} from 'react-redux';
-import { setDate } from '../../redux/actions';
+import {
+  setDate,
+  getBlocksByDate,
+} from '../../redux/actions';
 import { format } from 'date-fns';
+import { DAYS } from '../../constants';
+import { FILTER_DATES } from '../../constants';
+import { useAuthState } from '../../context';
 
 export const NavButtons = () => {
   const dispatch = useDispatch();
   const { currentDateObj } = useSelector(state => state.date);
-  
+  const { range, search, goalId } = useSelector(state => state.filter);
+  const { userDetails } = useAuthState();
+
   const moveClick = (direction) => {
-    direction === 'forward' ? currentDateObj.setDate(currentDateObj.getDate() + 7) : currentDateObj.setDate(currentDateObj.getDate() - 7);
+    direction === 'forward' ? currentDateObj.setDate(currentDateObj.getDate() + DAYS[range]) : currentDateObj.setDate(currentDateObj.getDate() - DAYS[range]);
     dispatch(setDate({
       dateObj: currentDateObj,
       dateStr: format(currentDateObj, 'yyyy-MM-dd'),
+    }));
+
+    const [start, end] = FILTER_DATES[range](currentDateObj)
+
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      search,
+      goalId,
+      userId: userDetails.id,
+      onSuccess: () => console.log('success'),
+      onError: () => console.log('errored'),
+    }));
+  }
+
+  const handleTodayClick = () => {
+    dispatch(setDate({
+      dateObj: new Date(),
+      dateStr: format(new Date(), 'yyyy-MM-dd'),
     }));
   }
 
@@ -31,26 +58,28 @@ export const NavButtons = () => {
         </Button>
       </div> */}
 
-      <div className={styles.todayButton}>
+      <div className={styles.navButtons}>
+        <IconButton
+          color='primary'
+          onClick={() => moveClick('back')}
+          size='small'
+        >
+          <ArrowBackIosIcon />
+        </IconButton>
+
+        <div className={styles.todayButton}>
         <Button
-          onClick={() => console.log('today button clicked')}
+          onClick={() => handleTodayClick()}
           color="primary"
           variant="outlined"
         >
           Today
         </Button>
-      </div>
-
-      <div className={styles.navButtons}>
-        <IconButton
-          color='primary'
-          onClick={() => moveClick('back')}
-        >
-          <ArrowBackIosIcon />
-        </IconButton>
+        </div>
         <IconButton
           color='primary'
           onClick={() => moveClick('forward')}
+          size='small'
         >
           <ArrowForwardIosIcon />
         </IconButton>

@@ -9,7 +9,7 @@ import {
   const modalReducer = (state = initialState, action) => {
     switch (action.type) {
       case TOGGLE_MODAL:
-        return { ...state, ...action.payload };;
+        return { ...state, ...action.payload };
       default:
         return state;
     }

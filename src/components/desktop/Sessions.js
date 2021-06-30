@@ -1,30 +1,44 @@
 import React, { useEffect } from 'react';
 import styles from './Sessions.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import {PastBlock} from './PastBlock';
+import {SessionList } from './SessionList';
 import {
   getBlocksByDate,
   toggleModal,
-  setBlock,
-  setGoal,
+  setDate,
+  setFilter
 } from '../../redux/actions';
-import NoteOutlinedIcon from '@material-ui/icons/NoteOutlined';
-import { IconButton } from '@material-ui/core';
 import { TaskModal } from './TaskModal';
 import { Retrospective } from './Retrospective';
 import { useAuthState } from '../../context';
+import { Filter, Summary, Search } from '../common';
+import { FILTER_DATES } from '../../constants';
+import { NavButtons } from './NavButtons';
+import { format } from 'date-fns';
 
 export const Sessions = () => {
-  const blocksByDate = useSelector(state => state.blocksByDate);
+  const dispatch = useDispatch();
   const {currentDateObj} = useSelector(state => state.date);
   const { isOpen } = useSelector(state => state.modal);
-  const dispatch = useDispatch();
+  const { range } = useSelector(state => state.filter);
   const { userDetails } = useAuthState();
+  const [start, end] = FILTER_DATES[range](currentDateObj);
+  
+  useEffect(() => {
+    dispatch(setDate({
+      dateObj: new Date(),
+      dateStr: format(new Date(), 'yyyy-MM-dd'),
+    }));
+  }, [])
 
   useEffect(() => {
-    let start = currentDateObj;
-    start.setDate(start.getDate() - 6);
-    const end = currentDateObj;
+    dispatch(setFilter({
+      range: 'week',
+      search: null,
+    }));
+  }, [])
+
+  useEffect(() => {
     dispatch(getBlocksByDate({
       start, 
       end,
@@ -32,28 +46,12 @@ export const Sessions = () => {
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
     }));
-  }, [currentDateObj, dispatch, userDetails.id]);
-
-  const handleNoteClick = (date) => {
-    const blocks = blocksByDate[date];
-    dispatch(toggleModal({
-      isOpen: true,
-      date,
-    }));
-
-    dispatch(setBlock({}));
-
-    dispatch(setGoal({
-      id: blocks[0].goal_id,
-      name: blocks[0].goal_name,
-      note: blocks[0].goal_note,
-    }));
-  }
+  }, [dispatch, userDetails.id, range, currentDateObj]);
 
   const closeModal = () => {
     dispatch(toggleModal({isOpen: false}));
   }
-
+  
   return (
     <div className={styles.container}>
       <TaskModal
@@ -62,40 +60,20 @@ export const Sessions = () => {
       >
         <Retrospective />
       </TaskModal>
-      {
-        Object.keys(blocksByDate).map((date)=> {
-          return (
-            <div
-              key={date}
-              className={styles.dayColumn}
-            >
-              <div className={styles.header}>
 
-                <div className={styles.date}>
-                  {new Date(date + ' 00:00:00').toLocaleDateString('en-US', { weekday: 'short' })}&nbsp;
-                  {new Date(date + ' 00:00:00').getMonth()}/{new Date(date + ' 00:00:00').getDate()}
-                </div>
+      <div className={styles.sideBarFilter}>
+        <div className={styles.filters}>
+          <NavButtons />
+          <Filter />
+        </div>
+        <Search />
+        <Summary />
+      </div>
 
-                <div className={styles.noteIcon}>
-                  <IconButton color='primary'>
-                    <NoteOutlinedIcon onClick={() => handleNoteClick(date)} />
-                  </IconButton>
-                </div>
+      <div className={styles.listContainer}>
+        <SessionList />       
+      </div>
 
-              </div>
-              {blocksByDate[date].map(block => {
-                return (
-                  <div key={block.id} className={styles.blockContainer}>
-                    <PastBlock
-                      block={block}
-                    />
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })
-      }
 
     </div>
   )

@@ -1,6 +1,6 @@
 import {
-  startOfToday,
-  endOfToday,
+  startOfDay,
+  endOfDay,
   startOfWeek,
   endOfWeek,
   startOfMonth,
@@ -10,15 +10,22 @@ import {
 }  from 'date-fns';
 
 export const FILTERS = {
-  day: 'D',
-  week: 'W',
-  month: 'M',
+  day: 'day',
+  week: 'week',
+  month: 'month',
   all: 'All',
 }
 
 export const FILTER_DATES = {
-  day: [startOfToday(), endOfToday()],
-  week: [startOfWeek(new Date(), { weekStartsOn: 1 }), endOfWeek(new Date(), { weekStartsOn: 1 })],
-  month: [startOfMonth(new Date()), endOfMonth(new Date())],
-  all: [startOfYear(new Date()), endOfYear(new Date())],
+  day: (date) => [startOfDay(date), endOfDay(date)],
+  week: (date) => [startOfWeek(date, { weekStartsOn: 1 }), endOfWeek(date, { weekStartsOn: 1 })],
+  month: (date) => [startOfMonth(date), endOfMonth(date)],
+  all: (date) => [startOfYear(date), endOfYear(date)],
+}
+
+export const DAYS = {
+  day: 1,
+  week: 7,
+  month: 30,
+  all: 0,
 }

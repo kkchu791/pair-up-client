@@ -8,14 +8,10 @@ import { useAuthState } from '../../context';
 import { Filter, Summary, BlockForm } from '../common';
 
 export const Sessions = () => {
-  let blocks = useSelector(state => state.blocksByDate);
   let {isOpen} = useSelector(state => state.modal);
   const dispatch = useDispatch();
   const {userDetails} = useAuthState();
-
-  blocks = Object.keys(blocks).reduce((acc, date) => {
-    return [...acc, ...blocks[date]];
-  }, []);
+  const { currentDateObj } = useSelector(state => state.date);
 
   const handleFilterClick = (filter) => {
     const [start, end] = FILTER_DATES[filter];
@@ -29,7 +25,7 @@ export const Sessions = () => {
   }
 
   useEffect(() => {
-    const [start, end] = FILTER_DATES.day;
+    const [start, end] = FILTER_DATES.day(currentDateObj);
     dispatch(getBlocksByDate({
       start, 
       end,
@@ -59,9 +55,7 @@ export const Sessions = () => {
           </div>
 
           <div className={styles.blockSummary}>
-            <Summary
-              blocks={blocks}
-            />
+            <Summary />
           </div>
 
           <div className={styles.list}>

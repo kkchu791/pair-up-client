@@ -1,19 +1,28 @@
 .container {
   display: flex;
+  
+  width: 100%;
+  overflow-x: scroll;
 }
 
-.dayColumn {
-  margin: 0 10px;
+.sideBarFilter {
+  padding: 30px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.sessionList {
+  
 }
+
 
 .blockContainer {
   position: relative;
   width: 148px;
   height: 154px
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
 }

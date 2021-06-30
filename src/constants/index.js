@@ -8,6 +8,7 @@ export { PATH } from './routes';
 export {
   FILTERS,
   FILTER_DATES,
+  DAYS,
 } from './sessions';
 export { MEDIA_TYPES } from './uploader';
 export { EDITOR_TYPES } from './taskForm';

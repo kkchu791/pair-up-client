@@ -1,11 +1,34 @@
 .container {
+  margin: 20px;
+  width: 290px;
+}
+
+.top {
   border: 1px solid black;
   border-radius: 3px;
   height: 100px;
-  width: 290px;
-  margin: 20px;
+
+  
   display: flex;
   align-items: center;
+}
+
+.bottom {
+  border: 1px solid black;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.note {
+  
+}
+
+.text {
+  margin: 5px 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .name {  

@@ -3,6 +3,7 @@ import styles from './SessionList.module.scss';
 import { useSelector } from 'react-redux';
 import { SessionBlock } from '../common';
 
+
 export const SessionList = () => {
   const {blocksByDate} = useSelector(state => state);
 

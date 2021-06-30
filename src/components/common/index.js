@@ -9,3 +9,4 @@ export { Summary } from './Summary';
 export { SessionBlock } from './SessionBlock';
 export { SlateEditor } from './SlateEditor';
 export { Error } from './Error';
+export { Search } from './Search';

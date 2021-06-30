@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Filter.module.scss';
 import {Button, ButtonGroup} from '@material-ui/core';
-import { FILTERS } from '../../constants';
+import { FILTERS, FILTER_DATES } from '../../constants';
 import clsx from 'clsx';
+import {
+  setFilter,
+  getBlocksByDate
+} from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAuthState } from '../../context';
 
-export const Filter = ({
-  onFilterClick,
-}) => {
-  const [isActive, setIsActive] = useState(FILTERS.day);
 
-  const onButtonClick = (filter) => {
-    onFilterClick(filter)
-    setIsActive(FILTERS[filter]);
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const { currentDateObj } = useSelector(state => state.date);
+  const { range } = useSelector(state => state.filter);
+  const { userDetails } = useAuthState();
+
+
+  const handleFilterClick = (filter) => {
+    dispatch(setFilter({range: filter}));
+  
+    const [start, end] = FILTER_DATES[filter](currentDateObj);
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      userId: userDetails.id,
+      onSuccess: () => console.log('success'),
+      onError: (e) => console.log('errored', e),
+    }));
   }
 
   const renderButtons = (filter) => {
@@ -19,9 +36,9 @@ export const Filter = ({
       <Button
         className={clsx(
           styles.button,
-          {[styles.active]: isActive === FILTERS[filter]}
+          {[styles.active]: range === FILTERS[filter]}
         )}
-        onClick={() => onButtonClick(filter)}
+        onClick={() => handleFilterClick(filter)}
         key={filter}
       >
         {FILTERS[filter]}

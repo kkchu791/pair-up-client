@@ -5,6 +5,7 @@ import {
   setBlock,
   toggleModal,
 } from '../../redux/actions';
+import { serialize } from '../../utils';
 
 export const SessionBlock = ({
   block
@@ -13,21 +14,37 @@ export const SessionBlock = ({
 
   const onBlockClick = () => {
     dispatch(setBlock(block));
-    dispatch(toggleModal({isOpen: true}))
+    dispatch(toggleModal({isOpen: true}));
   }
 
   return (
     <div className={styles.container}
       onClick={() => onBlockClick()}
     >
-      <div
-        className={styles.color}
-        style={{background: block.color}}
-      >
+
+      <div className={styles.top}>
+        <div
+          className={styles.color}
+          style={{background: block.color}}
+        >
+        </div>
+        <div className={styles.name}>
+          {block.task}
+        </div>
       </div>
-      <div className={styles.name}>
-        {block.task}
+
+      <div className={styles.bottom}>
+        <div className={styles.note}>
+          {block.note}
+        </div>
+
+        <pre>
+          <div className={styles.text}>
+            {block.text && serialize(JSON.parse(block.text))}
+          </div>
+        </pre>
       </div>
+      
     </div>
   )
 }
