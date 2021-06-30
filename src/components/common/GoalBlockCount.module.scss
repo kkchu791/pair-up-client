@@ -1,7 +1,8 @@
 .container {
-  border: 1px solid red;
-  height: 300px;
+  height: 400px;
   overflow-y: scroll;
+  position: relative;
+  padding-top: 20px;
 }
 
 .goalBlock {
@@ -21,4 +22,11 @@
 
 .name {
   margin: 0 5px;
+}
+
+.cancel {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  right: 0;
 }

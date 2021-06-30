@@ -5,14 +5,12 @@ import { Events } from './Events';
 import { MediaList } from '../common';
 import { format } from 'date-fns';
 import {
-  convertTimeTo24
+  convertTimeTo24,
+  serialize,
 } from '../../utils';
 
 export const Retrospective = () => {
-  const {date} = useSelector(state => state.modal);
-  const { currentBlock } = useSelector(state => state.blocks);
-  const dayBlocks = useSelector(state => state.blocksByDate[date]);
-  const blocks = currentBlock ? [currentBlock] : dayBlocks;
+  const {blocks, date} = useSelector(state => state.modal);
 
   const renderRetro = (block) => {
     return (
@@ -27,6 +25,12 @@ export const Retrospective = () => {
         <pre>
           <div className={styles.content}>
             {block.note}
+          </div>
+        </pre>
+
+        <pre>
+          <div className={styles.content}>
+            {block.text && serialize(JSON.parse(block.text))}
           </div>
         </pre>
 

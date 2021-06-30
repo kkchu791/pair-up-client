@@ -9,13 +9,14 @@ import {
   toggleModal,
   getBlocksByDate,
   getTimeBlocks,
-  // setBlock
+  setFilter,
+  setDate
 } from '../../redux/actions';
 import { TaskModal } from './TaskModal';
 import { TaskForm } from './TaskForm';
 // import { Timer } from '../common';
 import { useAuthState } from '../../context';
-// import { format } from 'date-fns';
+import { format } from 'date-fns';
 // import { getCurrentMilitaryTime } from '../../utils';
 import { DrawerToggle } from './DrawerToggle';
 
@@ -32,7 +33,21 @@ export const Calendar = () => {
   //   getActiveBlock(list);
   // }
 
-  useEffect(() => { 
+  useEffect(() => {
+    dispatch(setDate({
+      dateObj: new Date(),
+      dateStr: format(new Date(), 'yyyy-MM-dd'),
+    }));
+  }, [])
+
+  useEffect(() => {
+    dispatch(setFilter({
+      range: 'week',
+      search: null,
+    }));
+  }, [])
+
+  useEffect(() => {
     dispatch(getBlocksByDate({
       start, 
       end,

@@ -33,6 +33,8 @@ export const removeBlocksByDate = ({block, date}) => ({
 export const getBlocksByDate = ({
   start,
   end,
+  search,
+  goalId,
   userId,
   onSuccess,
   onError,
@@ -44,6 +46,8 @@ export const getBlocksByDate = ({
       startDate: start,
       endDate: end,
       userId,
+      search,
+      goalId,
     }).then((response) => {
       if (response.success) {
         dispatch(setBlocksByDate(response.data));

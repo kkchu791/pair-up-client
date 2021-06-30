@@ -17,3 +17,7 @@ export {
 export {
   getNearestTimeBlock,
 } from './timeBlockHelper';
+
+export {
+  serialize,
+} from './editorHelper';
