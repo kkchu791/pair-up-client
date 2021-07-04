@@ -78,3 +78,13 @@ export {
   SET_FILTER,
   setFilter,
 } from './filter';
+
+export {
+  SET_EDITOR,
+  setEditor,
+} from './editor';
+
+export {
+  SET_DEVICE,
+  setDevice,
+} from './device';

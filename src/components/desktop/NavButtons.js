@@ -44,6 +44,18 @@ export const NavButtons = () => {
       dateObj: new Date(),
       dateStr: format(new Date(), 'yyyy-MM-dd'),
     }));
+
+    const [start, end] = FILTER_DATES[range](new Date());
+
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      search,
+      goalId,
+      userId: userDetails.id,
+      onSuccess: () => console.log('success'),
+      onError: () => console.log('errored'),
+    }));
   }
 
   return (

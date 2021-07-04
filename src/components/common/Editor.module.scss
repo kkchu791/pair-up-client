@@ -1,0 +1,27 @@
+.container {
+  border: 1px solid blue;
+  padding: 10px 0 15px 0;
+}
+
+.subNavEditor {
+  width: 100%;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 10px;
+}
+
+.active {
+  text-decoration: underline;
+}
+
+.link {
+  margin: 0 3px;
+}
+
+.note {
+  z-index: 0,
+}
+
+

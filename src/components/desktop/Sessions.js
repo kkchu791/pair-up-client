@@ -34,7 +34,7 @@ export const Sessions = () => {
   useEffect(() => {
     dispatch(setFilter({
       range: 'week',
-      search: null,
+      search: '',
     }));
   }, [])
 
@@ -63,8 +63,8 @@ export const Sessions = () => {
 
       <div className={styles.sideBarFilter}>
         <div className={styles.filters}>
-          <NavButtons />
           <Filter />
+          <NavButtons />
         </div>
         <Search />
         <Summary />

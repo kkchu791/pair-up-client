@@ -15,6 +15,7 @@ import {
 } from '../../context';
 import { format } from 'date-fns';
 import {CircularProgress} from '@material-ui/core';
+import { Editor } from './Editor';
 
 export const BlockForm = ({
   onClose
@@ -24,10 +25,20 @@ export const BlockForm = ({
   const dispatch = useDispatch();
   const { userDetails } = useAuthState();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const defaultText = [
+    {
+      type: 'paragraph',
+      children: [{ text: '' }],
+    },
+  ];
+
+
   const [task, setTask] = useState({
     description: currentBlock.task,
     goalId: currentBlock.goal_id,
     note: currentBlock.note,
+    text: currentBlock.text ? JSON.parse(currentBlock.text) : defaultText,
     id: currentBlock.id,
     images: currentBlock.images || [],
   });
@@ -36,6 +47,10 @@ export const BlockForm = ({
     var value = evt.target.value;
     var name = evt.target.name;
     setTask({...task, ...{[name]: value}})
+  }
+
+  const handleEditorChange = (val) => {
+    setTask({...task, ...{'text': val}})
   }
 
   const handleCancel = () => {
@@ -60,10 +75,11 @@ export const BlockForm = ({
         id: task.id,
         creator_id: userDetails.id,
         time_block_id: currentBlock.timeBlockId,
-        date: format(new Date(currentBlock.date), 'yyyy-MM-dd'),
+        date: currentBlock.date.split('T')[0],
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        text: JSON.stringify(task.text),
         images: task.images,
         onSuccess: handleSuccess,
         onError: handleError,
@@ -72,10 +88,11 @@ export const BlockForm = ({
       dispatch(createBlock({
         creator_id: userDetails.id,
         time_block_id: currentBlock.timeBlockId,
-        date: currentBlock.date,
+        date: currentBlock.date.split('T')[0],
         task: task.description,
         goal_id: currentGoal.id,
         note: task.note,
+        text: JSON.stringify(task.text),
         type: currentBlock.type,
         onSuccess: handleSuccess,
         onError: handleError,
@@ -100,19 +117,11 @@ export const BlockForm = ({
         />
       </div>
 
-      <div className={styles.note}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          id="note"
-          label="What can you improve on?"
-          name="note"
-          value={task.note || ''}
-          onChange={handleInputChange}
-          multiline={true}
-          rows={10}
-          className={styles.note}
+      <div className={styles.editor}>
+        <Editor
+          task={task}
+          handleInputChange={handleInputChange}
+          handleEditorChange={handleEditorChange}
         />
       </div>
 

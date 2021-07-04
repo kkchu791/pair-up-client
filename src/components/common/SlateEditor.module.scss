@@ -2,7 +2,11 @@
   border: 1px solid lightgray;
   border-radius: 3px;
   padding: 10px;
-  height: 720px;
+  height: 60vh;
   overflow-y: scroll;
   margin: 10px 0 10px;
+}
+
+.isMobile {
+  height: 50vh;
 }

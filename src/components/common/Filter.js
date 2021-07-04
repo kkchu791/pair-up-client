@@ -17,7 +17,6 @@ export const Filter = () => {
   const { range } = useSelector(state => state.filter);
   const { userDetails } = useAuthState();
 
-
   const handleFilterClick = (filter) => {
     dispatch(setFilter({range: filter}));
   

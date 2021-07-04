@@ -3,12 +3,16 @@ import React, { useMemo, useCallback } from 'react';
 import styles from './SlateEditor.module.scss';
 import { createEditor, Editor, Transforms, Text } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
+import { useSelector } from 'react-redux';
+import clsx from 'clsx';
+import { DEVICE_TYPES } from '../../constants';
 
 export const SlateEditor = ({
   handleInputChange,
   value
 }) => {
   const editor = useMemo(() => withReact(createEditor()), [])
+  const { type } = useSelector(state => state.device);
 
   const renderElement = useCallback(props => {
     switch (props.element.type) {
@@ -24,7 +28,7 @@ export const SlateEditor = ({
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, {[styles.isMobile]: type === DEVICE_TYPES.MOBILE})}>
       <Slate
         editor={editor}
         value={value}
@@ -33,7 +37,7 @@ export const SlateEditor = ({
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder={'Beta Testing Editor... try control B'}
+          placeholder={'Try control-b or control-`'}
           onKeyDown={event => {
             if (!event.ctrlKey) {
               return
