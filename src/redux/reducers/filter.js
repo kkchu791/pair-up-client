@@ -2,7 +2,7 @@ import { SET_FILTER } from '../actions';
 import { FILTERS } from '../../constants';
 
 const initialState = { 
-  range: FILTERS.week
+  range: FILTERS.day
 };
 
 const filterReducer = (state = initialState, action) => {

@@ -12,3 +12,4 @@ export {
 } from './sessions';
 export { MEDIA_TYPES } from './uploader';
 export { EDITOR_TYPES } from './taskForm';
+export { DEVICE_TYPES } from './device';

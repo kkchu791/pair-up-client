@@ -4,8 +4,10 @@ import { useDispatch } from 'react-redux';
 import {
   setBlock,
   toggleModal,
+  setEditor
 } from '../../redux/actions';
-import { serialize } from '../../utils';
+import { TextField } from '@material-ui/core';
+import { EDITOR_TYPES } from '../../constants';
 
 export const SessionBlock = ({
   block
@@ -17,9 +19,16 @@ export const SessionBlock = ({
     dispatch(toggleModal({isOpen: true}));
   }
 
+  const onNoteClick = () => {
+    dispatch(setBlock(block));
+    dispatch(toggleModal({isOpen: true}));
+
+    dispatch(setEditor({type: EDITOR_TYPES.REGULAR}))
+  }
+
   return (
     <div className={styles.container}
-      onClick={() => onBlockClick()}
+      onClick={onBlockClick}
     >
 
       <div className={styles.top}>
@@ -33,18 +42,26 @@ export const SessionBlock = ({
         </div>
       </div>
 
-      <div className={styles.bottom}>
-        <div className={styles.note}>
-          {block.note}
+      {block.note &&
+        <div
+          className={styles.bottom}
+          onClick={onNoteClick}
+        >
+        
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="note"
+            name="note"
+            value={block.note}
+            multiline={true}
+            InputProps={{
+              className: styles.note,
+            }}
+          />
         </div>
-
-        <pre>
-          <div className={styles.text}>
-            {block.text && serialize(JSON.parse(block.text))}
-          </div>
-        </pre>
-      </div>
-      
+      }
     </div>
   )
 }

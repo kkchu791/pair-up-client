@@ -20,8 +20,8 @@ export const Search = () => {
     dispatch(getBlocksByDate({
       start, 
       end,
-      search,
       goalId,
+      search,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
@@ -32,6 +32,18 @@ export const Search = () => {
     dispatch(setFilter({search: val}));
   }
 
+  const resetSearch = () => {
+    dispatch(setFilter({search: ''}));
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      goalId,
+      userId: userDetails.id,
+      onSuccess: () => console.log('success'),
+      onError: () => console.log('errored'),
+    }));
+  }
+
   return (
     <div className={styles.container}>
        <SearchBar
@@ -40,6 +52,8 @@ export const Search = () => {
           placeholder='search'
           autoFocus
           className={styles.search}
+          onCancelSearch={resetSearch}
+          value={search}
         />
     </div>
   )

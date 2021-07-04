@@ -9,7 +9,9 @@ import { toggleModal } from '../../redux/actions';
 // import May16Audio from '../../audio/May16.m4a';
 // import ReactAudioPlayer from 'react-audio-player';
 
-export const Summary = () => {
+export const Summary = ({
+  isDesktop=true
+}) => {
   const dispatch = useDispatch();
   let { blocksByDate } = useSelector(state => state);
   const {currentDateStr} = useSelector(state => state.date);
@@ -33,14 +35,16 @@ export const Summary = () => {
           {`${blocks.length} Blocks` || '0 Blocks'}
         </div>
 
-        <Button
-          variant='contained'
-          color='primary'
-          className={styles.retro}
-          onClick={handleRetroClick}
-        >
-          Retro
-        </Button>     
+        {isDesktop &&
+          <Button
+            variant='contained'
+            color='primary'
+            className={styles.retro}
+            onClick={handleRetroClick}
+          >
+            Retro
+          </Button>   
+        }  
       </div>
 
       <div

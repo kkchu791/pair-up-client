@@ -9,6 +9,8 @@ import drawer from './drawer';
 import audio from './audio';
 import timer from './timer';
 import filter from './filter';
+import editor from './editor';
+import device from './device';
 
 export default combineReducers({
   modal: modal,
@@ -21,4 +23,6 @@ export default combineReducers({
   audio: audio,
   timer: timer,
   filter: filter,
+  editor: editor,
+  device, device,
 });

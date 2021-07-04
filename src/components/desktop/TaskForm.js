@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import styles from './TaskForm.module.scss';
 import {
   TextField,
-  Button,
-  FormControl
+  Button
 } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -17,9 +16,8 @@ import {
   MediaUploader,
 } from '../common';
 import clsx from 'clsx';
-import { SlateEditor } from '../common';
+import { Editor } from '../common';
 import {CircularProgress} from '@material-ui/core';
-import { EDITOR_TYPES } from '../../constants';
 
 export const TaskForm = () => {
   const {currentBlock} = useSelector(state => state.blocks);
@@ -41,7 +39,6 @@ export const TaskForm = () => {
     images: currentBlock.images || [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [editor, setEditor] = useState(EDITOR_TYPES.SLATE);
 
   const handleInputChange = evt => {
     var value = evt.target.value
@@ -129,50 +126,11 @@ export const TaskForm = () => {
 
         {task.id &&
           <div className={styles.notes}>
-            <div className={styles.subNavEditor}>
-              <div
-                className={clsx(styles.link, {[styles.active]: editor === EDITOR_TYPES.SLATE})}
-                onClick={() => setEditor(EDITOR_TYPES.SLATE)}
-              >
-                Slate
-              </div>
-
-              <div
-                className={clsx(styles.link, {[styles.active]: editor === EDITOR_TYPES.REGULAR})}
-                onClick={() => setEditor(EDITOR_TYPES.REGULAR)}
-              >
-                Regular
-              </div>
-            </div>
-
-            {editor === EDITOR_TYPES.REGULAR ? 
-              <FormControl
-                required
-                variant="outlined"
-                className={styles.formControl}
-              >
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  id="note"
-                  label="What can you improve on?"
-                  name="note"
-                  onChange={handleInputChange}
-                  value={task.note}
-                  multiline={true}
-                  rows={10}
-                  className={styles.note}
-                />
-              </FormControl>
-
-              :
-              
-              <SlateEditor
-                handleInputChange={handleEditorChange}
-                value={task.text}
-              />
-            }
+            <Editor
+              handleEditorChange={handleEditorChange}
+              handleInputChange={handleInputChange}
+              task={task}
+            />
 
             <MediaUploader
               setTask={setTask}

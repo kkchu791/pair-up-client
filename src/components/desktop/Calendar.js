@@ -43,7 +43,7 @@ export const Calendar = () => {
   useEffect(() => {
     dispatch(setFilter({
       range: 'week',
-      search: null,
+      search: '',
     }));
   }, [])
 

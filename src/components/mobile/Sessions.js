@@ -2,10 +2,15 @@ import React, {useEffect} from 'react';
 import styles from './Sessions.module.scss';
 import { SessionList } from './SessionList';
 import {useSelector, useDispatch} from 'react-redux';
-import { getBlocksByDate, toggleModal } from '../../redux/actions';
+import {
+  getBlocksByDate,
+  toggleModal,
+  setFilter,
+} from '../../redux/actions';
 import { FILTER_DATES} from '../../constants';
 import { useAuthState } from '../../context';
-import { Filter, Summary, BlockForm } from '../common';
+import { Filter, Summary, BlockForm, Search } from '../common';
+import { NavButtons } from '../desktop/NavButtons';
 
 export const Sessions = () => {
   let {isOpen} = useSelector(state => state.modal);
@@ -35,6 +40,13 @@ export const Sessions = () => {
     }));
   }, [dispatch, userDetails.id]);
 
+  useEffect(() => {
+    dispatch(setFilter({
+      range: 'day',
+      search: '',
+    }));
+  }, [])
+
   return (
     <div className={styles.container}>
 
@@ -52,10 +64,16 @@ export const Sessions = () => {
             <Filter
               onFilterClick={handleFilterClick}
             />
+            <div className={styles.search}>
+              <NavButtons />
+              <Search />
+            </div>
           </div>
 
-          <div className={styles.blockSummary}>
-            <Summary />
+          <div className={styles.summary}>
+            <Summary
+              isDesktop={false}
+            />
           </div>
 
           <div className={styles.list}>

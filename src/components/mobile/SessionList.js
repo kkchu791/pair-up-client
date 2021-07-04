@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './SessionList.module.scss';
 import { useSelector } from 'react-redux';
 import { SessionBlock } from '../common';
+import { parseISO, format } from 'date-fns';
 
 
 export const SessionList = () => {
@@ -16,7 +17,7 @@ export const SessionList = () => {
             key={date}
           >
             <div className={styles.date}>
-              {date}
+              {format(parseISO(date), 'E MMM dd')}
             </div>
 
             {blocksByDate[date].map(block => {
