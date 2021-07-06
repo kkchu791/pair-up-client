@@ -18,9 +18,12 @@ export const Filter = () => {
   const { userDetails } = useAuthState();
 
   const handleFilterClick = (filter) => {
+
+    console.log(filter, filter)
     dispatch(setFilter({range: filter}));
   
     const [start, end] = FILTER_DATES[filter](currentDateObj);
+
     dispatch(getBlocksByDate({
       start, 
       end,
@@ -33,6 +36,8 @@ export const Filter = () => {
   }
 
   const renderButtons = (filter) => {
+
+    console.log(range, FILTERS[filter])
     return (
       <Button
         className={clsx(

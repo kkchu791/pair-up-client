@@ -11,26 +11,28 @@ export const SessionList = () => {
   return (
     <div className={styles.container}>
       {Object.keys(blocksByDate).map(date => {
-        return (
-          <div
-            className={styles.dateContainer}
-            key={date}
-          >
-            <div className={styles.date}>
-              {format(parseISO(date), 'E MMM dd')}
+        if (blocksByDate[date].length > 0) {
+          return (
+            <div
+              className={styles.dateContainer}
+              key={date}
+            >
+              <div className={styles.date}>
+                {format(parseISO(date), 'E MMM dd')}
+              </div>
+  
+              {blocksByDate[date].map(block => {
+                return (
+                  <div key={block.id}>
+                    <SessionBlock
+                      block={block}
+                    />
+                  </div>
+                )
+              })}
             </div>
-
-            {blocksByDate[date].map(block => {
-              return (
-                <div key={block.id}>
-                  <SessionBlock
-                    block={block}
-                  />
-                </div>
-              )
-            })}
-          </div>
-        )
+          )
+        }
       })}
     </div>
   )

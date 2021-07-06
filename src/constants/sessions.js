@@ -13,7 +13,7 @@ export const FILTERS = {
   day: 'day',
   week: 'week',
   month: 'month',
-  all: 'All',
+  all: 'all',
 }
 
 export const FILTER_DATES = {

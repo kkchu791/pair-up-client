@@ -14,7 +14,7 @@ export const GoalBlockCount = ({
   blocks
 }) => {
   const dispatch = useDispatch();
-  const { range, search, goalId } = useSelector(state => state.filter);
+  const { range, search, goalId, type } = useSelector(state => state.filter);
   const {currentDateObj} = useSelector(state => state.date);
   const [start, end] = FILTER_DATES[range](currentDateObj);
   const { userDetails } = useAuthState();
@@ -37,6 +37,7 @@ export const GoalBlockCount = ({
       end,
       search,
       goalId,
+      type,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
@@ -74,6 +75,7 @@ export const GoalBlockCount = ({
       start, 
       end,
       search,
+      type,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
