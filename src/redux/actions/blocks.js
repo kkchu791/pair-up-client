@@ -216,7 +216,7 @@ return async (dispatch, getState) => {
       }
 
       dispatch(setBlock(response.data));
-      getState().timer.status === 'end'  ? dispatch(setActiveBlock({})) : dispatch(setActiveBlock(response.data));
+      dispatch(setActiveBlock(response.data));
     } else {
       onError(response.error);
     }
@@ -243,7 +243,8 @@ export const deleteBlock = ({
           block: removedBlock,
           date
         }));
-        dispatch(removeActionBlock(removedBlock))
+        dispatch(removeActionBlock(removedBlock));
+        dispatch(setActiveBlock({}));
       } else {
         onError(response.error);
       }

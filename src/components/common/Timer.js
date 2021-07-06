@@ -26,9 +26,7 @@ export const Timer = ({
     }, 1000);
   
     if (seconds === 1 && isStarting) {
-      console.log('is begin')
       onBeginning();
-      clearInterval(interval)
     }
 
     if (seconds < 0 && !isStarting) {

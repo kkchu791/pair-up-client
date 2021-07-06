@@ -13,3 +13,8 @@ export {
 export { MEDIA_TYPES } from './uploader';
 export { EDITOR_TYPES } from './taskForm';
 export { DEVICE_TYPES } from './device';
+export {
+  GOAL_TYPES,
+  GOAL_TYPE_OPTIONS,
+  GOAL_TYPE_NAMES,
+} from './goals';

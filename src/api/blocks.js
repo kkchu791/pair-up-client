@@ -11,12 +11,13 @@ export const getBlocksByDateRange = async ({
   userId,
   search,
   goalId,
+  type,
 }) => {
   // should be passing in user id and token
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_API_URL}/blocks`,
-      {params: {startDate, endDate, userId, search, goalId}}
+      {params: {startDate, endDate, userId, search, goalId, type}}
     );
 
     return {success: true, data: response.data};

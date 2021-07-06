@@ -34,6 +34,7 @@ export const getBlocksByDate = ({
   start,
   end,
   search,
+  type,
   goalId,
   userId,
   onSuccess,
@@ -47,6 +48,7 @@ export const getBlocksByDate = ({
       endDate: end,
       userId,
       search,
+      type,
       goalId,
     }).then((response) => {
       if (response.success) {
