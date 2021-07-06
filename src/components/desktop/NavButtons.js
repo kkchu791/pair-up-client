@@ -16,7 +16,7 @@ import { useAuthState } from '../../context';
 export const NavButtons = () => {
   const dispatch = useDispatch();
   const { currentDateObj } = useSelector(state => state.date);
-  const { range, search, goalId } = useSelector(state => state.filter);
+  const { range, search, goalId, type } = useSelector(state => state.filter);
   const { userDetails } = useAuthState();
 
   const moveClick = (direction) => {
@@ -33,6 +33,7 @@ export const NavButtons = () => {
       end,
       search,
       goalId,
+      type,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
@@ -52,6 +53,7 @@ export const NavButtons = () => {
       end,
       search,
       goalId,
+      type,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),

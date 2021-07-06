@@ -1,5 +1,5 @@
 export const GOAL_TYPES = {
-  'NONE': 0,
+  'ALL': 0,
   'INDOOR': 1,
   'OUTDOOR': 2,
 }
@@ -11,7 +11,7 @@ export const GOAL_TYPE_OPTIONS = [
 ];
 
 export const GOAL_TYPE_NAMES = {
-  0: 'none',
-  1: 'indoor',
-  2: 'outdoor',
+  0: 'All',
+  1: 'Indoor',
+  2: 'Outdoor',
 }

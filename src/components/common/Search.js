@@ -11,7 +11,7 @@ import { useAuthState } from '../../context';
 
 export const Search = () => {
   const dispatch = useDispatch();
-  const { range, search, goalId } = useSelector(state => state.filter);
+  const { range, search, goalId, type } = useSelector(state => state.filter);
   const {currentDateObj} = useSelector(state => state.date);
   const [start, end] = FILTER_DATES[range](currentDateObj);
   const { userDetails } = useAuthState();
@@ -22,6 +22,7 @@ export const Search = () => {
       end,
       goalId,
       search,
+      type,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
@@ -38,6 +39,7 @@ export const Search = () => {
       start, 
       end,
       goalId,
+      type,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
