@@ -59,12 +59,14 @@ export const getGoal = ({
 
 export const getGoals = ({
   userId,
+  type,
   onSuccess,
   onError,
 }) => {
   return async (dispatch, getState) => {
     return await getGoalsApi({
-      userId
+      userId,
+      type,
     }).then((response) => {
       if (response.success) {
         dispatch(setGoals(response.goals));
@@ -81,6 +83,7 @@ export const createGoal= ({
   color,
   name,
   userId,
+  type,
   onSuccess,
   onError,
 }) => {
@@ -89,6 +92,7 @@ export const createGoal= ({
       color,
       name,
       userId,
+      type,
     }).then((response) => {
       if (response.success) {
         dispatch(updateGoalsList(response.data));
@@ -106,6 +110,7 @@ export const updateGoal= ({
   coachesNote,
   color,
   name,
+  type,
   onSuccess,
   onError,
 }) => {
@@ -114,6 +119,7 @@ export const updateGoal= ({
       id,
       note,
       coachesNote,
+      type,
       color,
       name,
     }).then((response) => {

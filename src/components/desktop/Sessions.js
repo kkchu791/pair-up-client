@@ -11,8 +11,15 @@ import {
 import { TaskModal } from './TaskModal';
 import { Retrospective } from './Retrospective';
 import { useAuthState } from '../../context';
-import { Filter, Summary, Search } from '../common';
-import { FILTER_DATES } from '../../constants';
+import {
+  Filter,
+  Summary,
+  Search,
+  GoalTypeSelector,
+} from '../common';
+import {
+  FILTER_DATES,
+} from '../../constants';
 import { NavButtons } from './NavButtons';
 import { format } from 'date-fns';
 
@@ -20,7 +27,7 @@ export const Sessions = () => {
   const dispatch = useDispatch();
   const {currentDateObj} = useSelector(state => state.date);
   const { isOpen } = useSelector(state => state.modal);
-  const { range } = useSelector(state => state.filter);
+  const { range, type, search } = useSelector(state => state.filter);
   const { userDetails } = useAuthState();
   const [start, end] = FILTER_DATES[range](currentDateObj);
   
@@ -42,6 +49,8 @@ export const Sessions = () => {
     dispatch(getBlocksByDate({
       start, 
       end,
+      type,
+      search,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: () => console.log('errored'),
@@ -50,6 +59,22 @@ export const Sessions = () => {
 
   const closeModal = () => {
     dispatch(toggleModal({isOpen: false}));
+  }
+
+  const handleTypeChange = (option) => {
+    dispatch(setFilter({
+      type: option.type,
+    }))
+
+    dispatch(getBlocksByDate({
+      start, 
+      end,
+      type: option.type,
+      search,
+      userId: userDetails.id,
+      onSuccess: () => console.log('success'),
+      onError: (e) => console.log('errored', e),
+    }));
   }
   
   return (
@@ -65,6 +90,12 @@ export const Sessions = () => {
         <div className={styles.filters}>
           <Filter />
           <NavButtons />
+        </div>
+        <div className={styles.goalTypeFilter}>
+          <GoalTypeSelector
+            goal={{type}}
+            handleChange={handleTypeChange}
+          />
         </div>
         <Search />
         <Summary />

@@ -24,5 +24,5 @@ export default combineReducers({
   timer: timer,
   filter: filter,
   editor: editor,
-  device, device,
+  device: device,
 });

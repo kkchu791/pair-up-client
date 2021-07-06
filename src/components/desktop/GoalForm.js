@@ -11,6 +11,8 @@ import {
 } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
 import { useAuthState } from '../../context';
+import { GoalTypeSelector } from '../common';
+import { GOAL_TYPE_OPTIONS } from '../../constants';
 
 export const GoalForm = ({
   setIsOpen,
@@ -19,7 +21,8 @@ export const GoalForm = ({
   const {userDetails} = useAuthState();
   const dispatch = useDispatch();
   const initialGoalState = {
-    color: '#add8e6'
+    color: '#add8e6',
+    type: 1,
   }
   const [goal, setGoal] = useState(existingGoal || initialGoalState);
 
@@ -30,6 +33,7 @@ export const GoalForm = ({
         color: goal.color,
         name: goal.name,
         userId: userDetails.id,
+        type: goal.type,
         onSuccess: () => setIsOpen(false),
         onError: () => console.log('error in updating goal'),
       }));
@@ -38,6 +42,7 @@ export const GoalForm = ({
         color: goal.color,
         name: goal.name,
         userId: userDetails.id,
+        type: goal.type,
         onSuccess: () => setIsOpen(false),
         onError: () => console.log('error in creating goal'),
       }));
@@ -70,6 +75,14 @@ export const GoalForm = ({
             size='small'
             onChange={(evt) => handleChange({'name': evt.target.value})}
             value={goal.name}
+          />
+        </div>
+
+        <div className={styles.typeSelector}>
+          <GoalTypeSelector
+            goalTypeOptions={GOAL_TYPE_OPTIONS}
+            goal={goal}
+            handleChange={handleChange}
           />
         </div>
       </div>

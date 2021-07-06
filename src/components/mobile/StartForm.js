@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import {GoalSelector} from '../common';
 import { getNearestTimeBlock } from '../../utils';
-import { BLOCK_TYPE } from '../../constants';
+import { BLOCK_TYPE, GOAL_TYPES } from '../../constants';
 
 export const StartForm = () => {
   const [task, setTask] = useState({});
@@ -52,8 +52,6 @@ export const StartForm = () => {
 
   return (
     <div className={styles.container}>
-
-
       <div className={styles.description}>
         <TextField
           fullWidth
@@ -70,7 +68,9 @@ export const StartForm = () => {
       </div>
 
       <div className={styles.goalSelector}>
-        <GoalSelector />
+        <GoalSelector
+          type={GOAL_TYPES.OUTDOOR}
+        />
       </div>
 
       <Button

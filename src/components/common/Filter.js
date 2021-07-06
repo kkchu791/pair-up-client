@@ -14,7 +14,7 @@ import { useAuthState } from '../../context';
 export const Filter = () => {
   const dispatch = useDispatch();
   const { currentDateObj } = useSelector(state => state.date);
-  const { range } = useSelector(state => state.filter);
+  const { range, search, type } = useSelector(state => state.filter);
   const { userDetails } = useAuthState();
 
   const handleFilterClick = (filter) => {
@@ -24,6 +24,8 @@ export const Filter = () => {
     dispatch(getBlocksByDate({
       start, 
       end,
+      type,
+      search,
       userId: userDetails.id,
       onSuccess: () => console.log('success'),
       onError: (e) => console.log('errored', e),

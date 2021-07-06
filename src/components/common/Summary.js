@@ -4,17 +4,17 @@ import styles from './Summary.module.scss';
 import { Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleModal } from '../../redux/actions';
+import { DEVICE_TYPES } from '../../constants';
 
 // import Speech from 'react-speech';
 // import May16Audio from '../../audio/May16.m4a';
 // import ReactAudioPlayer from 'react-audio-player';
 
-export const Summary = ({
-  isDesktop=true
-}) => {
+export const Summary = () => {
   const dispatch = useDispatch();
   let { blocksByDate } = useSelector(state => state);
   const {currentDateStr} = useSelector(state => state.date);
+  const { type } = useSelector(state => state.device);
   
   const blocks = Object.keys(blocksByDate).reduce((acc, date) => {
     return [...acc, ...blocksByDate[date]];
@@ -35,7 +35,7 @@ export const Summary = ({
           {`${blocks.length} Blocks` || '0 Blocks'}
         </div>
 
-        {isDesktop &&
+        {type === DEVICE_TYPES.DESKTOP &&
           <Button
             variant='contained'
             color='primary'

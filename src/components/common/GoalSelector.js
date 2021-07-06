@@ -9,7 +9,9 @@ import {
 } from '../../redux/actions';
 import { useAuthState } from '../../context'
 
-export const GoalSelector = () => {
+export const GoalSelector = ({
+  type=1,
+}) => {
   const dispatch = useDispatch();
   const goal = useSelector(state => state.goals.currentGoal);
   const {goalOptions} = useSelector(state => state.goals)
@@ -18,6 +20,7 @@ export const GoalSelector = () => {
   useEffect(() => {
     dispatch(getGoals({
       userId: userDetails.id,
+      type,
       onSuccess: () => console.log('success get goals'),
       onError: () => console.log('error get goals'),
     }));

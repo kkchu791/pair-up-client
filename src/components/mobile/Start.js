@@ -11,6 +11,7 @@ import {
 import styles from './Start.module.scss';
 import { useAuthState } from '../../context';
 import { startOfWeek, endOfWeek } from 'date-fns';
+import { GOAL_TYPES } from '../../constants';
 
 export const Start = () => {
   const { currentDateObj } = useSelector(state => state.date);
@@ -42,6 +43,7 @@ export const Start = () => {
   useEffect(() => {
     dispatch(getGoals({
       userId: userDetails.id,
+      type: GOAL_TYPES.OUTDOOR,
       onSuccess: () => console.log('on success for get goals'),
       onError: () => console.log('on error for get goals'),
     }));
@@ -53,6 +55,8 @@ export const Start = () => {
       onError: () => console.log('error timeBlock')
     }));
   }, [dispatch]);
+
+  console.log('clearing currentBlockDisplay?', Object.keys(activeBlock).length > 4)
 
   return (
     <div className={styles.container}>

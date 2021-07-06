@@ -71,9 +71,7 @@ export const Sessions = () => {
           </div>
 
           <div className={styles.summary}>
-            <Summary
-              isDesktop={false}
-            />
+            <Summary />
           </div>
 
           <div className={styles.list}>

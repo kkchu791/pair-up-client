@@ -11,3 +11,4 @@ export { SlateEditor } from './SlateEditor';
 export { Error } from './Error';
 export { Search } from './Search';
 export { Editor } from './Editor';
+export { GoalTypeSelector } from './GoalTypeSelector';
